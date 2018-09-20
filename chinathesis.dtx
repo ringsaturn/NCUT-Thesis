@@ -265,7 +265,8 @@ version 2005/12/01 or later.
 }
 %    \end{macrocode}
 %
-% 加载所需宏包，注意不要轻易改变加载顺序。
+% 建议在模板开始处载入全部宏包，不要轻易改变加载顺序。
+% \pkg{hyperref} 一般在最后加载。
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{amsmath}
@@ -289,19 +290,25 @@ version 2005/12/01 or later.
 %
 % \section{字体}
 %
+% \subsection{字体库}
+%
 % \begin{macro}{\ustc@strifeq}
-% 判断字符串是否相等。
+% 使用 \LaTeX3 的功能判断字符串是否相等。这里也可以使用 \pkg{xstring} 宏包。
 %    \begin{macrocode}
 \newcommand\ustc@strifeq{\csname str_if_eq_x:nnTF\endcsname}
 %    \end{macrocode}
 % \end{macro}
 %
-% 将 \pkg{ctex} 的 \opt{fontset} 存在 \cs{ustc@fontset} 方便 \LaTeXe{} 调用。
+% \begin{macro}{\ustc@fontset}
+% \pkg{ctex} 配置的字体库名称保存在 |\g__ctex_fontset_tl|。
 %    \begin{macrocode}
 \newcommand\ustc@fontset{\csname g__ctex_fontset_tl\endcsname}
 %    \end{macrocode}
+% \end{macro}
 %
-% 设置西文字体
+% 大部分学位论文都要求西文字体使用 Times New Roman 和 Arial，
+% 但是在 Linux 下没有这两个字体，所以使用它们的克隆版 TeX Gyre Termes 和
+% TeX Gyre Heros。
 %    \begin{macrocode}
 \ustc@strifeq{\ustc@fontset}{fandol}{
   \setmainfont[
@@ -343,9 +350,11 @@ version 2005/12/01 or later.
 %    \end{macrocode}
 %
 % 中文字体可以由 \pkg{ctex} 自动设置，但是会有问题：
-% 1. 无衬线字体默认会使用微软雅黑或者苹方，这对打印不太友好；
-% 2. 没有粗体的字体不会开启伪粗；
-% 所以必须做一些调整。
+% \begin{enumerate}
+%   \item 无衬线字体默认会使用微软雅黑或者苹方，这对打印不太友好；
+%   \item 没有粗体的字体不会开启伪粗；
+% \end{enumerate}
+% 所以需要重新配置一部分，参考 \pkg{ctex} 宏包。
 %    \begin{macrocode}
 \ustc@strifeq{\ustc@fontset}{mac}{
   \setCJKmainfont[
@@ -402,34 +411,60 @@ version 2005/12/01 or later.
 %    \end{macrocode}
 % \end{macro}
 %
-% 印刷的长度单位点（磅）通常指 PostScript point，在 \LaTeX{} 中是 bp。
+%
+% \subsection{字号与行距}
+%
+% 目前最广泛使用的印刷的长度单位点（磅）通常指 PostScript point
+% \footnote{\url{https://en.wikipedia.org/wiki/Point_(typography)}}，
+% 在 \LaTeX{} 中是 bp，比默认的 pt 略大。
+% 这里保存起来可以节约编译时间。
 %    \begin{macrocode}
 \newdimen\bp@
 \bp@=1bp
 %    \end{macrocode}
 %
-% 下面设置正文字号 12bp，行距 20bp；
-% 其他命令的行距按照相同的的比例设置，如表~\ref{tab:fontsize}。
+% 字号的设置有两种方法：\cls{ctexbook} 的参数 \opt{zihao=-4} 和 \opt{zihao=5}
+% 可以将正文的默认字号分别设为小四（12bp）或五号（10.5bp）；
+% 如果要求的正文字号不是这两个字号，就必须重定义 \cs{normalsize} 命令，
+% 并且按照比例重定义 \cs{small}, \cs{large} 等一系列命令。
+%
+% \LaTeX{} 的行距是同字号一起设置的，通常规定行距的形式是固定行距，
+% 比如要求“字号 12bp，行距 20 bp”。
+% 如果使用 \pkg{ctex} 的字号设置，由于默认的基础行距为字号的 $1.2$ 倍，
+% 还需要扩大 $20 / 12 / 1.2 \approx 1.39$ 倍，
+% 所以应设置 |\linespread{1.39}|；
+% 如果重定义 \cs{normalsize}，就可以直接设置行距的值
+% |\@setfontsize\normalsize{12\bp@}{20\bp@}|， 并设置 |\linespread{1}|；
+% 注意这时不应再使用 \pkg{ctex} 的 \cs{zihao} 命令。
+%
+% 行距的另外一种形式是“$n$ 倍行距”，比如“字号 12bp、单倍行距”。
+% 这里指的是 Microsoft Word 的“单倍行距”，其实际行距依赖使用的字体，
+% 通常设置中易字体的“单倍行距”，它与字号的比值是 $332 / 256 \approx 1.30$
+% \footnote{\url{https://github.com/CTeX-org/ctex-kit/tree/master/zhlineskip}}，
+% 设置方法与前文类似。
+%
+% 下面使用重定义 \cs{normalsize} 的方法设置正文字号 12bp，行距 20bp；
+% 其他命令按照相同的的比例设置，如表~\ref{tab:fontsize}。
 % \begin{table}[htb]
 %   \centering
-%   \begin{tabular}{llll}
-%     \toprule
-%     字体命令          & 字号 & bp   & 行距 \\
-%     \midrule
-%     \cs{tiny}         & 小六 & 6.5  & 10.83      \\
-%     \cs{scriptsize}   & 六号 & 7.5  & 12.5       \\
-%     \cs{footnotesize} & 小五 & 9    & 15         \\
-%     \cs{small}        & 五号 & 10.5 & 17.5       \\
-%     \cs{normalsize}   & 小四 & 12   & 20         \\
-%     \cs{large}        & 小三 & 15   & 25         \\
-%     \cs{Large}        & 小二 & 18   & 30         \\
-%     \cs{LARGE}        & 二号 & 22   & 36.67      \\
-%     \cs{huge}         & 小一 & 24   & 40         \\
-%     \cs{Huge}         & 一号 & 26   & 43.33      \\
-%     \bottomrule
-%   \end{tabular}
 %   \caption{标准字体命令与字号、行距的对应}
 %   \label{tab:fontsize}
+%   \begin{tabular}{llll}
+%     \toprule
+%     字体命令          & 字号 & bp   & 行距  \\
+%     \midrule
+%     \cs{tiny}         & 小六 & 6.5  & 10.83 \\
+%     \cs{scriptsize}   & 六号 & 7.5  & 12.5  \\
+%     \cs{footnotesize} & 小五 & 9    & 15    \\
+%     \cs{small}        & 五号 & 10.5 & 17.5  \\
+%     \cs{normalsize}   & 小四 & 12   & 20    \\
+%     \cs{large}        & 小三 & 15   & 25    \\
+%     \cs{Large}        & 小二 & 18   & 30    \\
+%     \cs{LARGE}        & 二号 & 22   & 36.67 \\
+%     \cs{huge}         & 小一 & 24   & 40    \\
+%     \cs{Huge}         & 一号 & 26   & 43.33 \\
+%     \bottomrule
+%   \end{tabular}
 % \end{table}
 %    \begin{macrocode}
 \renewcommand\normalsize{%
@@ -442,7 +477,7 @@ version 2005/12/01 or later.
 \normalsize
 %    \end{macrocode}
 %
-% 注意已经去掉了列表的间距，所以不再修改 \cs{@listi}。
+% 注意第~\ref{sec:list} 节去掉了列表的间距，所以不再修改 \cs{@listi}。
 %    \begin{macrocode}
 \renewcommand\small{%
   \@setfontsize\small{10.5\bp@}{17.5\bp@}%
@@ -773,10 +808,10 @@ version 2005/12/01 or later.
 % \begin{macro}{\frontmatter}
 % 前言的页码用大写罗马数字，
 %    \begin{macrocode}
-% \renewcommand\frontmatter{%
-%   \cleardoublepage
-%   \@mainmatterfalse
-%   \pagenumbering{Roman}}
+\renewcommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{Roman}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1088,6 +1123,7 @@ version 2005/12/01 or later.
 %
 %
 % \section{列表}
+% \label{sec:list}
 %
 % \begin{environment}{enumerate}
 % \begin{environment}{description}

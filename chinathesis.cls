@@ -394,6 +394,10 @@
   }{}%
 }
 \patchcmd\chaptermark{\MakeUppercase}{}{}{\ustc@patchfailure{\chaptermark}}
+\renewcommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{Roman}}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
   \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \setcounter{secnumdepth}{5}
