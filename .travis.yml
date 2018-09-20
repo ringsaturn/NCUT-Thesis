@@ -1,0 +1,12 @@
+language: generic
+
+cache:
+  directories:
+    - /tmp/texlive
+
+install:
+  - source ./support/texlive.sh
+
+script:
+  - make main
+  - make doc
