@@ -185,7 +185,7 @@
 \linespread{1}\selectfont
 \newcommand\ustc@fontsize[2]{%
   \fontsize{#1}{#2}\selectfont}
-\newcommand\ustc@abstractname{摘\hspace{2\ccwd}要}
+\newcommand\ustc@abstractname{摘要}
 \newcommand\ustc@enabstractname{Abstract}
 \ifustc@english
   \renewcommand\figurename{Fig.}
@@ -202,9 +202,8 @@
   \newcommand\ustc@remarkname{Remark}
   \newcommand\ustc@theoremname{Theorem}
 \else
-  \renewcommand\contentsname{目\hspace{2\ccwd}录}
-  \newcommand\ustc@acknowledgementsname{致\hspace{2\ccwd}谢}
-  \newcommand\ustc@acknowledgementstocname{致谢}
+  \renewcommand\contentsname{目录}
+  \newcommand\ustc@acknowledgementsname{致谢}
   \newcommand\ustc@publicationsname{在读期间发表的学术论文与取得的研究成果}
   \renewcommand\listfigurename{插图清单}
   \renewcommand\listtablename{表格清单}
@@ -227,6 +226,24 @@
   headsep    = 0.29cm,
   footskip   = 0.79cm,
 }
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{ustc@headings}{
+  \fancyhf{}
+  \fancyhead[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\leftmark}
+  \fancyfoot[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\thepage}}
+\pagestyle{ustc@headings}
+\newcommand\ustc@patchfailure[1]{%
+  \ClassError{chinathesis}{Failed to patch command \protect#1.\MessageBreak
+    Please contact the template author.%
+  }{}%
+}
+\patchcmd\chaptermark{\MakeUppercase}{}{}{\ustc@patchfailure{\chaptermark}}
+\renewcommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{Roman}}
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \def\ustc@define@term#1#2{%
   \expandafter\gdef\csname #1\endcsname##1{%
     \expandafter\gdef\csname ustc@#1\endcsname{##1}%
@@ -382,24 +399,6 @@
   \end{titlepage}
   \cleardoublepage
 }%
-\renewcommand{\headrulewidth}{0.4pt}
-\fancypagestyle{ustc@headings}{
-  \fancyhf{}
-  \fancyhead[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\leftmark}
-  \fancyfoot[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\thepage}}
-\pagestyle{ustc@headings}
-\newcommand\ustc@patchfailure[1]{%
-  \ClassError{chinathesis}{Failed to patch command \protect#1.\MessageBreak
-    Please contact the template author.%
-  }{}%
-}
-\patchcmd\chaptermark{\MakeUppercase}{}{}{\ustc@patchfailure{\chaptermark}}
-\renewcommand\frontmatter{%
-  \cleardoublepage
-  \@mainmatterfalse
-  \pagenumbering{Roman}}
-\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \setcounter{secnumdepth}{5}
 \newcommand\ustc@textcircled[1]{%
   \ifnum\value{#1}<21\relax
@@ -637,14 +636,14 @@
     \renewcommand\leq{\leqslant}%
     \renewcommand\geq{\geqslant}%
   }
-  \removenolimits{%
-    \int\iint\iiint\iiiint\oint\oiint\oiiint
-    \intclockwise\varointclockwise\ointctrclockwise\sumint
-    \intbar\intBar\fint\cirfnint\awint\rppolint
-    \scpolint\npolint\pointint\sqint\intlarhk\intx
-    \intcap\intcup\upint\lowint
-  }
 \fi
+\removenolimits{%
+  \int\iint\iiint\iiiint\oint\oiint\oiiint
+  \intclockwise\varointclockwise\ointctrclockwise\sumint
+  \intbar\intBar\fint\cirfnint\awint\rppolint
+  \scpolint\npolint\pointint\sqint\intlarhk\intx
+  \intcap\intcup\upint\lowint
+}
 \AtBeginDocument{%
   \renewcommand{\Re}{\operatorname{Re}}%
   \renewcommand{\Im}{\operatorname{Im}}%
@@ -765,7 +764,7 @@
   \@mainmattertrue
 }
 \newenvironment{acknowledgements}{%
-  \chapter[\ustc@acknowledgementstocname]{\ustc@acknowledgementsname}%
+  \chapter{\ustc@acknowledgementsname}%
 }{}
 \newenvironment{publications}{\chapter{\ustc@publicationsname}}{}
 

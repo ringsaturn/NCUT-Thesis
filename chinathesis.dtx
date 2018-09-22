@@ -521,7 +521,7 @@ version 2005/12/01 or later.
 %
 % 这里设置了中英文的各种名字。
 %    \begin{macrocode}
-\newcommand\ustc@abstractname{摘\hspace{2\ccwd}要}
+\newcommand\ustc@abstractname{摘要}
 \newcommand\ustc@enabstractname{Abstract}
 \ifustc@english
   \renewcommand\figurename{Fig.}
@@ -538,9 +538,8 @@ version 2005/12/01 or later.
   \newcommand\ustc@remarkname{Remark}
   \newcommand\ustc@theoremname{Theorem}
 \else
-  \renewcommand\contentsname{目\hspace{2\ccwd}录}
-  \newcommand\ustc@acknowledgementsname{致\hspace{2\ccwd}谢}
-  \newcommand\ustc@acknowledgementstocname{致谢}
+  \renewcommand\contentsname{目录}
+  \newcommand\ustc@acknowledgementsname{致谢}
   \newcommand\ustc@publicationsname{在读期间发表的学术论文与取得的研究成果}
   \renewcommand\listfigurename{插图清单}
   \renewcommand\listtablename{表格清单}
@@ -571,6 +570,45 @@ version 2005/12/01 or later.
   footskip   = 0.79cm,
 }
 %    \end{macrocode}
+%
+% 使用 \pkg{fancyhdr} 宏包设置页眉和页码。
+%    \begin{macrocode}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{ustc@headings}{
+  \fancyhf{}
+  \fancyhead[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\leftmark}
+  \fancyfoot[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\thepage}}
+\pagestyle{ustc@headings}
+%    \end{macrocode}
+%
+% 取消页眉的英文自动大写，并保持与正文章标题格式一致。
+% 注意，对 \cs{chaptermark} 的修改必须在第一次调用 \cs{pagestyle} 后。
+%    \begin{macrocode}
+\newcommand\ustc@patchfailure[1]{%
+  \ClassError{chinathesis}{Failed to patch command \protect#1.\MessageBreak
+    Please contact the template author.%
+  }{}%
+}
+\patchcmd\chaptermark{\MakeUppercase}{}{}{\ustc@patchfailure{\chaptermark}}
+%    \end{macrocode}
+%
+% \begin{macro}{\frontmatter}
+% 前言的页码用大写罗马数字，
+%    \begin{macrocode}
+\renewcommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{Roman}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cleardoublepage}
+% 空白页不加页眉和页码。
+%    \begin{macrocode}
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+%    \end{macrocode}
+% \end{macro}
 %
 %
 %
@@ -777,49 +815,6 @@ version 2005/12/01 or later.
   \end{titlepage}
   \cleardoublepage
 }%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-%
-% \section{页眉和页码}
-%
-% 使用 \pkg{fancyhdr} 宏包设置页眉和页码。
-%    \begin{macrocode}
-\renewcommand{\headrulewidth}{0.4pt}
-\fancypagestyle{ustc@headings}{
-  \fancyhf{}
-  \fancyhead[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\leftmark}
-  \fancyfoot[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\thepage}}
-\pagestyle{ustc@headings}
-%    \end{macrocode}
-%
-% 取消页眉的英文自动大写，并保持与正文章标题格式一致。
-% 注意，对 \cs{chaptermark} 的修改必须在第一次调用 \cs{pagestyle} 后。
-%    \begin{macrocode}
-\newcommand\ustc@patchfailure[1]{%
-  \ClassError{chinathesis}{Failed to patch command \protect#1.\MessageBreak
-    Please contact the template author.%
-  }{}%
-}
-\patchcmd\chaptermark{\MakeUppercase}{}{}{\ustc@patchfailure{\chaptermark}}
-%    \end{macrocode}
-%
-% \begin{macro}{\frontmatter}
-% 前言的页码用大写罗马数字，
-%    \begin{macrocode}
-\renewcommand\frontmatter{%
-  \cleardoublepage
-  \@mainmatterfalse
-  \pagenumbering{Roman}}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\cleardoublepage}
-% 空白页不加页眉和页码。
-%    \begin{macrocode}
-\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1285,6 +1280,7 @@ version 2005/12/01 or later.
     \renewcommand\leq{\leqslant}%
     \renewcommand\geq{\geqslant}%
   }
+\fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1292,14 +1288,13 @@ version 2005/12/01 or later.
 % \begin{macro}{\int}
 % 积分号的上下限默认置于上下两侧。
 %    \begin{macrocode}
-  \removenolimits{%
-    \int\iint\iiint\iiiint\oint\oiint\oiiint
-    \intclockwise\varointclockwise\ointctrclockwise\sumint
-    \intbar\intBar\fint\cirfnint\awint\rppolint
-    \scpolint\npolint\pointint\sqint\intlarhk\intx
-    \intcap\intcup\upint\lowint
-  }
-\fi
+\removenolimits{%
+  \int\iint\iiint\iiiint\oint\oiint\oiiint
+  \intclockwise\varointclockwise\ointctrclockwise\sumint
+  \intbar\intBar\fint\cirfnint\awint\rppolint
+  \scpolint\npolint\pointint\sqint\intlarhk\intx
+  \intcap\intcup\upint\lowint
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1541,7 +1536,7 @@ version 2005/12/01 or later.
 % 定义了一个满足要求的致谢环境：
 %    \begin{macrocode}
 \newenvironment{acknowledgements}{%
-  \chapter[\ustc@acknowledgementstocname]{\ustc@acknowledgementsname}%
+  \chapter{\ustc@acknowledgementsname}%
 }{}
 %    \end{macrocode}
 % \end{environment}
