@@ -22,15 +22,15 @@
 \newif\ifustc@doctor
 \newif\ifustc@master
 \newif\ifustc@bachelor
-\newif\ifustc@english
+\newif\ifustc@chinese
 \newif\ifustc@numerical
 \newif\ifustc@super
 \newif\ifustc@pdf
 \DeclareOption{doctor}{\ustc@doctortrue\ustc@masterfalse\ustc@bachelorfalse}
 \DeclareOption{master}{\ustc@doctorfalse\ustc@mastertrue\ustc@bachelorfalse}
 \DeclareOption{bachelor}{\ustc@doctorfalse\ustc@masterfalse\ustc@bachelortrue}
-\DeclareOption{chinese}{\ustc@englishfalse}
-\DeclareOption{english}{\ustc@englishtrue\ustc@arabictrue}
+\DeclareOption{chinese}{\ustc@chinesetrue}
+\DeclareOption{english}{\ustc@chinesefalse}
 \DeclareOption{print}{\ustc@pdffalse}
 \DeclareOption{pdf}{\ustc@pdftrue}
 \DeclareOption{super}{\ustc@numericaltrue\ustc@supertrue}
@@ -39,7 +39,9 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptions{doctor,chinese,print,super}
 \ProcessOptions\relax
-\ifustc@english
+\ifustc@chinese
+  \PassOptionsToClass{scheme=chinese}{ctexbook}
+\else
   \PassOptionsToClass{scheme=plain}{ctexbook}
 \fi
 \ifustc@pdf
@@ -51,7 +53,6 @@
   \ClassError{chinathesis}{%
     This template requires TeX Live\MessageBreak 2016 or later version}{}
 }
-\RequirePackage{etoolbox}
 \RequirePackage{amsmath}
 \RequirePackage{unicode-math}
 \RequirePackage{geometry}
@@ -123,32 +124,77 @@
 }{
   \ustc@strifeq{\ustc@fontset}{windows}{
     \IfFileExists{C:/bootfont.bin}{
-      \setCJKmainfont[AutoFakeBold,ItalicFont=KaiTi_GB2312]{SimSun}
+      \setCJKmainfont[AutoFakeBold=2,ItalicFont=KaiTi_GB2312]{SimSun}
     }{
-      \setCJKmainfont[AutoFakeBold,ItalicFont=KaiTi]{SimSun}
+      \setCJKmainfont[AutoFakeBold=2,ItalicFont=KaiTi]{SimSun}
     }
-    \setCJKsansfont[AutoFakeBold]{SimHei}
-    \setCJKfamilyfont{zhsong}[AutoFakeBold]{SimSun}
-    \setCJKfamilyfont{zhhei}[AutoFakeBold]{SimHei}
+    \setCJKsansfont[AutoFakeBold=2]{SimHei}
+    \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{SimSun}
+    \setCJKfamilyfont{zhhei}[AutoFakeBold=2]{SimHei}
   }{
     \ustc@strifeq{\ustc@fontset}{adobe}{
       \setCJKmainfont[
-        AutoFakeBold,
-        ItalicFont=AdobeKaitiStd-Regular,
+        AutoFakeBold = 2,
+        ItalicFont   = AdobeKaitiStd-Regular,
       ]{AdobeSongStd-Light}
-      \setCJKsansfont[AutoFakeBold]{AdobeHeitiStd-Regular}
-      \setCJKfamilyfont{zhsong}[AutoFakeBold]{AdobeSongStd-Light}
-      \setCJKfamilyfont{zhhei}[AutoFakeBold]{AdobeHeitiStd-Regular}
+      \setCJKsansfont[AutoFakeBold=2]{AdobeHeitiStd-Regular}
+      \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{AdobeSongStd-Light}
+      \setCJKfamilyfont{zhhei}[AutoFakeBold=2]{AdobeHeitiStd-Regular}
     }{}
   }
 }
+\unimathsetup{
+  math-style = ISO,
+  bold-style = ISO,
+  nabla      = upright,
+  partial    = upright,
+}
+\newif\ifustc@stixtwo
+\newif\ifustc@xitsnew
+\@ifpackagelater{fontspec}{2017/01/20}{
+  \IfFontExistsTF{STIX2Math.otf}{
+    \ustc@stixtwotrue
+  }{}
+  \IfFontExistsTF{XITS-Regular.otf}{
+    \ustc@xitsnewtrue
+  }{}
+}{}
+\ifustc@stixtwo
+  \setmathfont[StylisticSet=8]{STIX2Math.otf}
+  \setmathfont[range={scr,bfscr},StylisticSet=1]{STIX2Math.otf}
+  \ifustc@xitsnew
+    \setmathfont[range={\partial,\lbrace,\rbrace}]{XITSMath-Regular.otf}
+  \else
+    \setmathfont[range={\partial,\lbrace,\rbrace}]{xits-math.otf}
+  \fi
+\else
+  \ifustc@xitsnew
+    \setmathfont[
+      Extension    = .otf,
+      BoldFont     = XITSMath-Bold,
+      StylisticSet = 8,
+    ]{XITSMath}
+    \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular}
+  \else
+    \setmathfont[
+      Extension    = .otf,
+      BoldFont     = *bold,
+      StylisticSet = 8,
+    ]{xits-math}
+    \setmathfont[range={cal,bfcal},StylisticSet=1]{xits-math.otf}
+  \fi
+\fi
 \ustc@strifeq{\ustc@fontset}{mac}{
   \newfontfamily\ustc@circlefont{Songti SC Light}
 }{
   \ustc@strifeq{\ustc@fontset}{windows}{
     \newfontfamily\ustc@circlefont{SimSun}
   }{
-    \newfontfamily\ustc@circlefont{xits-regular.otf}
+    \ifustc@xitsnew
+      \newfontfamily\ustc@circlefont{XITS-Regular.otf}
+    \else
+      \newfontfamily\ustc@circlefont{xits-regular.otf}
+    \fi
   }
 }
 \newdimen\bp@
@@ -183,40 +229,19 @@
 \renewcommand\huge{\@setfontsize\huge{24\bp@}{40\bp@}}
 \renewcommand\Huge{\@setfontsize\Huge{26\bp@}{43.33\bp@}}
 \linespread{1}\selectfont
-\newcommand\ustc@fontsize[2]{%
-  \fontsize{#1}{#2}\selectfont}
-\newcommand\ustc@abstractname{摘要}
-\newcommand\ustc@enabstractname{Abstract}
-\ifustc@english
+\newcommand\ustc@universityname{中国大学}
+\newcommand\ustc@enuniversityname{University of China}
+\ifustc@chinese
+  \renewcommand\listfigurename{插图清单}
+  \renewcommand\listtablename{表格清单}
+  \newcommand\ustc@acknowledgementsname{致谢}
+  \newcommand\ustc@publicationsname{在读期间发表的学术论文与取得的研究成果}
+  \newcommand\ustc@notationname{符号说明}
+\else
   \renewcommand\figurename{Fig.}
   \newcommand\ustc@acknowledgementsname{Acknowledgements}
   \newcommand\ustc@publicationsname{Publications}
-  \newcommand\ustc@assertionname{Assertion}
-  \newcommand\ustc@axiomname{Axiom}
-  \newcommand\ustc@corollaryname{Corollary}
-  \newcommand\ustc@definitionname{Definition}
-  \newcommand\ustc@examplename{Example}
-  \newcommand\ustc@lemmaname{Lemma}
-  \newcommand\ustc@proofname{Proof}
-  \newcommand\ustc@propositionname{Proposition}
-  \newcommand\ustc@remarkname{Remark}
-  \newcommand\ustc@theoremname{Theorem}
-\else
-  \renewcommand\contentsname{目录}
-  \newcommand\ustc@acknowledgementsname{致谢}
-  \newcommand\ustc@publicationsname{在读期间发表的学术论文与取得的研究成果}
-  \renewcommand\listfigurename{插图清单}
-  \renewcommand\listtablename{表格清单}
-  \newcommand\ustc@assertionname{断言}
-  \newcommand\ustc@axiomname{公理}
-  \newcommand\ustc@corollaryname{推论}
-  \newcommand\ustc@definitionname{定义}
-  \newcommand\ustc@examplename{例}
-  \newcommand\ustc@lemmaname{引理}
-  \newcommand\ustc@proofname{证明}
-  \newcommand\ustc@propositionname{命题}
-  \newcommand\ustc@remarkname{注}
-  \newcommand\ustc@theoremname{定理}
+  \newcommand\ustc@notationname{Notation}
 \fi
 \geometry{
   paper      = a4paper,
@@ -226,24 +251,20 @@
   headsep    = 0.29cm,
   footskip   = 0.79cm,
 }
-\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0.4\p@}
 \fancypagestyle{ustc@headings}{
   \fancyhf{}
-  \fancyhead[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\leftmark}
-  \fancyfoot[C]{\ustc@fontsize{10.5\bp@}{21\bp@}\thepage}}
+  \fancyhead[C]{\fontsize{10.5\bp@}{21\bp@}\selectfont\leftmark}
+  \fancyfoot[C]{\fontsize{10.5\bp@}{21\bp@}\selectfont\thepage}}
 \pagestyle{ustc@headings}
-\newcommand\ustc@patchfailure[1]{%
-  \ClassError{chinathesis}{Failed to patch command \protect#1.\MessageBreak
-    Please contact the template author.%
-  }{}%
-}
-\patchcmd\chaptermark{\MakeUppercase}{}{}{\ustc@patchfailure{\chaptermark}}
+\newcommand\ustc@patchcmd{\csname ctex_patch_cmd:Nnn\endcsname}
+\ustc@patchcmd\chaptermark{\MakeUppercase}{}
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
   \pagenumbering{Roman}}
-\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \def\ustc@define@term#1#2{%
   \expandafter\gdef\csname #1\endcsname##1{%
     \expandafter\gdef\csname ustc@#1\endcsname{##1}%
@@ -269,8 +290,6 @@
 \ustc@define@term{ensecretlevel}{}
 \ustc@define@term{keywords}{}
 \ustc@define@term{enkeywords}{}
-\newcommand\ustc@universityname{中国大学}
-\newcommand\ustc@enuniversityname{Unversity of China}
 \ifustc@doctor
   \newcommand\ustc@thesisname{博士学位论文}
   \newcommand\ustc@enthesisname{A dissertation for doctor's degree}
@@ -287,20 +306,23 @@
   \begin{titlepage}%
     \centering
     \parbox[t][0.6cm][t]{\textwidth}{%
-      \raggedleft\fangsong\large\null\ustc@secretlevel\par}\par
+      \raggedleft\fangsong\fontsize{14\bp@}{14\bp@}\selectfont
+      \null\ustc@secretlevel\par}\par
     \vskip 0.5cm%
     {\sffamily\bfseries\fontsize{36\bp@}{36\bp@}\selectfont
       \ustc@universityname\par}
     \vskip 0.6cm%
-    {\sffamily\fontsize{56\bp@}{56\bp@}\selectfont\ustc@thesisname\par}%
+    {\sffamily\fontsize{56\bp@}{56\bp@}\selectfont
+      \ustc@thesisname\par}%
     \vskip 2.0cm%
     \includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.9cm%
     \begin{minipage}[t][3.5cm][c]{\textwidth}%
-      \centering\sffamily\bfseries\Huge\ustc@title\par
+      \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont
+      \ustc@title\par
     \end{minipage}\par
     \vskip 0.6cm%
-    {\large
+    {\fontsize{16\bp@}{31\bp@}\selectfont
       \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
         \textsf{作者姓名：} & \ustc@author \\
         \textsf{学科专业：} & \ustc@major \\
@@ -319,18 +341,22 @@
   \begin{titlepage}%
     \centering
     \parbox[t][0.4cm][t]{\textwidth}{%
-      \raggedleft\large\null\ustc@ensecretlevel\par}\par
+      \raggedleft\fontsize{14\bp@}{14\bp@}\selectfont
+      \null\ustc@ensecretlevel\par}\par
     \vskip 0.5cm%
-    {\sffamily\LARGE\ustc@enuniversityname\par}%
-    {\sffamily\Huge\ustc@enthesisname\par}%
+    {\sffamily\fontsize{20\bp@}{30\bp@}\selectfont
+      \ustc@enuniversityname\par}%
+    {\sffamily\fontsize{26\bp@}{30\bp@}\selectfont
+      \ustc@enthesisname\par}%
     \vskip 2.5cm%
     \includegraphics[height=4.5cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.5cm%
     \begin{minipage}[t][4.5cm][c]{\textwidth}%
-      \centering\sffamily\bfseries\Huge\ustc@entitle\par
+      \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
+      \ustc@entitle\par
     \end{minipage}\par
     \vskip 1.6cm%
-    {\large
+    {\fontsize{16\bp@}{30\bp@}\selectfont
       \begin{tabular}{@{}l@{}}
         Author:        \ustc@enauthor \\
         Speciality:    \ustc@enmajor \\
@@ -349,17 +375,18 @@
   \cleardoublepage
 }
 \newcommand\ustc@originality{%
-本人声明所呈交的学位论文，是本人在导师指导下进行研究工作所取得的成果。
-除已特别加以标注和致谢的地方外，论文中不包含任何他人已经发表或撰写过
-的研究成果。与我一同工作的同志对本研究所做的贡献均已在论文中作了明确的说明。}
+  本人声明所呈交的学位论文，是本人在导师指导下进行研究工作所取得的成果。%
+  除已特别加以标注和致谢的地方外，论文中不包含任何他人已经发表或撰写过的%
+  研究成果。%
+  与我一同工作的同志对本研究所做的贡献均已在论文中作了明确的说明。}
 \newcommand\ustc@authorization{%
-作为申请学位的条件之一，学位论文著作权拥有者授权中国科学技术大学拥有
-学位论文的部分使用权，即：学校有权按有关规定向国家有关部门或机构送交
-论文的复印件和电子版，允许论文被查阅和借阅，可以将学位论文编入《中国
-学位论文全文数据库》等有关数据库进行检索，可以采用影印、缩印或扫描等
-复制手段保存、汇编学位论文。本人提交的电子文档的内容和纸质论文的内容
-相一致。\par
-保密的学位论文在解密后也遵守此规定。}
+  作为申请学位的条件之一，学位论文著作权拥有者授权\ustc@universityname{}拥有%
+  学位论文的部分使用权，%
+  即：学校有权按有关规定向国家有关部门或机构送交论文的复印件和电子版，%
+  允许论文被查阅和借阅，可以将学位论文编入《中国学位论文全文数据库》等%
+  有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。%
+  本人提交的电子文档的内容和纸质论文的内容相一致。\par
+  保密的学位论文在解密后也遵守此规定。}
 \newcommand\ustc@underline[2][3.2cm]{\underline{\hb@xt@ #1{\hss#2\hss}}}
 \newcommand\ustc@checkbox{%
   \makebox[\z@][l]{$\square$}%
@@ -370,16 +397,16 @@
   \begin{titlepage}%
     \null
     \vskip 0.3cm%
-    {\centering\sffamily\ustc@fontsize{16\bp@}{32\bp@}%
-      中国科学技术大学学位论文原创性声明\par}%
+    {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
+      \ustc@universityname{}学位论文原创性声明\par}%
     \vskip 0.7cm%
     \ustc@originality\par
     \vskip 1.3cm%
     作者签名：\ustc@underline{}\hspace{2.7cm}%
     签字日期：\ustc@underline{}\par
     \vskip 1.9cm%
-    {\centering\sffamily\ustc@fontsize{16\bp@}{32\bp@}%
-      中国科学技术大学学位论文授权使用声明\par}
+    {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
+      \ustc@universityname{}学位论文授权使用声明\par}
     \vskip 0.7cm%
     \ustc@authorization\par
     \vskip 0.6cm%
@@ -409,7 +436,7 @@
 }
 \ctexset{
   chapter = {
-    format      = \centering\sffamily\bfseries\ustc@fontsize{16\bp@}{20.75\bp@},
+    format      = \centering\sffamily\bfseries\fontsize{16\bp@}{26.67\bp@}\selectfont,
     nameformat  = {},
     titleformat = {},
     number      = \thechapter,
@@ -428,27 +455,27 @@
 }{
   \ctexset{
     chapter = {
-      beforeskip = -7\bp@, % 24bp - 31bp
-      afterskip  =  8\bp@, % 18bp - 10bp
+      beforeskip = -7\bp@,  % 24bp - 31bp
+      afterskip  =  8\bp@,  % 18bp - 10bp
     },
   }
 }
 \ctexset{
   section = {
-    format     = \sffamily\ustc@fontsize{14\bp@}{18.16\bp@},
+    format     = \sffamily\fontsize{14\bp@}{23.33\bp@}\selectfont,
     aftername  = \hspace{\ccwd},
     beforeskip = 24\bp@,
     afterskip  = 6\bp@,
   },
   subsection = {
-    format     = \sffamily\ustc@fontsize{13\bp@}{16.86\bp@},
+    format     = \sffamily\fontsize{13\bp@}{21.67\bp@}\selectfont,
     aftername  = \hspace{\ccwd},
     indent     = 2\ccwd,
     beforeskip = 12\bp@,
     afterskip  = 6\bp@,
   },
   subsubsection = {
-    format     = \sffamily\ustc@fontsize{12\bp@}{20\bp@},
+    format     = \sffamily\fontsize{12\bp@}{20\bp@}\selectfont,
     number     = \arabic{subsubsection},
     aftername  = .\hspace{0.5\ccwd},
     indent     = 2\ccwd,
@@ -456,7 +483,7 @@
     afterskip  = \z@,
   },
   paragraph = {
-    format     = \rmfamily\ustc@fontsize{12\bp@}{20\bp@},
+    format     = \rmfamily\fontsize{12\bp@}{20\bp@}\selectfont,
     number     = (\arabic{paragraph}),
     aftername  = \hspace{0.5\ccwd},
     indent     = 2\ccwd,
@@ -465,7 +492,7 @@
     runin      = false,
   },
   subparagraph = {
-    format     = \rmfamily\ustc@fontsize{12\bp@}{20\bp@},
+    format     = \rmfamily\fontsize{12\bp@}{20\bp@}\selectfont,
     number     = \ustc@textcircled{subparagraph},
     aftername  = \hspace{0.5\ccwd},
     indent     = 2\ccwd,
@@ -487,14 +514,14 @@
   }%
   \chapter*{#2}}
 \newenvironment{abstract}{%
-  \ustc@chapter{\ustc@abstractname}%
+  \ustc@chapter{摘要}%
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
   \textbf{关键词}：\ustc@keywords
 }
 \newenvironment{enabstract}{%
   \@openrightfalse
-  \ustc@chapter{\ustc@enabstractname}%
+  \ustc@chapter{Abstract}%
   \@openrighttrue
 }{
   \par\null\par\noindent\hangindent=5.3em\relax
@@ -512,19 +539,19 @@
 \newcommand\ustc@leaders{\titlerule*[0.5pc]{$\cdot$}}
 \titlecontents{chapter}
   [\z@]
-  {\addvspace{6\bp@}\ustc@fontsize{14\bp@}{20\bp@}}
+  {\addvspace{6\bp@}\fontsize{14\bp@}{20\bp@}\selectfont}
   {\contentspush{\thecontentslabel\unskip\hskip\ccwd\relax}}
-  {}{\ustc@leaders\ustc@fontsize{12\bp@}{20\bp@}\contentspage}
+  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
 \titlecontents{section}
   [\ccwd]
-  {\ustc@fontsize{12\bp@}{20\bp@}}
+  {\fontsize{12\bp@}{20\bp@}\selectfont}
   {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
-  {}{\ustc@leaders\ustc@fontsize{12\bp@}{20\bp@}\contentspage}
+  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
 \titlecontents{subsection}
   [2\ccwd]
-  {\ustc@fontsize{10.5\bp@}{20\bp@}}
+  {\fontsize{10.5\bp@}{20\bp@}\selectfont}
   {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
-  {}{\ustc@leaders\ustc@fontsize{12\bp@}{20\bp@}\contentspage}
+  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
 \titlecontents{figure}
   [\ccwd]
   {\normalsize}
@@ -536,7 +563,7 @@
   {\thecontentslabel\hspace*{0.5em}}
   {}{\ustc@leaders\contentspage}
 \setlength{\parskip}{\z@}
-\renewcommand{\thefootnote}{\ustc@textcircled{footnote}}
+\renewcommand\thefootnote{\ustc@textcircled{footnote}}
 \renewcommand\footnoterule{%
   \kern-3\p@
   \hrule\@width.25\textwidth
@@ -602,41 +629,15 @@
   \caption*{#1}%
   \endgroup
 }
-\unimathsetup{
-  math-style = ISO,
-  bold-style = ISO,
-  nabla      = upright,
-  partial    = upright,
-}
-\newcommand\ustc@mathfont{xits}
-\@ifpackagelater{fontspec}{2017/01/20}{
-  \IfFontExistsTF{STIX2Math.otf}{
-    \renewcommand\ustc@mathfont{stix2}
-  }{}
-}{}
-\ustc@strifeq{\ustc@mathfont}{stix2}{
-  \setmathfont[StylisticSet=8]{STIX2Math.otf}
-  \setmathfont[range={scr,bfscr},StylisticSet=1]{STIX2Math.otf}
-  \setmathfont[range={\partial,\lbrace,\rbrace}]{xits-math.otf}
-}{
-  \ustc@strifeq{\ustc@mathfont}{xits}{
-    \setmathfont[
-      Extension    = .otf,
-      BoldFont     = *bold,
-      StylisticSet = 8,
-    ]{xits-math}
-    \setmathfont[range={cal,bfcal},StylisticSet=1]{xits-math.otf}
-  }{}
-}
-\ifustc@english\else
+\ifustc@chinese
   \def\mathellipsis{\cdots}
-  \protected\def\le{\leqslant}
-  \protected\def\ge{\geqslant}
-  \AtBeginDocument{%
-    \renewcommand\leq{\leqslant}%
-    \renewcommand\geq{\geqslant}%
-  }
 \fi
+\protected\def\le{\leqslant}
+\protected\def\ge{\geqslant}
+\AtBeginDocument{%
+  \renewcommand\leq{\leqslant}%
+  \renewcommand\geq{\geqslant}%
+}
 \removenolimits{%
   \int\iint\iiint\iiiint\oint\oiint\oiiint
   \intclockwise\varointclockwise\ointctrclockwise\sumint
@@ -645,8 +646,8 @@
   \intcap\intcup\upint\lowint
 }
 \AtBeginDocument{%
-  \renewcommand{\Re}{\operatorname{Re}}%
-  \renewcommand{\Im}{\operatorname{Im}}%
+  \renewcommand\Re{\operatorname{Re}}%
+  \renewcommand\Im{\operatorname{Im}}%
 }
 \AtBeginDocument{%
   \renewcommand\nabla{\mbfnabla}%
@@ -659,51 +660,9 @@
 \newcommand\dif{\mathop{}\!\mathrm{d}}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
-
-\newtheoremstyle{ustcplain}
-    {}{}
-    {}{2\ccwd}
-    {\bfseries}{}
-    {\ccwd}{}
-\theoremstyle{ustcplain}
-\newtheorem{theorem}                {\ustc@theoremname}     [chapter]
-\newtheorem{assertion}  [theorem]   {\ustc@assertionname}
-\newtheorem{axiom}      [theorem]   {\ustc@axiomname}
-\newtheorem{corollary}  [theorem]   {\ustc@corollaryname}
-\newtheorem{lemma}      [theorem]   {\ustc@lemmaname}
-\newtheorem{proposition}[theorem]   {\ustc@propositionname}
-\newtheorem{definition}             {\ustc@definitionname}  [chapter]
-\newtheorem{example}                {\ustc@examplename}     [chapter]
-\newtheorem*{remark}                {\ustc@remarkname}
-\renewenvironment{proof}[1][\proofname]{\par
-    \pushQED{\qed}%
-    \normalfont \topsep6\p@\@plus6\p@\relax
-    \trivlist
-        \item\relax\hskip2\ccwd
-        \textbf{#1}
-        \hskip\ccwd\ignorespaces
-    }{%
-    \popQED\endtrivlist\@endpefalse
-}
-\renewcommand\proofname\ustc@proofname
 \newcommand\bibstyle@super{\bibpunct{[}{]}{,}{s}{,}{\textsuperscript{,}}}
 \newcommand\bibstyle@numbers{\bibpunct{[}{]}{,}{n}{,}{,}}
 \newcommand\bibstyle@authoryear{\bibpunct{(}{)}{;}{a}{,}{,}}
-\def\tmp@numerical{numerical}
-\def\tmp@authoryear{authoryear}
-\newcommand\ustcbibstyle[1]{%
-  \def\ustc@arg{#1}%
-  \ifx\ustc@arg\tmp@numerical
-    \bibliographystyle{chinathesis-numerical}%
-  \else
-    \ifx\ustc@arg\tmp@authoryear
-      \bibliographystyle{chinathesis-authoryear}%
-    \else
-      \ClassError{chinathesis}{Unknown argument #1.}%
-        {It should be `numerical' or `authoryear'.}%
-    \fi
-  \fi
-}
 \ifustc@numerical
   \ifustc@super
     \citestyle{super}
@@ -715,7 +674,7 @@
   \citestyle{authoryear}
   \bibliographystyle{chinathesis-authoryear}
 \fi
-\patchcmd{\NAT@citexnum}{%
+\ustc@patchcmd{\NAT@citexnum}{%
   \@ifnum{\NAT@ctype=\z@}{%
     \if*#2*\else\NAT@cmt#2\fi
   }{}%
@@ -725,7 +684,7 @@
   \@ifnum{\NAT@ctype=\z@}{%
     \if*#2*\else\textsuperscript{#2}\fi
   }{}%
-}{}{\ustc@patchfailure{\NAT@citexnum}}
+}
 \renewcommand\NAT@citesuper[3]{\ifNAT@swa
 \if*#2*\else#2\NAT@spacechar\fi
 \unskip\kern\p@\textsuperscript{\NAT@@open#1\NAT@@close\if*#3*\else#3\fi}%
@@ -733,17 +692,17 @@
 \renewcommand\NAT@citenum%
     [3]{\ifNAT@swa\NAT@@open\if*#2*\else#2\NAT@spacechar\fi
         #1\NAT@@close\if*#3*\else\textsuperscript{#3}\fi\else#1\fi\endgroup}
-\patchcmd{\NAT@citex}{%
+\ustc@patchcmd{\NAT@citex}{%
   \if*#2*\else\NAT@cmt#2\fi
   \if\relax\NAT@date\relax\else\NAT@@close\fi
 }{%
   \if\relax\NAT@date\relax\else\NAT@@close\fi
   \if*#2*\else\textsuperscript{#2}\fi
-}{}{\ustc@patchfailure{\NAT@citex}}
+}
 \renewcommand\NAT@cite%
     [3]{\ifNAT@swa\NAT@@open\if*#2*\else#2\NAT@spacechar\fi
         #1\NAT@@close\if*#3*\else\textsuperscript{#3}\fi\else#1\fi\endgroup}
-\patchcmd{\NAT@citexnum}{%
+\ustc@patchcmd{\NAT@citexnum}{%
   \ifx\NAT@last@yr\relax
     \def@NAT@last@yr{\@citea}%
   \else
@@ -751,10 +710,10 @@
   \fi
 }{%
   \def@NAT@last@yr{-\NAT@penalty}%
-}{}{\ustc@patchfailure{\NAT@citexnum}}
+}
 \DeclareRobustCommand\inlinecite{\@inlinecite}
 \def\@inlinecite#1{\begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup}
-\renewcommand\bibfont{\ustc@fontsize{10.5bp}{20bp}}
+\renewcommand\bibfont{\fontsize{10.5\bp@}{20\bp@}\selectfont}
 \setlength{\bibsep}{\z@}
 \setlength{\bibhang}{2\ccwd}
 \renewcommand\@biblabel[1]{[#1]\hfill}
@@ -767,7 +726,6 @@
   \chapter{\ustc@acknowledgementsname}%
 }{}
 \newenvironment{publications}{\chapter{\ustc@publicationsname}}{}
-
 \hypersetup{
   bookmarksnumbered  = true,
   bookmarksopen      = true,
@@ -776,22 +734,22 @@
 }
 \ifustc@pdf
   \hypersetup{
-    colorlinks        = true,
-    allcolors         = blue,
+    colorlinks = true,
+    allcolors  = blue,
   }
 \else
   \hypersetup{hidelinks}
 \fi
 \AtBeginDocument{%
-  \ifustc@english
+  \ifustc@chinese
     \hypersetup{
-      pdftitle={\ustc@entitle},
-      pdfauthor={\ustc@enauthor},
+      pdftitle  = \ustc@title,
+      pdfauthor = \ustc@author,
     }%
   \else
     \hypersetup{
-      pdftitle={\ustc@title},
-      pdfauthor={\ustc@author},
+      pdftitle  = \ustc@entitle,
+      pdfauthor = \ustc@enauthor,
     }%
   \fi
 }
@@ -809,7 +767,7 @@
   \do0\do1\do2\do3\do4\do5\do6\do7\do8\do9\do=\do/\do.\do:%
   \do\*\do\-\do\~\do\'\do\"\do\-}
 \Urlmuskip=0mu plus 0.1mu
-\ifustc@english\else
+\ifustc@chinese
   \def\equationautorefname~#1\null{公式~(#1)\null}
   \def\footnoteautorefname{脚注}
   \def\itemautorefname~#1\null{第~#1~项\null}
@@ -826,5 +784,68 @@
   \def\theoremautorefname{定理}
   \def\HyRef@autopageref#1{\hyperref[{#1}]{第~\pageref*{#1} 页}}
 \fi
-\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
-\newcommand\pkg{\textsf}
+\newcommand\ustc@atendpackage{\csname ctex_at_end_package:nn\endcsname}
+\ustc@atendpackage{amsthm}{
+  \newtheoremstyle{ustcplain}
+    {}{}
+    {}{2\ccwd}
+    {\bfseries}{}
+    {\ccwd}{}
+  \theoremstyle{ustcplain}
+  \ifustc@chinese
+    \newcommand\ustc@assertionname{断言}
+    \newcommand\ustc@axiomname{公理}
+    \newcommand\ustc@corollaryname{推论}
+    \newcommand\ustc@definitionname{定义}
+    \newcommand\ustc@examplename{例}
+    \newcommand\ustc@lemmaname{引理}
+    \newcommand\ustc@proofname{证明}
+    \newcommand\ustc@propositionname{命题}
+    \newcommand\ustc@remarkname{注}
+    \newcommand\ustc@theoremname{定理}
+  \else
+    \newcommand\ustc@assertionname{Assertion}
+    \newcommand\ustc@axiomname{Axiom}
+    \newcommand\ustc@corollaryname{Corollary}
+    \newcommand\ustc@definitionname{Definition}
+    \newcommand\ustc@examplename{Example}
+    \newcommand\ustc@lemmaname{Lemma}
+    \newcommand\ustc@proofname{Proof}
+    \newcommand\ustc@propositionname{Proposition}
+    \newcommand\ustc@remarkname{Remark}
+    \newcommand\ustc@theoremname{Theorem}
+  \fi
+  \newtheorem{theorem}                {\ustc@theoremname}     [chapter]
+  \newtheorem{assertion}  [theorem]   {\ustc@assertionname}
+  \newtheorem{axiom}      [theorem]   {\ustc@axiomname}
+  \newtheorem{corollary}  [theorem]   {\ustc@corollaryname}
+  \newtheorem{lemma}      [theorem]   {\ustc@lemmaname}
+  \newtheorem{proposition}[theorem]   {\ustc@propositionname}
+  \newtheorem{definition}             {\ustc@definitionname}  [chapter]
+  \newtheorem{example}                {\ustc@examplename}     [chapter]
+  \newtheorem*{remark}                {\ustc@remarkname}
+  \renewenvironment{proof}[1][\proofname]{\par
+    \pushQED{\qed}%
+    \normalfont \topsep6\p@\@plus6\p@\relax
+    \trivlist
+      \item\relax\hskip2\ccwd
+      \textbf{#1}
+      \hskip\ccwd\ignorespaces
+    }{%
+    \popQED\endtrivlist\@endpefalse
+  }
+  \renewcommand\proofname\ustc@proofname
+}
+\ustc@atendpackage{algorithm2e}{
+  \ifustc@chinese
+    \renewcommand\listalgorithmcfname{算法索引}
+    \renewcommand\algorithmcfname{算法}
+  \else
+    \renewcommand\listalgorithmcfname{List of Algorithms}
+    \renewcommand\algorithmcfname{Algorithm}
+  \fi
+  \let\ustc@save@listofalgorithms=\listofalgorithms
+  \renewcommand\listofalgorithms{%
+    \cleardoublepage
+    \ustc@save@listofalgorithms}
+}
