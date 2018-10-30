@@ -18,26 +18,29 @@
 \entitle{A LaTeX template framework for Chinese dissertations}
 \enauthor{Zeping Li}
 \enmajor{Computer Science and Technology}
-\ensupervisor{Prof. Knuth}
+\ensupervisor{Prof. Donald E. Knuth}
 % \encosupervisor{}
 % \endate{May 1, 2017}      % Today if commented
 % \enprofessionaltype{Professional degree type}
 % \ensecretlevel{Secret}    % Top secret|Highly secret|Secret
 
 
-% 图片默认目录
+% 加载宏包和配置
+\usepackage{graphicx}
 \graphicspath{{figures/}}
-% 三线表
 \usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{siunitx}
+\usepackage{amsthm}
+\usepackage{hyperref}
 
-% 命令和宏包的格式
 \DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 \newcommand\pkg{\textsf}
 
-% 向量、矩阵和张量：
 \renewcommand\vec{\symbf}
 \newcommand\mat{\symbf}
 \newcommand\ts{\symbfsf}
+\newcommand\real{\mathbf{R}}
 
 
 \begin{document}
@@ -48,6 +51,9 @@
 \frontmatter
 \input{chapters/abstract}
 \tableofcontents
+% \listoffigures
+% \listoftables
+\input{chapters/notation}
 
 \mainmatter
 \input{chapters/intro}

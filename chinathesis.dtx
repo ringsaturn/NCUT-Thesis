@@ -50,7 +50,7 @@ version 2005/12/01 or later.
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{chinathesis}
 %<*class>
-  [2018/09/19 v1.0 A template framework for Chinese dissertations]
+  [2018/10/27 v1.0 A template framework for Chinese dissertations]
 %</class>
 %
 %<*driver>
@@ -276,8 +276,8 @@ version 2005/12/01 or later.
 \RequirePackage{unicode-math}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
-\RequirePackage{fancyhdr}
 \RequirePackage{titletoc}
+\RequirePackage{url}
 \RequirePackage[perpage]{footmisc}
 \RequirePackage{caption}
 \RequirePackage{calc}
@@ -286,7 +286,6 @@ version 2005/12/01 or later.
   \PassOptionsToPackage{sort&compress}{natbib}
 \fi
 \RequirePackage{natbib}
-\RequirePackage{hyperref}
 %    \end{macrocode}
 %
 %
@@ -365,32 +364,36 @@ version 2005/12/01 or later.
         ItalicFont = Kaiti SC,
     BoldItalicFont = Kaiti SC Bold,
   ]{Songti SC}
-  \setCJKsansfont{Heiti SC}
+  \setCJKsansfont[BoldFont=* Medium]{Heiti SC}
   \setCJKfamilyfont{zhsong}[
        UprightFont = * Light,
           BoldFont = * Bold,
   ]{Songti SC}
-  \setCJKfamilyfont{zhhei}{Heiti SC}
-  \setCJKfamilyfont{zhkai}[BoldFont=Kaiti SC Bold]{Kaiti SC}
+  \setCJKfamilyfont{zhhei}[BoldFont=* Medium]{Heiti SC}
+  \setCJKfamilyfont{zhkai}[BoldFont=* Bold]{Kaiti SC}
 }{
+  \xeCJKsetup{EmboldenFactor=2}
   \ustc@strifeq{\ustc@fontset}{windows}{
     \IfFileExists{C:/bootfont.bin}{
-      \setCJKmainfont[AutoFakeBold=2,ItalicFont=KaiTi_GB2312]{SimSun}
+      \setCJKmainfont[AutoFakeBold,ItalicFont=KaiTi_GB2312]{SimSun}
+      \setCJKfamilyfont{zhkai}[AutoFakeBold]{KaiTi_GB2312}
     }{
-      \setCJKmainfont[AutoFakeBold=2,ItalicFont=KaiTi]{SimSun}
+      \setCJKmainfont[AutoFakeBold,ItalicFont=KaiTi]{SimSun}
+      \setCJKfamilyfont{zhkai}[AutoFakeBold]{KaiTi}
     }
-    \setCJKsansfont[AutoFakeBold=2]{SimHei}
-    \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{SimSun}
-    \setCJKfamilyfont{zhhei}[AutoFakeBold=2]{SimHei}
+    \setCJKsansfont[AutoFakeBold]{SimHei}
+    \setCJKfamilyfont{zhsong}[AutoFakeBold]{SimSun}
+    \setCJKfamilyfont{zhhei}[AutoFakeBold]{SimHei}
   }{
     \ustc@strifeq{\ustc@fontset}{adobe}{
       \setCJKmainfont[
-        AutoFakeBold = 2,
+        AutoFakeBold = true,
         ItalicFont   = AdobeKaitiStd-Regular,
       ]{AdobeSongStd-Light}
-      \setCJKsansfont[AutoFakeBold=2]{AdobeHeitiStd-Regular}
-      \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{AdobeSongStd-Light}
-      \setCJKfamilyfont{zhhei}[AutoFakeBold=2]{AdobeHeitiStd-Regular}
+      \setCJKsansfont[AutoFakeBold]{AdobeHeitiStd-Regular}
+      \setCJKfamilyfont{zhsong}[AutoFakeBold]{AdobeSongStd-Light}
+      \setCJKfamilyfont{zhhei}[AutoFakeBold]{AdobeHeitiStd-Regular}
+      \setCJKfamilyfont{zhkai}[AutoFakeBold]{AdobeKaitiStd-Regular}
     }{}
   }
 }
@@ -445,8 +448,8 @@ version 2005/12/01 or later.
       Extension    = .otf,
       BoldFont     = XITSMath-Bold,
       StylisticSet = 8,
-    ]{XITSMath}
-    \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular}
+    ]{XITSMath-Regular}
+    \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular.otf}
   \else
     \setmathfont[
       Extension    = .otf,
@@ -597,35 +600,105 @@ version 2005/12/01 or later.
 %    \end{macrocode}
 %
 %
-% \subsection{页面和页眉}
-% 首先用 \pkg{geometry} 宏包设置纸张和页面。
+% \subsection{纸张和页面}
+% 使用 \pkg{geometry} 宏包设置纸张和页面。
+%
+% 纸张：A4；
+%
+% 页面设置：上、下 2.54 cm，左、右 3.17 cm，页眉 1.5 cm，页脚 1.75 cm。
+%
+% 注意这里指的是页眉顶部到纸张顶部的距离为 1.5 cm，
+% 所以应该是 2.54cm - 0.8cm - 0.24cm = 1.5cm
+%
 %    \begin{macrocode}
 \geometry{
   paper      = a4paper,
   vmargin    = 2.54cm,
   hmargin    = 3.17cm,
-  headheight = 0.75cm,
-  headsep    = 0.29cm,
+  headheight = 0.8cm,
+  headsep    = 0.24cm,
   footskip   = 0.79cm,
 }
 %    \end{macrocode}
 %
-% 使用 \pkg{fancyhdr} 宏包设置页眉和页码。
+% 页眉和页码可以使用 \pkg{fancyhdr} 或者 \pkg{titleps} 来设置，
+% 但是 \pkg{fancyhdr} 有一个坑，它定义的样式在第一次被调用时会修改
+% \cs{chaptermark}，所以如果需要切换几种 page style 就会有问题；
+% 而且页眉默认是向下对齐的。
+%
+% 所以，如果页眉非常简单的话，建议直接手动定义 \cs{ps@\meta{pagestyle}}。
+%
+% 页眉与该部分的章标题相同，宋体 10.5 磅（五号）居中。
 %    \begin{macrocode}
-\renewcommand{\headrulewidth}{0.4\p@}
-\fancypagestyle{ustc@headings}{
-  \fancyhf{}
-  \fancyhead[C]{\fontsize{10.5\bp@}{21\bp@}\selectfont\leftmark}
-  \fancyfoot[C]{\fontsize{10.5\bp@}{21\bp@}\selectfont\thepage}}
-\pagestyle{ustc@headings}
+\newcommand\ustc@header@font{\fontsize{10.5\bp@}{12\bp@}\selectfont}
+\newcommand\ustc@header{\leftmark}
+\newcommand\ustc@head{%
+  \vbox to\headheight{%
+    \hfil\ustc@header@font\ustc@header\strut\hfil
+    \hrule\@height 0.4\p@\@width\textwidth
+    \vfil
+  }%
+}
 %    \end{macrocode}
 %
-% 取消页眉的英文自动大写，并保持与正文章标题格式一致。
-% 这里使用 \pkg{ctex} 的 \cs{ctex\_patch\_cmd:Nnn} 命令。
-% 注意，对 \cs{chaptermark} 的修改必须在第一次调用 \cs{pagestyle} 后。
+% 页码：宋体 10.5 磅、页面下脚居中。
 %    \begin{macrocode}
-\newcommand\ustc@patchcmd{\csname ctex_patch_cmd:Nnn\endcsname}
-\ustc@patchcmd\chaptermark{\MakeUppercase}{}
+\newcommand\ustc@foot{\hfil\ustc@header@font\thepage\hfil}
+%    \end{macrocode}
+%
+% 重定义默认的 |plain| page style，会显示页眉和页脚。
+%    \begin{macrocode}
+\def\ps@plain{%
+  \def\@oddhead{\ustc@head}%
+  \def\@oddfoot{\ustc@foot}%
+  \let\@evenhead\@oddhead
+  \let\@evenfoot\@oddfoot
+  \let\@mkboth\markboth
+}
+%    \end{macrocode}
+% \pkg{ctex} v2.4.4 （2016/09/21）引入了 \cs{CTEXifname}。
+%    \begin{macrocode}
+\@ifclasslater{ctexbook}{2016/09/21}{
+  \def\chaptermark#1{%
+    \markboth{%
+      \CTEXifname{\CTEXthechapter\CTEX@chapter@aftername}{}%
+      #1%
+    }{}%
+  }
+}{
+  \def\chaptermark#1{%
+    \markboth{%
+      \ifnum \c@secnumdepth >\m@ne
+        \if@mainmatter
+          \ifodd\CTEX@chapter@numbering
+            \CTEXthechapter\CTEX@chapter@aftername
+          \fi
+        \fi
+      \fi
+      #1%
+    }{}%
+  }
+}
+\let\sectionmark\@gobble
+\pagestyle{plain}
+%    \end{macrocode}
+%
+% |headings| 只有页眉，没有页脚。
+%    \begin{macrocode}
+\def\ps@headings{%
+  \def\@oddhead{\ustc@head}%
+  \let\@evenhead\@oddhead
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@empty
+  \let\@mkboth\markboth
+}
+%    \end{macrocode}
+%
+% 每章第一页默认会设置特殊的 page style，我们希望它不改变页眉页脚，
+% 所以定义一个 |none|。
+%    \begin{macrocode}
+\def\ps@none{}
+\ctexset{chapter/pagestyle=none}
 %    \end{macrocode}
 %
 % \begin{macro}{\cleardoublepage}
@@ -642,7 +715,8 @@ version 2005/12/01 or later.
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
-  \pagenumbering{Roman}}
+  \pagenumbering{Roman}%
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -699,10 +773,35 @@ version 2005/12/01 or later.
 \fi
 %    \end{macrocode}
 %
+% \begin{macro}{\ustc@pdfbookmark}
+% 添加 DFP 书签，在 \pkg{hyperref} 载入后才有效。
+%    \begin{macrocode}
+\newcommand\ustc@pdfbookmark{\@gobble}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{titlepage}
+% 重定义 \env{titlepage} 环境，不修改页码。
+%    \begin{macrocode}
+\renewenvironment{titlepage}{%
+  \cleardoublepage
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse\newpage
+  \fi
+  \thispagestyle{empty}%
+}{%
+  \if@restonecol\twocolumn \else \newpage \fi
+}
+%    \end{macrocode}
+% \end{environment}
+%
 % 中文封面：
 %    \begin{macrocode}
 \newcommand\ustc@makezhtitle{%
   \begin{titlepage}%
+    \ustc@pdfbookmark{封面}%
     \centering
     \parbox[t][0.6cm][t]{\textwidth}{%
       \raggedleft\fangsong\fontsize{14\bp@}{14\bp@}\selectfont
@@ -716,10 +815,9 @@ version 2005/12/01 or later.
     \vskip 2.0cm%
     \includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.9cm%
-    \begin{minipage}[t][3.5cm][c]{\textwidth}%
+    \parbox[t][3.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont
-      \ustc@title\par
-    \end{minipage}\par
+      \ustc@title\par}\par
     \vskip 0.6cm%
     {\fontsize{16\bp@}{31\bp@}\selectfont
       \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
@@ -739,13 +837,15 @@ version 2005/12/01 or later.
     Supervisor: \ustc@ensupervisor
   \else
     Supervisors: \ustc@ensupervisor, \ustc@encosupervisor
-  \fi}
+  \fi
+}
 %    \end{macrocode}
 %
 % 英文封面
 %    \begin{macrocode}
 \newcommand\ustc@makeentitle{%
   \begin{titlepage}%
+    \ustc@pdfbookmark{Title page}%
     \centering
     \parbox[t][0.4cm][t]{\textwidth}{%
       \raggedleft\fontsize{14\bp@}{14\bp@}\selectfont
@@ -758,13 +858,12 @@ version 2005/12/01 or later.
     \vskip 2.5cm%
     \includegraphics[height=4.5cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.5cm%
-    \begin{minipage}[t][4.5cm][c]{\textwidth}%
+    \parbox[t][4.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
-      \ustc@entitle\par
-    \end{minipage}\par
+      \ustc@entitle\par}\par
     \vskip 1.6cm%
     {\fontsize{16\bp@}{30\bp@}\selectfont
-      \begin{tabular}{@{}l@{}}
+      \begin{tabular}{@{}l@{}}%
         Author:        \ustc@enauthor \\
         Speciality:    \ustc@enmajor \\
         \ustc@supervisorline \\
@@ -778,13 +877,11 @@ version 2005/12/01 or later.
 % 分别生成中、英文封面。
 %    \begin{macrocode}
 \renewcommand\maketitle{%
-  \pagenumbering{gobble}%
-  \pdfbookmark[0]{封面}{titlepage}%
+  \pagenumbering{Alph}%
+  \pagestyle{empty}%
   \ustc@makezhtitle
-  \cleardoublepage
-  \pdfbookmark[0]{Title page}{entitlepage}%
   \ustc@makeentitle
-  \cleardoublepage
+  \pagestyle{plain}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -828,8 +925,8 @@ version 2005/12/01 or later.
 % \begin{macro}{\makestatement}
 %    \begin{macrocode}
 \newcommand\makestatement{%
-  \pdfbookmark[0]{原创性声明}{statement}%
   \begin{titlepage}%
+    \ustc@pdfbookmark{原创性和授权使用声明}%
     \null
     \vskip 0.3cm%
     {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
@@ -841,7 +938,7 @@ version 2005/12/01 or later.
     签字日期：\ustc@underline{}\par
     \vskip 1.9cm%
     {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
-      \ustc@universityname{}学位论文授权使用声明\par}
+      \ustc@universityname{}学位论文授权使用声明\par}%
     \vskip 0.7cm%
     \ustc@authorization\par
     \vskip 0.6cm%
@@ -858,9 +955,8 @@ version 2005/12/01 or later.
     \vskip 0.5cm%
     签字日期：\ustc@underline{}\hspace{2.7cm}%
     签字日期：\ustc@underline{}\par
-  \end{titlepage}
-  \cleardoublepage
-}%
+  \end{titlepage}%
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -897,7 +993,6 @@ version 2005/12/01 or later.
     titleformat = {},
     number      = \thechapter,
     aftername   = \hspace{\ccwd},
-    pagestyle   = ustc@headings,
   },
 }
 %    \end{macrocode}
@@ -999,15 +1094,13 @@ version 2005/12/01 or later.
 % 但是需要修改页眉，并且加入 PDF 标签。
 % 所以我们新定义 \cs{ustc@chapter} 用于处理这些章节。%
 %    \begin{macrocode}
-\newcounter{ustc@pdfbookmark}
 \NewDocumentCommand\ustc@chapter{o m}{%
   \if@openright\cleardoublepage\else\clearpage\fi
-  \addtocounter{ustc@pdfbookmark}\@ne
   \IfValueTF{#1}{%
-    \pdfbookmark[0]{#1}{ustcchapter.\theustc@pdfbookmark}%
+    \ustc@pdfbookmark{#1}%
     \chaptermark{#1}%
   }{%
-    \pdfbookmark[0]{#2}{ustcchapter.\theustc@pdfbookmark}%
+    \ustc@pdfbookmark{#2}%
     \chaptermark{#2}%
   }%
   \chapter*{#2}}
@@ -1051,22 +1144,9 @@ version 2005/12/01 or later.
 %    \begin{macrocode}
 \renewcommand\tableofcontents{%
   \ustc@chapter{\contentsname}%
-  \@starttoc{toc}}
+  \@starttoc{toc}%
+}
 %    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\listoffigures}
-% \begin{macro}{\listoftables}
-% 图、表的清单同目录一样。
-%    \begin{macrocode}
-\renewcommand\listoffigures{%
-  \ustc@chapter{\listfigurename}%
-  \@starttoc{lof}}
-\renewcommand\listoftables{%
-  \ustc@chapter{\listtablename}%
-  \@starttoc{lot}}
-%    \end{macrocode}
-% \end{macro}
 % \end{macro}
 %
 % 下面用 \pkg{titletoc} 宏包设置目录内容的格式。
@@ -1107,26 +1187,77 @@ version 2005/12/01 or later.
   {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
 %    \end{macrocode}
 %
-% 同时设置图、表清单的格式。
+% \begin{macro}{\listoffigures}
+% 图、表的清单同目录一样。
 %    \begin{macrocode}
+\renewcommand\listoffigures{%
+  \ustc@chapter{\listfigurename}%
+  \@starttoc{lof}%
+}
 \titlecontents{figure}
   [\ccwd]
   {\normalsize}
   {\thecontentslabel\hspace*{0.5em}}
   {}{\ustc@leaders\contentspage}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\listoftables}
+%    \begin{macrocode}
+\renewcommand\listoftables{%
+  \ustc@chapter{\listtablename}%
+  \@starttoc{lot}%
+}
 \titlecontents{table}
   [\ccwd]
   {\normalsize}
   {\thecontentslabel\hspace*{0.5em}}
   {}{\ustc@leaders\contentspage}
 %    \end{macrocode}
+% \end{macro}
+%
+%
+% \subsection{符号说明}
+%
+% \begin{environment}{notation}
+% 研究生规定符号说明另页起，标题字体字号等同论文正文，
+% 《撰写手册》第 9 页 1.10(2) 还规定“符号说明不加页码”。
+% \changes{v3.0}{2017/07/01}{符号说明不加页码}
+% \changes{v3.0.b}{2018/05/18}{更正符号说明的字号}
+%    \begin{macrocode}
+\newenvironment{notation}{%
+  \pagestyle{headings}%
+  \ustc@chapter{\ustc@notationname}%
+}{%
+  \clearpage\pagestyle{plain}%
+}%
+%    \end{macrocode}
+% \end{environment}
 %
 %
 % \subsection{正文}
 %
 % 段间距 0 磅。
 %    \begin{macrocode}
-\setlength{\parskip}{\z@}
+\setlength{\parskip}{0\p@ \@plus .2\p@}
+%    \end{macrocode}
+%
+% URL 的字体设为保持原样。
+%    \begin{macrocode}
+\urlstyle{same}
+%    \end{macrocode}
+%
+% 使用 \pkg{xurl} 宏包的方法，增加 URL 可断行的位置。
+%    \begin{macrocode}
+\def\UrlBreaks{%
+  \do\/%
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l%
+     \do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z%
+  \do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L%
+     \do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z%
+  \do0\do1\do2\do3\do4\do5\do6\do7\do8\do9\do=\do/\do.\do:%
+  \do\*\do\-\do\~\do\'\do\"\do\-}
+\Urlmuskip=0mu plus 0.1mu
 %    \end{macrocode}
 %
 % \begin{macro}{\footnote}
@@ -1168,9 +1299,9 @@ version 2005/12/01 or later.
 %    \begin{macrocode}
 \setlength\partopsep{\z@}
 \newcommand\ustc@nolistsep{%
-  \parsep \z@
-  \topsep \z@
-  \itemsep\z@
+  \parsep 0\p@ \@plus.2\p@
+  \topsep 0\p@ \@plus.2\p@
+  \itemsep0\p@ \@plus.2\p@
 }
 \def\@listi{\leftmargin\leftmargini
             \ustc@nolistsep}
@@ -1370,6 +1501,11 @@ version 2005/12/01 or later.
 \fi
 %    \end{macrocode}
 %
+% 使用 \pkg{ctex} 的 \cs{ctex\_patch\_cmd:Nnn} 命令。
+%    \begin{macrocode}
+\newcommand\ustc@patchcmd{\csname ctex_patch_cmd:Nnn\endcsname}
+%    \end{macrocode}
+%
 % \begin{macro}{\cite}
 % 下面修改引用标注的格式，主要是将页码写在上标位置。
 % Numerical 模式的 \cs{citet} 的页码：
@@ -1444,7 +1580,7 @@ version 2005/12/01 or later.
 % 参考文献列表格式：宋体 10.5 磅，行距 20 磅，续行缩进两字，左对齐。
 %    \begin{macrocode}
 \renewcommand\bibfont{\fontsize{10.5\bp@}{20\bp@}\selectfont}
-\setlength{\bibsep}{\z@}
+\setlength{\bibsep}{0\p@ \@plus.2\p@}
 \setlength{\bibhang}{2\ccwd}
 \renewcommand\@biblabel[1]{[#1]\hfill}
 %    \end{macrocode}
@@ -1479,101 +1615,97 @@ version 2005/12/01 or later.
 % \end{environment}
 %
 %
-% \subsection{PDF 设置}
-%
-%    \begin{macrocode}
-\hypersetup{
-  bookmarksnumbered  = true,
-  bookmarksopen      = true,
-  bookmarksopenlevel = 1,
-  linktoc            = all,
-}
-%    \end{macrocode}
-%
-% 如果为 \opt{pdf} 样式，设置 hyperlink 颜色
-%    \begin{macrocode}
-\ifustc@pdf
-  \hypersetup{
-    colorlinks = true,
-    allcolors  = blue,
-  }
-\else
-  \hypersetup{hidelinks}
-\fi
-%    \end{macrocode}
-%
-% 填写 PDF 元信息。
-%    \begin{macrocode}
-\AtBeginDocument{%
-  \ifustc@chinese
-    \hypersetup{
-      pdftitle  = \ustc@title,
-      pdfauthor = \ustc@author,
-    }%
-  \else
-    \hypersetup{
-      pdftitle  = \ustc@entitle,
-      pdfauthor = \ustc@enauthor,
-    }%
-  \fi
-}
-%    \end{macrocode}
-%
-% 在 PDF 字符串中去掉换行，以减少 \pkg{hyperref} 的警告信息。
-%    \begin{macrocode}
-\pdfstringdefDisableCommands{
-  \let\\\@empty
-  \let\hspace\@gobble
-}
-%    \end{macrocode}
-%
-% 将 URL 的字体设置为保持原样。
-%    \begin{macrocode}
-\urlstyle{same}
-%    \end{macrocode}
-%
-% 使用 \pkg{xurl} 宏包的方法，增加 URL 可断行的位置。
-%    \begin{macrocode}
-\def\UrlBreaks{%
-  \do\/%
-  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l%
-     \do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z%
-  \do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L%
-     \do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z%
-  \do0\do1\do2\do3\do4\do5\do6\do7\do8\do9\do=\do/\do.\do:%
-  \do\*\do\-\do\~\do\'\do\"\do\-}
-\Urlmuskip=0mu plus 0.1mu
-%    \end{macrocode}
-%
-% 设置中文的 \cs{autoref}。
-% \footnote{\url{https://tex.stackexchange.com/a/66150/82731}}
-%    \begin{macrocode}
-\ifustc@chinese
-  \def\equationautorefname~#1\null{公式~(#1)\null}
-  \def\footnoteautorefname{脚注}
-  \def\itemautorefname~#1\null{第~#1~项\null}
-  \def\figureautorefname{图}
-  \def\tableautorefname{表}
-  \def\partautorefname~#1\null{第~#1~部分\null}
-  \def\appendixautorefname{附录}
-  \def\chapterautorefname~#1\null{第~#1~章\null}
-  \def\sectionautorefname~#1\null{第~#1~节\null}
-  \def\subsectionautorefname~#1\null{第~#1~小节\null}
-  \def\subsubsectionautorefname~#1\null{第~#1~小小节\null}
-  \def\paragraphautorefname~#1\null{第~#1~段\null}
-  \def\subparagraphautorefname~#1\null{第~#1~小段\null}
-  \def\theoremautorefname{定理}
-  \def\HyRef@autopageref#1{\hyperref[{#1}]{第~\pageref*{#1} 页}}
-\fi
-%    \end{macrocode}
-%
-%
 % \subsection{其他宏包的设置}
 %
 % 这些宏包并非格式要求，但是为了方便同学们使用，在这里进行简单设置。
 %    \begin{macrocode}
 \newcommand\ustc@atendpackage{\csname ctex_at_end_package:nn\endcsname}
 %    \end{macrocode}
+%
+%
+% \subsubsection{hyperref 宏包}
+%
+%    \begin{macrocode}
+\ustc@atendpackage{hyperref}{
+  \hypersetup{
+    bookmarksnumbered  = true,
+    bookmarksopen      = true,
+    bookmarksopenlevel = 1,
+    linktoc            = all,
+  }
+%    \end{macrocode}
+%
+% 如果为 \opt{pdf} 样式，设置 hyperlink 颜色
+%    \begin{macrocode}
+  \ifustc@pdf
+    \hypersetup{
+      colorlinks = true,
+      allcolors  = blue,
+    }
+  \else
+    \hypersetup{hidelinks}
+  \fi
+%    \end{macrocode}
+%
+% 填写 PDF 元信息。
+%    \begin{macrocode}
+  \AtBeginDocument{%
+    \ifustc@chinese
+      \hypersetup{
+        pdftitle  = \ustc@title,
+        pdfauthor = \ustc@author,
+      }%
+    \else
+      \hypersetup{
+        pdftitle  = \ustc@entitle,
+        pdfauthor = \ustc@enauthor,
+      }%
+    \fi
+  }
+%    \end{macrocode}
+%
+% 添加 PDF 书签
+%
+%    \begin{macrocode}
+  \newcounter{ustc@bookmarknumber}
+  \renewcommand\ustc@pdfbookmark[1]{%
+    \phantomsection
+    \stepcounter{ustc@bookmarknumber}%
+    \pdfbookmark[0]{#1}{ustcchapter.\theustc@bookmarknumber}%
+  }
+%    \end{macrocode}
+%
+% 在 PDF 字符串中去掉换行，以减少 \pkg{hyperref} 的警告信息。
+%    \begin{macrocode}
+  \pdfstringdefDisableCommands{
+    \let\\\@empty
+    \let\hspace\@gobble
+  }
+%    \end{macrocode}
+%
+% 设置中文的 \cs{autoref}。
+% \footnote{\url{https://tex.stackexchange.com/a/66150/82731}}
+%    \begin{macrocode}
+  \ifustc@chinese
+    \def\equationautorefname~#1\null{公式~(#1)\null}
+    \def\footnoteautorefname{脚注}
+    \def\itemautorefname~#1\null{第~#1~项\null}
+    \def\figureautorefname{图}
+    \def\tableautorefname{表}
+    \def\partautorefname~#1\null{第~#1~部分\null}
+    \def\appendixautorefname{附录}
+    \def\chapterautorefname~#1\null{第~#1~章\null}
+    \def\sectionautorefname~#1\null{第~#1~节\null}
+    \def\subsectionautorefname~#1\null{第~#1~小节\null}
+    \def\subsubsectionautorefname~#1\null{第~#1~小小节\null}
+    \def\paragraphautorefname~#1\null{第~#1~段\null}
+    \def\subparagraphautorefname~#1\null{第~#1~小段\null}
+    \def\theoremautorefname{定理}
+    \def\HyRef@autopageref#1{\hyperref[{#1}]{第~\pageref*{#1} 页}}
+  \fi
+}
+%    \end{macrocode}
+%
 %
 % \subsubsection{amsthm 宏包}
 %
@@ -1658,6 +1790,49 @@ version 2005/12/01 or later.
   \renewcommand\listofalgorithms{%
     \cleardoublepage
     \ustc@save@listofalgorithms}
+}
+%    \end{macrocode}
+%
+%
+% \subsubsection{nomencl 宏包}
+%
+%    \begin{macrocode}
+\ustc@atendpackage{nomencl}{
+  \let\nomname\ustc@notationname
+  \def\thenomenclature{%
+    \ustc@chapter{\ustc@notationname}%
+    \nompreamble
+    \list{}{%
+      \labelwidth\nom@tempdim
+      \leftmargin\labelwidth
+      \advance\leftmargin\labelsep
+      \itemsep\nomitemsep
+      \let\makelabel\nomlabel}}
+  \def\endthenomenclature{%
+    \endlist
+    \nompostamble
+    \clearpage
+  }
+}
+%    \end{macrocode}
+%
+%
+% \subsubsection{siunitx 宏包}
+%
+%    \begin{macrocode}
+\ustc@atendpackage{siunitx}{
+  \sisetup{
+    group-minimum-digits = 4,
+    separate-uncertainty = true,
+    inter-unit-product   = \ensuremath{{}\cdot{}},
+  }
+  \ifustc@chinese
+    \sisetup{
+      list-final-separator = { 和 },
+      list-pair-separator  = { 和 },
+      range-phrase         = {～},
+    }
+  \fi
 }
 %    \end{macrocode}
 %

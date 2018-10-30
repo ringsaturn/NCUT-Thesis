@@ -7,10 +7,12 @@
 
 主要特性：
 - 支持跨平台使用，兼容最新的 TeX Live, MacTeX 和 MikTeX 发行版，
-  并向后兼容到 2016 年的版本；
-- 不支持已经过时的 CTeX 套装；
-- 数学符号遵循国内的排版习惯；
-- 参考文献格式符合 GB/T 7714。
+  并向后兼容到 2016 年的版本
+- 不支持已经过时的 CTeX 套装
+- 数学符号遵循国内的排版习惯
+- 参考文献格式符合 GB/T 7714
+- 单元测试（l3build）
+- 持续集成（travis-ci）
 
 
 
@@ -20,11 +22,6 @@
 编译模板的使用说明文档 `chinathesis.pdf`：
 ```
 latexmk -xelatex chinathesis.dtx
-```
-
-生成去掉文档和注释的模板 `chinathesis.cls`：
-```
-xetex chinathesis.dtx
 ```
 
 编译论文 `main.pdf`：

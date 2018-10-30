@@ -18,7 +18,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{chinathesis}
-  [2018/09/19 v1.0 A template framework for Chinese dissertations]
+  [2018/10/27 v1.0 A template framework for Chinese dissertations]
 \newif\ifustc@doctor
 \newif\ifustc@master
 \newif\ifustc@bachelor
@@ -57,8 +57,8 @@
 \RequirePackage{unicode-math}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
-\RequirePackage{fancyhdr}
 \RequirePackage{titletoc}
+\RequirePackage{url}
 \RequirePackage[perpage]{footmisc}
 \RequirePackage{caption}
 \RequirePackage{calc}
@@ -67,7 +67,6 @@
   \PassOptionsToPackage{sort&compress}{natbib}
 \fi
 \RequirePackage{natbib}
-\RequirePackage{hyperref}
 \newcommand\ustc@strifeq{\csname str_if_eq_x:nnTF\endcsname}
 \newcommand\ustc@fontset{\csname g__ctex_fontset_tl\endcsname}
 \ustc@strifeq{\ustc@fontset}{fandol}{
@@ -114,32 +113,36 @@
         ItalicFont = Kaiti SC,
     BoldItalicFont = Kaiti SC Bold,
   ]{Songti SC}
-  \setCJKsansfont{Heiti SC}
+  \setCJKsansfont[BoldFont=* Medium]{Heiti SC}
   \setCJKfamilyfont{zhsong}[
        UprightFont = * Light,
           BoldFont = * Bold,
   ]{Songti SC}
-  \setCJKfamilyfont{zhhei}{Heiti SC}
-  \setCJKfamilyfont{zhkai}[BoldFont=Kaiti SC Bold]{Kaiti SC}
+  \setCJKfamilyfont{zhhei}[BoldFont=* Medium]{Heiti SC}
+  \setCJKfamilyfont{zhkai}[BoldFont=* Bold]{Kaiti SC}
 }{
+  \xeCJKsetup{EmboldenFactor=2}
   \ustc@strifeq{\ustc@fontset}{windows}{
     \IfFileExists{C:/bootfont.bin}{
-      \setCJKmainfont[AutoFakeBold=2,ItalicFont=KaiTi_GB2312]{SimSun}
+      \setCJKmainfont[AutoFakeBold,ItalicFont=KaiTi_GB2312]{SimSun}
+      \setCJKfamilyfont{zhkai}[AutoFakeBold]{KaiTi_GB2312}
     }{
-      \setCJKmainfont[AutoFakeBold=2,ItalicFont=KaiTi]{SimSun}
+      \setCJKmainfont[AutoFakeBold,ItalicFont=KaiTi]{SimSun}
+      \setCJKfamilyfont{zhkai}[AutoFakeBold]{KaiTi}
     }
-    \setCJKsansfont[AutoFakeBold=2]{SimHei}
-    \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{SimSun}
-    \setCJKfamilyfont{zhhei}[AutoFakeBold=2]{SimHei}
+    \setCJKsansfont[AutoFakeBold]{SimHei}
+    \setCJKfamilyfont{zhsong}[AutoFakeBold]{SimSun}
+    \setCJKfamilyfont{zhhei}[AutoFakeBold]{SimHei}
   }{
     \ustc@strifeq{\ustc@fontset}{adobe}{
       \setCJKmainfont[
-        AutoFakeBold = 2,
+        AutoFakeBold = true,
         ItalicFont   = AdobeKaitiStd-Regular,
       ]{AdobeSongStd-Light}
-      \setCJKsansfont[AutoFakeBold=2]{AdobeHeitiStd-Regular}
-      \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{AdobeSongStd-Light}
-      \setCJKfamilyfont{zhhei}[AutoFakeBold=2]{AdobeHeitiStd-Regular}
+      \setCJKsansfont[AutoFakeBold]{AdobeHeitiStd-Regular}
+      \setCJKfamilyfont{zhsong}[AutoFakeBold]{AdobeSongStd-Light}
+      \setCJKfamilyfont{zhhei}[AutoFakeBold]{AdobeHeitiStd-Regular}
+      \setCJKfamilyfont{zhkai}[AutoFakeBold]{AdobeKaitiStd-Regular}
     }{}
   }
 }
@@ -173,8 +176,8 @@
       Extension    = .otf,
       BoldFont     = XITSMath-Bold,
       StylisticSet = 8,
-    ]{XITSMath}
-    \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular}
+    ]{XITSMath-Regular}
+    \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular.otf}
   \else
     \setmathfont[
       Extension    = .otf,
@@ -247,24 +250,66 @@
   paper      = a4paper,
   vmargin    = 2.54cm,
   hmargin    = 3.17cm,
-  headheight = 0.75cm,
-  headsep    = 0.29cm,
+  headheight = 0.8cm,
+  headsep    = 0.24cm,
   footskip   = 0.79cm,
 }
-\renewcommand{\headrulewidth}{0.4\p@}
-\fancypagestyle{ustc@headings}{
-  \fancyhf{}
-  \fancyhead[C]{\fontsize{10.5\bp@}{21\bp@}\selectfont\leftmark}
-  \fancyfoot[C]{\fontsize{10.5\bp@}{21\bp@}\selectfont\thepage}}
-\pagestyle{ustc@headings}
-\newcommand\ustc@patchcmd{\csname ctex_patch_cmd:Nnn\endcsname}
-\ustc@patchcmd\chaptermark{\MakeUppercase}{}
+\newcommand\ustc@header@font{\fontsize{10.5\bp@}{12\bp@}\selectfont}
+\newcommand\ustc@header{\leftmark}
+\newcommand\ustc@head{%
+  \vbox to\headheight{%
+    \hfil\ustc@header@font\ustc@header\strut\hfil
+    \hrule\@height 0.4\p@\@width\textwidth
+    \vfil
+  }%
+}
+\newcommand\ustc@foot{\hfil\ustc@header@font\thepage\hfil}
+\def\ps@plain{%
+  \def\@oddhead{\ustc@head}%
+  \def\@oddfoot{\ustc@foot}%
+  \let\@evenhead\@oddhead
+  \let\@evenfoot\@oddfoot
+  \let\@mkboth\markboth
+}
+\@ifclasslater{ctexbook}{2016/09/21}{
+  \def\chaptermark#1{%
+    \markboth{%
+      \CTEXifname{\CTEXthechapter\CTEX@chapter@aftername}{}%
+      #1%
+    }{}%
+  }
+}{
+  \def\chaptermark#1{%
+    \markboth{%
+      \ifnum \c@secnumdepth >\m@ne
+        \if@mainmatter
+          \ifodd\CTEX@chapter@numbering
+            \CTEXthechapter\CTEX@chapter@aftername
+          \fi
+        \fi
+      \fi
+      #1%
+    }{}%
+  }
+}
+\let\sectionmark\@gobble
+\pagestyle{plain}
+\def\ps@headings{%
+  \def\@oddhead{\ustc@head}%
+  \let\@evenhead\@oddhead
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@empty
+  \let\@mkboth\markboth
+}
+\def\ps@none{}
+\ctexset{chapter/pagestyle=none}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
   \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
-  \pagenumbering{Roman}}
+  \pagenumbering{Roman}%
+}
 \def\ustc@define@term#1#2{%
   \expandafter\gdef\csname #1\endcsname##1{%
     \expandafter\gdef\csname ustc@#1\endcsname{##1}%
@@ -302,8 +347,21 @@
     \newcommand\ustc@enthesisname{A dissertation for bachelor's degree}
   \fi
 \fi
+\newcommand\ustc@pdfbookmark{\@gobble}
+\renewenvironment{titlepage}{%
+  \cleardoublepage
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse\newpage
+  \fi
+  \thispagestyle{empty}%
+}{%
+  \if@restonecol\twocolumn \else \newpage \fi
+}
 \newcommand\ustc@makezhtitle{%
   \begin{titlepage}%
+    \ustc@pdfbookmark{封面}%
     \centering
     \parbox[t][0.6cm][t]{\textwidth}{%
       \raggedleft\fangsong\fontsize{14\bp@}{14\bp@}\selectfont
@@ -317,10 +375,9 @@
     \vskip 2.0cm%
     \includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.9cm%
-    \begin{minipage}[t][3.5cm][c]{\textwidth}%
+    \parbox[t][3.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont
-      \ustc@title\par
-    \end{minipage}\par
+      \ustc@title\par}\par
     \vskip 0.6cm%
     {\fontsize{16\bp@}{31\bp@}\selectfont
       \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
@@ -336,9 +393,11 @@
     Supervisor: \ustc@ensupervisor
   \else
     Supervisors: \ustc@ensupervisor, \ustc@encosupervisor
-  \fi}
+  \fi
+}
 \newcommand\ustc@makeentitle{%
   \begin{titlepage}%
+    \ustc@pdfbookmark{Title page}%
     \centering
     \parbox[t][0.4cm][t]{\textwidth}{%
       \raggedleft\fontsize{14\bp@}{14\bp@}\selectfont
@@ -351,13 +410,12 @@
     \vskip 2.5cm%
     \includegraphics[height=4.5cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.5cm%
-    \begin{minipage}[t][4.5cm][c]{\textwidth}%
+    \parbox[t][4.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
-      \ustc@entitle\par
-    \end{minipage}\par
+      \ustc@entitle\par}\par
     \vskip 1.6cm%
     {\fontsize{16\bp@}{30\bp@}\selectfont
-      \begin{tabular}{@{}l@{}}
+      \begin{tabular}{@{}l@{}}%
         Author:        \ustc@enauthor \\
         Speciality:    \ustc@enmajor \\
         \ustc@supervisorline \\
@@ -366,13 +424,11 @@
   \end{titlepage}%
 }
 \renewcommand\maketitle{%
-  \pagenumbering{gobble}%
-  \pdfbookmark[0]{封面}{titlepage}%
+  \pagenumbering{Alph}%
+  \pagestyle{empty}%
   \ustc@makezhtitle
-  \cleardoublepage
-  \pdfbookmark[0]{Title page}{entitlepage}%
   \ustc@makeentitle
-  \cleardoublepage
+  \pagestyle{plain}
 }
 \newcommand\ustc@originality{%
   本人声明所呈交的学位论文，是本人在导师指导下进行研究工作所取得的成果。%
@@ -393,8 +449,8 @@
   \raisebox{-0.2ex}{\hspace{0.1em}$\checkmark$}%
 }
 \newcommand\makestatement{%
-  \pdfbookmark[0]{原创性声明}{statement}%
   \begin{titlepage}%
+    \ustc@pdfbookmark{原创性和授权使用声明}%
     \null
     \vskip 0.3cm%
     {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
@@ -406,7 +462,7 @@
     签字日期：\ustc@underline{}\par
     \vskip 1.9cm%
     {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
-      \ustc@universityname{}学位论文授权使用声明\par}
+      \ustc@universityname{}学位论文授权使用声明\par}%
     \vskip 0.7cm%
     \ustc@authorization\par
     \vskip 0.6cm%
@@ -423,9 +479,8 @@
     \vskip 0.5cm%
     签字日期：\ustc@underline{}\hspace{2.7cm}%
     签字日期：\ustc@underline{}\par
-  \end{titlepage}
-  \cleardoublepage
-}%
+  \end{titlepage}%
+}
 \setcounter{secnumdepth}{5}
 \newcommand\ustc@textcircled[1]{%
   \ifnum\value{#1}<21\relax
@@ -441,7 +496,6 @@
     titleformat = {},
     number      = \thechapter,
     aftername   = \hspace{\ccwd},
-    pagestyle   = ustc@headings,
   },
 }
 \@ifclasslater{ctexbook}{2016/09/21}{
@@ -501,15 +555,13 @@
     runin      = false,
   },
 }
-\newcounter{ustc@pdfbookmark}
 \NewDocumentCommand\ustc@chapter{o m}{%
   \if@openright\cleardoublepage\else\clearpage\fi
-  \addtocounter{ustc@pdfbookmark}\@ne
   \IfValueTF{#1}{%
-    \pdfbookmark[0]{#1}{ustcchapter.\theustc@pdfbookmark}%
+    \ustc@pdfbookmark{#1}%
     \chaptermark{#1}%
   }{%
-    \pdfbookmark[0]{#2}{ustcchapter.\theustc@pdfbookmark}%
+    \ustc@pdfbookmark{#2}%
     \chaptermark{#2}%
   }%
   \chapter*{#2}}
@@ -529,13 +581,8 @@
 }
 \renewcommand\tableofcontents{%
   \ustc@chapter{\contentsname}%
-  \@starttoc{toc}}
-\renewcommand\listoffigures{%
-  \ustc@chapter{\listfigurename}%
-  \@starttoc{lof}}
-\renewcommand\listoftables{%
-  \ustc@chapter{\listtablename}%
-  \@starttoc{lot}}
+  \@starttoc{toc}%
+}
 \newcommand\ustc@leaders{\titlerule*[0.5pc]{$\cdot$}}
 \titlecontents{chapter}
   [\z@]
@@ -552,17 +599,41 @@
   {\fontsize{10.5\bp@}{20\bp@}\selectfont}
   {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
   {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+\renewcommand\listoffigures{%
+  \ustc@chapter{\listfigurename}%
+  \@starttoc{lof}%
+}
 \titlecontents{figure}
   [\ccwd]
   {\normalsize}
   {\thecontentslabel\hspace*{0.5em}}
   {}{\ustc@leaders\contentspage}
+\renewcommand\listoftables{%
+  \ustc@chapter{\listtablename}%
+  \@starttoc{lot}%
+}
 \titlecontents{table}
   [\ccwd]
   {\normalsize}
   {\thecontentslabel\hspace*{0.5em}}
   {}{\ustc@leaders\contentspage}
-\setlength{\parskip}{\z@}
+\newenvironment{notation}{%
+  \pagestyle{headings}%
+  \ustc@chapter{\ustc@notationname}%
+}{%
+  \clearpage\pagestyle{plain}%
+}%
+\setlength{\parskip}{0\p@ \@plus .2\p@}
+\urlstyle{same}
+\def\UrlBreaks{%
+  \do\/%
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l%
+     \do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z%
+  \do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L%
+     \do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z%
+  \do0\do1\do2\do3\do4\do5\do6\do7\do8\do9\do=\do/\do.\do:%
+  \do\*\do\-\do\~\do\'\do\"\do\-}
+\Urlmuskip=0mu plus 0.1mu
 \renewcommand\thefootnote{\ustc@textcircled{footnote}}
 \renewcommand\footnoterule{%
   \kern-3\p@
@@ -574,9 +645,9 @@
   \hb@xt@2\ccwd{\hss\@makefnmark}#1}
 \setlength\partopsep{\z@}
 \newcommand\ustc@nolistsep{%
-  \parsep \z@
-  \topsep \z@
-  \itemsep\z@
+  \parsep 0\p@ \@plus.2\p@
+  \topsep 0\p@ \@plus.2\p@
+  \itemsep0\p@ \@plus.2\p@
 }
 \def\@listi{\leftmargin\leftmargini
             \ustc@nolistsep}
@@ -674,6 +745,7 @@
   \citestyle{authoryear}
   \bibliographystyle{chinathesis-authoryear}
 \fi
+\newcommand\ustc@patchcmd{\csname ctex_patch_cmd:Nnn\endcsname}
 \ustc@patchcmd{\NAT@citexnum}{%
   \@ifnum{\NAT@ctype=\z@}{%
     \if*#2*\else\NAT@cmt#2\fi
@@ -714,7 +786,7 @@
 \DeclareRobustCommand\inlinecite{\@inlinecite}
 \def\@inlinecite#1{\begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup}
 \renewcommand\bibfont{\fontsize{10.5\bp@}{20\bp@}\selectfont}
-\setlength{\bibsep}{\z@}
+\setlength{\bibsep}{0\p@ \@plus.2\p@}
 \setlength{\bibhang}{2\ccwd}
 \renewcommand\@biblabel[1]{[#1]\hfill}
 \renewcommand\bibsection{%
@@ -726,65 +798,63 @@
   \chapter{\ustc@acknowledgementsname}%
 }{}
 \newenvironment{publications}{\chapter{\ustc@publicationsname}}{}
-\hypersetup{
-  bookmarksnumbered  = true,
-  bookmarksopen      = true,
-  bookmarksopenlevel = 1,
-  linktoc            = all,
-}
-\ifustc@pdf
+\newcommand\ustc@atendpackage{\csname ctex_at_end_package:nn\endcsname}
+\ustc@atendpackage{hyperref}{
   \hypersetup{
-    colorlinks = true,
-    allcolors  = blue,
+    bookmarksnumbered  = true,
+    bookmarksopen      = true,
+    bookmarksopenlevel = 1,
+    linktoc            = all,
   }
-\else
-  \hypersetup{hidelinks}
-\fi
-\AtBeginDocument{%
-  \ifustc@chinese
+  \ifustc@pdf
     \hypersetup{
-      pdftitle  = \ustc@title,
-      pdfauthor = \ustc@author,
-    }%
+      colorlinks = true,
+      allcolors  = blue,
+    }
   \else
-    \hypersetup{
-      pdftitle  = \ustc@entitle,
-      pdfauthor = \ustc@enauthor,
-    }%
+    \hypersetup{hidelinks}
+  \fi
+  \AtBeginDocument{%
+    \ifustc@chinese
+      \hypersetup{
+        pdftitle  = \ustc@title,
+        pdfauthor = \ustc@author,
+      }%
+    \else
+      \hypersetup{
+        pdftitle  = \ustc@entitle,
+        pdfauthor = \ustc@enauthor,
+      }%
+    \fi
+  }
+  \newcounter{ustc@bookmarknumber}
+  \renewcommand\ustc@pdfbookmark[1]{%
+    \phantomsection
+    \stepcounter{ustc@bookmarknumber}%
+    \pdfbookmark[0]{#1}{ustcchapter.\theustc@bookmarknumber}%
+  }
+  \pdfstringdefDisableCommands{
+    \let\\\@empty
+    \let\hspace\@gobble
+  }
+  \ifustc@chinese
+    \def\equationautorefname~#1\null{公式~(#1)\null}
+    \def\footnoteautorefname{脚注}
+    \def\itemautorefname~#1\null{第~#1~项\null}
+    \def\figureautorefname{图}
+    \def\tableautorefname{表}
+    \def\partautorefname~#1\null{第~#1~部分\null}
+    \def\appendixautorefname{附录}
+    \def\chapterautorefname~#1\null{第~#1~章\null}
+    \def\sectionautorefname~#1\null{第~#1~节\null}
+    \def\subsectionautorefname~#1\null{第~#1~小节\null}
+    \def\subsubsectionautorefname~#1\null{第~#1~小小节\null}
+    \def\paragraphautorefname~#1\null{第~#1~段\null}
+    \def\subparagraphautorefname~#1\null{第~#1~小段\null}
+    \def\theoremautorefname{定理}
+    \def\HyRef@autopageref#1{\hyperref[{#1}]{第~\pageref*{#1} 页}}
   \fi
 }
-\pdfstringdefDisableCommands{
-  \let\\\@empty
-  \let\hspace\@gobble
-}
-\urlstyle{same}
-\def\UrlBreaks{%
-  \do\/%
-  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l%
-     \do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z%
-  \do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L%
-     \do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z%
-  \do0\do1\do2\do3\do4\do5\do6\do7\do8\do9\do=\do/\do.\do:%
-  \do\*\do\-\do\~\do\'\do\"\do\-}
-\Urlmuskip=0mu plus 0.1mu
-\ifustc@chinese
-  \def\equationautorefname~#1\null{公式~(#1)\null}
-  \def\footnoteautorefname{脚注}
-  \def\itemautorefname~#1\null{第~#1~项\null}
-  \def\figureautorefname{图}
-  \def\tableautorefname{表}
-  \def\partautorefname~#1\null{第~#1~部分\null}
-  \def\appendixautorefname{附录}
-  \def\chapterautorefname~#1\null{第~#1~章\null}
-  \def\sectionautorefname~#1\null{第~#1~节\null}
-  \def\subsectionautorefname~#1\null{第~#1~小节\null}
-  \def\subsubsectionautorefname~#1\null{第~#1~小小节\null}
-  \def\paragraphautorefname~#1\null{第~#1~段\null}
-  \def\subparagraphautorefname~#1\null{第~#1~小段\null}
-  \def\theoremautorefname{定理}
-  \def\HyRef@autopageref#1{\hyperref[{#1}]{第~\pageref*{#1} 页}}
-\fi
-\newcommand\ustc@atendpackage{\csname ctex_at_end_package:nn\endcsname}
 \ustc@atendpackage{amsthm}{
   \newtheoremstyle{ustcplain}
     {}{}
@@ -848,4 +918,35 @@
   \renewcommand\listofalgorithms{%
     \cleardoublepage
     \ustc@save@listofalgorithms}
+}
+\ustc@atendpackage{nomencl}{
+  \let\nomname\ustc@notationname
+  \def\thenomenclature{%
+    \ustc@chapter{\ustc@notationname}%
+    \nompreamble
+    \list{}{%
+      \labelwidth\nom@tempdim
+      \leftmargin\labelwidth
+      \advance\leftmargin\labelsep
+      \itemsep\nomitemsep
+      \let\makelabel\nomlabel}}
+  \def\endthenomenclature{%
+    \endlist
+    \nompostamble
+    \clearpage
+  }
+}
+\ustc@atendpackage{siunitx}{
+  \sisetup{
+    group-minimum-digits = 4,
+    separate-uncertainty = true,
+    inter-unit-product   = \ensuremath{{}\cdot{}},
+  }
+  \ifustc@chinese
+    \sisetup{
+      list-final-separator = { 和 },
+      list-pair-separator  = { 和 },
+      range-phrase         = {～},
+    }
+  \fi
 }
