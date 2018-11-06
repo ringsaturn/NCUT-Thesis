@@ -618,11 +618,8 @@
   {\thecontentslabel\hspace*{0.5em}}
   {}{\ustc@leaders\contentspage}
 \newenvironment{notation}{%
-  \pagestyle{headings}%
   \ustc@chapter{\ustc@notationname}%
-}{%
-  \clearpage\pagestyle{plain}%
-}%
+}{}%
 \setlength{\parskip}{0\p@ \@plus .2\p@}
 \urlstyle{same}
 \def\UrlBreaks{%
