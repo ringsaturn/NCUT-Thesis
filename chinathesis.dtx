@@ -54,46 +54,40 @@ version 2005/12/01 or later.
 %</class>
 %
 %<*driver>
-\documentclass{ltxdoc}
-\usepackage[paper=a4paper,margin=1in,left=1.5in]{geometry}
-\usepackage{hypdoc}
-\hypersetup{
-  allcolors=blue,
-  bookmarksnumbered=true,
-  bookmarksopen=true,
-}
+\documentclass[a4paper]{ltxdoc}
 \usepackage[UTF8]{ctex}
-\usepackage[math-style=ISO,bold-style=ISO]{unicode-math}
-\IfFileExists{/System/Library/Fonts/Times.ttc}{
-  \setmainfont{Times}
-  \setsansfont[Scale=MatchLowercase]{Helvetica}
-  \setmonofont[Scale=MatchLowercase]{Menlo}
-}{}
-\setmathfont{STIX2Math.otf}
+\usepackage{unicode-math}
 \usepackage{caption}
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{listings}
-\lstdefinestyle{lstshell}{
-  basicstyle=\small\ttfamily,
-  backgroundcolor=\color{lightgray},
-  gobble=2,% 重要！否则会生成注释符号"%"
-  language=bash}
-\newcommand\shellcmd[1]{\colorbox{lightgray}{\lstinline[style=lstshell]|#1|}}
-\lstnewenvironment{shell}{\lstset{style=lstshell}}{}
-\lstnewenvironment{latex}{%
-  \lstset{
-    basicstyle=\small\ttfamily,
-    frame=single,
-    gobble=2,
-    language=[LaTeX]TeX}}{}
-\lstnewenvironment{pseudocode}{%
-  \lstset{
-    basicstyle=\ttfamily,
-    frame=single,
-    gobble=2,
-    language=bash}}{}
+\usepackage{hypdoc}
+
 \makeatletter
+
+% 设置字体
+\IfFileExists{/System/Library/Fonts/Times.ttc}{
+  \setmainfont{Times}
+  \setsansfont[Scale=MatchLowercase]{Helvetica}
+  \setmonofont[Scale=MatchLowercase]{Menlo}
+  \xeCJKsetwidth{‘’“”}{1em}
+}{}
+\unimathsetup{
+  math-style=ISO,
+  bold-style=ISO,
+}
+\setmathfont{STIX2Math.otf}
+
+% 定义一些命令用于写文档
+\newcommand\TeXLive{\TeX{} Live}
+\newcommand\unicodechar[1]{U+#1（\symbol{"#1}）}
+\DeclareRobustCommand\file{\nolinkurl}
+\DeclareRobustCommand\env{\texttt}
+\DeclareRobustCommand\pkg{\textsf}
+\DeclareRobustCommand\cls{\textsf}
+\DeclareRobustCommand\opt{\texttt}
+
+% 在 doc 的基础上增加 option 的描述
 \def\DescribeOption{\leavevmode\@bsphack\begingroup\MakePrivateLetters
   \Describe@Option}
 \def\Describe@Option#1{\endgroup
@@ -101,12 +95,8 @@ version 2005/12/01 or later.
               \SpecialEnvIndex{#1}\@esphack\ignorespaces}
 \@ifundefined{PrintDescribeOption}
    {\def\PrintDescribeOption#1{\strut \MacroFont #1\ }}{}
-% 模仿 l3doc 的定义（见 l3styleguide）
-\DeclareRobustCommand\file{\nolinkurl}
-\DeclareRobustCommand\env{\texttt}
-\DeclareRobustCommand\pkg{\textsf}
-\DeclareRobustCommand\cls{\textsf}
-\DeclareRobustCommand\opt{\texttt}
+
+% 调整列表的格式
 \setlength\partopsep{\z@}
 \def\@listi{\leftmargin\leftmargini
             \parsep \z@
@@ -114,6 +104,26 @@ version 2005/12/01 or later.
             \itemsep2\p@ \@plus\p@ \@minus\p@}
 \let\@listI\@listi
 \@listi
+
+% listings 的样式
+\lstdefinestyle{lstshell}{
+  basicstyle      = \small\ttfamily,
+  backgroundcolor = \color{lightgray},
+  gobble          = 2, % 重要！否则会生成注释符号"%"
+  language        = bash,
+}
+\newcommand\shellcmd[1]{\colorbox{lightgray}{\lstinline[style=lstshell]|#1|}}
+\lstnewenvironment{shell}{\lstset{style=lstshell}}{}
+\lstnewenvironment{latex}{%
+  \lstset{
+    basicstyle = \small\ttfamily,
+    frame      = single,
+    gobble     = 4,
+    language   = [LaTeX]TeX,
+  }%
+}{}
+
+% 调整版本历史和索引的格式
 \renewcommand\glossaryname{版本历史}
 \GlossaryPrologue{\section*{\glossaryname}}
 \def\changes@#1#2#3{%
@@ -137,8 +147,14 @@ version 2005/12/01 or later.
   \section*{\indexname}
   \textit{意大利体的数字表示描述对应索引项的页码；%
     带下划线的数字表示定义对应索引项的代码行号；%
-    罗马字体的数字表示使用对应索引项的代码行号。}}
-\newcommand\TeXLive{\TeX{} Live}
+    罗马字体的数字表示使用对应索引项的代码行号。}%
+}
+
+\hypersetup{
+  allcolors         = blue,
+  bookmarksnumbered = true,
+  bookmarksopen     = true,
+}
 \makeatother
 
 \EnableCrossrefs
@@ -148,8 +164,10 @@ version 2005/12/01 or later.
 
 \begin{document}
   \DocInput{\jobname.dtx}
+  \clearpage
   \linespread{1.3}
   \PrintChanges
+  \clearpage
   \linespread{1}
   \PrintIndex
 \end{document}
@@ -203,6 +221,395 @@ version 2005/12/01 or later.
 %
 % \section{简介}
 %
+% \subsection{文件组成}
+% 本模板的主要文件如表~\ref{tab:files}：
+% \begin{table}[htb]
+%   \centering\small
+%   \caption{模板的文件组成}
+%   \label{tab:files}
+%   \begin{tabular}{lll}
+%     \toprule
+%     类别     & 文件                     & 说明                           \\
+%     \midrule
+%     模板文件 & \file{chinathesis.dtx}   & 模板原始代码文件，用户无需使用 \\
+%              & \file{chinathesis.cls}   & 文档类文件                     \\
+%              & \file{chinathesis-*.bst} & 参考文献表格式                 \\
+%     \midrule
+%     生成文件 & \file{chinathesis.pdf}   & （你正在阅读的）模板使用说明   \\
+%     \midrule
+%     示例文档 & \file{main.tex}          & 主文档                         \\
+%              & \file{chapters/*.tex}    & 示例文档的各个章节             \\
+%              & \file{figures/}          & 放置图片的目录                 \\
+%              & \file{bib/refs.bib}      & \BibTeX{} 示例数据库           \\
+%     \midrule
+%     其他     & \file{README.md}         & 基本说明                       \\
+%              & \file{latexmkrc}         & latexmk 的配置文件             \\
+%              & \file{Makefile}          & GNU make 的配置文件            \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% 示例文档包括了常用的 \LaTeX{} 命令，建议新手从此入手，用自己的内容进行替换。
+%
+% 文件 \file{chinathesis.dtx} 是模板的原始代码文件，可以编译生成文档类文件
+% \file{chinathesis.cls} 和模板使用说明文件 \file{chinathesis.pdf} 。
+% 原始模板文件仅供模板开发者使用，一般用户无需使用。
+%
+%
+% \subsection{依赖宏包}
+%
+% 本模板要求使用 TeX Live、MacTeX 或 MikTeX 不低于 2016 年的发行版，
+% 推荐升级到最新的版本。
+%
+% 模板直接依赖的宏包有：
+% \pkg{amsmath},
+% \pkg{amsthm},
+% \pkg{caption},
+% \pkg{calc},
+% \pkg{ctex},
+% \pkg{footmisc},
+% \pkg{geometry},
+% \pkg{graphicx},
+% \pkg{titletoc},
+% \pkg{url},
+% \pkg{natbib},
+% \pkg{unicode-math}。
+%
+% 另外，模板还对其他宏包提供了支持，包括：
+% \pkg{amsmath},
+% \pkg{algorithm2e},
+% \pkg{hyperref},
+% \pkg{nomencl},
+% \pkg{siunitx}。
+% 这些宏包并非必需，用户可以根据需要选择使用。
+% 模板在检测到这些宏包被调用后会自动进行配置。
+%
+% 注意，本模板\emph{不}兼容的宏包有：
+% \pkg{amsfonts},
+% \pkg{amssymb},
+% \pkg{biblatex},
+% \pkg{bm},
+% \pkg{cite},
+% \pkg{mathrsfs},
+% \pkg{newtx},
+% \pkg{upgreek}。
+%
+%
+% \subsection{开始编译}
+%
+% \begin{enumerate}
+%
+% \item GNU make \\
+% Linux/Mac用户，可以直接使用 GNU make 工具，这是最简单的方法。
+% 编译论文 \file{main.pdf}：
+% \begin{shell}
+%   make
+% \end{shell}
+% 编译说明文档 \file{chinathesis.pdf}：
+% \begin{shell}
+%   make doc
+% \end{shell}
+% 另外还可以用 \shellcmd{make clean} 清理辅助文件。
+%
+% \item |latexmk| \\
+% Windows 用户可能无法使用GNU make，使用 |latexmk| 也是一个比较简单的方法，
+% 配置文件由 \file{latexmkrc} 给出，其参数设置为 |-xelatex|，用户编译论文
+% 只需使用命令：
+% \begin{shell}
+%   latexmk -xelatex main.tex
+% \end{shell}
+% 编译说明文档：
+% \begin{shell}
+%   latexmk -xelatex chinathesis.dtx
+% \end{shell}
+% 清理辅助文件可以用 \shellcmd{latexmk -c}。图形界面用户应参考编辑器的使用说明。
+%
+% \item 手动编译 \\
+% 手动编译是最繁琐的方法，用户可能需要运行多遍，以确保论文的交叉引用等信息全部正确。
+%
+% 编译论文 \file{main.pdf}：
+% \begin{shell}
+%   xelatex main
+%   bibtex main # 如果不使用 BibTeX 可以略过此步
+%   xelatex main
+%   xelatex main
+% \end{shell}
+% 编译说明文档 \file{chinathesis.pdf}：
+% \begin{shell}
+%   xelatex chinathesis.dtx
+%   makeindex -s gind.ist chinathesis.idx
+%   makeindex -s gglo.ist -o chinathesis.gls chinathesis.glo
+%   xelatex chinathesis.dtx
+%   xelatex chinathesis.dtx
+% \end{shell}
+% \end{enumerate}
+%
+%
+%
+% \section{模板设置}
+%
+%
+% \subsection{文档类参数}
+% 模板提供了若干选项，应在载入模板时设置，如：
+% \begin{latex}
+%   \documentclass[doctor,english,pdf]{chinathesis}
+% \end{latex}
+%
+% 全部的选项见表~\ref{tab:options}。
+% \begin{table}[htb]
+%   \centering\small
+%   \caption{文档类参数}
+%   \label{tab:options}
+%   \begin{tabular}{ll}
+%     \toprule
+%     文档类参数         & 说明 \\
+%     \midrule
+%     \opt{doctor}*      & 博士论文 \\
+%     \opt{master}       & 硕士论文 \\
+%     \opt{bachelor}     & 本科论文 \\
+%     \opt{chinese}*     & 中文 \\
+%     \opt{english}      & English \\
+%     \opt{print}*       & 用于双面打印纸质论文 \\
+%     \opt{pdf}          & 单面打印，并保留超链接颜色 \\
+%     \opt{super}*       & 角标数字式文献引用标注 \\
+%     \opt{numbers}      & 数字式文献引用标注 \\
+%     \opt{authoryear}   & 著者-出版年制文献引用标注 \\
+%     \opt{arabic}       & 阿拉伯数字式章节标题（限本科生）\\
+%     \bottomrule
+%   \end{tabular}
+%   \caption*{\small 注：带 * 号的是默认参数}
+% \end{table}
+%
+%
+% \subsection{字体设置}
+% 本模板是以 \pkg{XeTeX} + \pkg{fontspec} + \pkg{xeCJK}
+% 的方式来配置字体的，
+% 所以用户必须使用 UTF-8 编码保存源文件，并且用 |xelatex| 命令进行编译。
+%
+% \DescribeOption{fontset=\meta{font}}
+% 默认情况下，本模板可以自动检测操作系统，并配置合适的字体。
+% 用户可以在调用文档类时加入选项
+% \opt{fontset=mac/windows/adobe} 指定加载的字库，
+% 也可以使用 \opt{fontset=none}，然后自行配置，
+% 详见 \pkg{ctex}、\pkg{xeCJK}、\pkg{fontspec} 等宏包的使用说明。
+%
+% 注意，Linux 系统下可能缺失 Times New Roman 等西文字体，
+% 而且默认的中文字库 Fandol 也容易出现缺字的情况。
+% 我们建议 Linux 用户自行配置合适的字体。
+%
+%
+%
+% \section{论文内容}
+%
+% \subsection{封面}
+%
+% “封面”的名字让人有些混淆，它既可以指由印刷厂统一制作的硬皮封面（cover），也可
+% 以指书打开后的第一页（title page）。在这里指的是后者，所以本模板从 title page
+% 开始。
+%
+% \DescribeMacro{\maketitle}
+% \DescribeMacro{\makestatement}
+% 封面和声明页分别由 \cs{maketitle} 和 \cs{makestatement} 命令生成，
+% 其中的各项信息使用 \cs{\meta{item}\marg{info}} 的方式填写，
+% 本模板提供的命令如表~\ref{tab:covercmds}，
+% 其中带 |en| 前缀的命令是 设置英文封面的命令：
+% \begin{table}[htb]
+%   \centering\small
+%   \caption{录入封面信息的命令}
+%   \label{tab:covercmds}
+%   \begin{tabular}{lll}
+%     \toprule
+%     命令              & 命令（英文）        & 说明                   \\
+%     \midrule
+%     \cs{title}        & \cs{entitle}        & 论文标题               \\
+%     \cs{author}       & \cs{enauthor}       & 作者姓名               \\
+%     \cs{major}        & \cs{enmajor}        & 学科专业               \\
+%     \cs{supervisor}   & \cs{ensupervisor}   & 导师姓名               \\
+%     \cs{cosupervisor} & \cs{encosupervisor} & 副导师姓名             \\
+%     \cs{date}         & \cs{endate}         & 完成时间（默认为今天） \\
+%     \cs{secretlevel}  & \cs{ensecretlevel}  & 密级（默认不保密）     \\
+%     \cs{secretyear}   & -                   & 保密年限               \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+%
+% \subsection{摘要和章节}
+% \DescribeEnv{abstract}
+% \DescribeEnv{enabstract}
+% \DescribeEnv{notation}
+% \DescribeEnv{acknowledgements}
+% \DescribeEnv{publications}
+% 对于特殊的章节，\cls{chinathesis} 还提供了相应的环境：
+% \begin{itemize}
+%   \item 中文摘要：\env{abstract}
+%   \item 英文摘要：\env{enabstract}
+%   \item 符号说明：\env{notation}
+%   \item 致谢：    \env{acknowledgements}
+%   \item 发表成果：\env{publications}
+% \end{itemize}
+%
+% \DescribeMacro{\keywords}
+% \DescribeMacro{\enkeywords}
+% 摘要的关键词应使用 \cs{keywords} 和 \cs{enkeywords} 命令，
+% 并包含在摘要环境中，比如：
+% \begin{latex}
+%   \begin{abstract}
+%     这里是摘要。
+%     \keywords{论文；摘要；关键词}
+%   \end{abstract}
+% \end{latex}
+%
+% \DescribeMacro{\tableofcontents}
+% \DescribeMacro{\listoffigures}
+% \DescribeMacro{\listoftables}
+% 目录和图、表清单可以使用命令自动生成：
+% \begin{itemize}
+%   \item 目录：  \cs{tableofcontents}
+%   \item 图清单：\cs{listoffigures}
+%   \item 表清单：\cs{listoftables}
+% \end{itemize}
+%
+%
+% \subsection{浮动体}
+%
+% 图题置于图的下方，表题置于表的上方。
+% \LaTeX{} 的 \cs{caption} 命令并不能控制在浮动体中的位置，
+% 需要作者注意写在合适的地方。
+%
+% \DescribeMacro{\note}
+% 本模板还提供了 \cs{note}\marg{notes} 命令，用于在图表中添加注释。
+%
+% 关于图片的并排，推荐使用较新的 \pkg{subcaption} 宏包，不建议使用
+% \pkg{subfigure} 或 \pkg{subfig}。
+%
+% 更多的表格样式参见 \pkg{booktabs}（三线表）、\pkg{longtable}（跨页表格）。
+%
+% 算法可以使用 \pkg{algorithms} 宏包或者较新的 \pkg{algorithm2e}。
+%
+%
+% \subsection{数学}
+%
+% \LaTeX{} 默认按照美国的习惯排版数学公式和符号，
+% 但是本模板的数学符号依据《GB 3102.11--1993》执行，
+% 与 \LaTeX{} 的习惯有所差异。
+% 本模板基于 \pkg{unicode-math} 宏包配置数学符号，以遵循国标的规定。
+%
+% 注意，\pkg{unicode-math} 宏包与 \pkg{amsfonts}, \pkg{amssymb}, \pkg{bm},
+% \pkg{mathrsfs}, \pkg{upgreek} 等宏包\emph{不}兼容。
+% 本模板作了处理，用户可以直接使用这些宏包的命令，如 \cs{bm}, \cs{mathscr},
+% \cs{upGamma}。
+%
+% \DescribeMacro{\symup}
+% \DescribeMacro{\symbf}
+% 本模板中数学符号的用法与 \LaTeX{} 传统有些区别：
+% \begin{itemize}
+%   \item 数学常数和特殊函数使用正体，
+%     如圆周率 $\symup{\pi}$、$\symup{\Gamma}$ 函数。
+%     应使用 \pkg{unicode-math} 宏包提供的 \cs{symup} 命令转为正体，
+%     如 |\symup{\pi}|。
+%   \item 向量、矩阵和张量要求粗斜体，应使用 \cs{symbf} 命令，
+%     如 |\symbf{A}|、|\symbf{u}|。
+%   \item 有限增量符号 $\increment$ （U+2206）应使用 \cs{increment} 命令。
+%   \item 微分符号 $\mathrm{d}$ 使用正体，本模板提供了 \cs{dif} 命令。
+% \end{itemize}
+%
+% 关于数学符号更多的用法，参见 \pkg{unicode-math} 宏包的使用说明和符号列表
+% \pkg{unimath-symbols}。
+%
+%
+% \subsection{参考文献}
+%
+% \DescribeOption{authoryear}
+% \DescribeOption{super}
+% \DescribeOption{numbers}
+% 按照《GB/T 7714-2015》 的规定，
+% 参考文献的标注体系分为“顺序编码制”和“著者-出版年制”（authoryear），
+% 其中顺序编码制根据引用标注样式的不同分为角标数字式（super）
+% 和与正文平排的数字式（numbers）。
+%
+% 推荐使用角标数字式顺序编码制（默认），
+% 用户也可以在文档类参数中设置，如：
+% \begin{latex}
+%   \documentclass[doctor,authoryear]{chinathesis}
+% \end{latex}
+%
+% \DescribeMacro{\cite}
+% 在正文中引用文献时应使用 \cs{cite} 命令。
+% 同一处引用多篇文献时，需要将各篇文献的 key 一同写在参数中，
+% 如 |\cite{knuth84,lamport94,mittelbach04}|。
+% 它可以自动排序并用处理连续编号。
+% 更多的引用标注方法可以参考 \pkg{natbib} 宏包的使用说明。
+%
+% \DescribeMacro{\inlinecite}
+% 在使用角标数字式时，如果文献序号作为叙述文字的一部分，
+% 需要临时将文献序号与正文平排，可以使用 \cs{inlinecite} 命令，如：
+% \begin{latex}
+%   文献~\inlinecite{knuth84} 提出了一种新的断行算法
+% \end{latex}
+%
+% 若需要标出引文的页码，可以标在 \cs{cite} 的可选参数中，如
+% |\cite[42]{knuth84}|。
+%
+% \DescribeMacro{\bibliography}
+% 参考文献表可以使用 \BibTeX{} 生成，并在文中使用 \cs{bibliography} 命令调用。
+% 注意文献列表的样式已经在模板中根据选项设置，
+% 用户\emph{不再}需要使用 \cs{bibliographystyle} 命令。
+%
+% \BibTeX{} 默认情况下可以自动识别文献语言，并自动处理文献类型和载体类型标识，
+% 但是在少数情况下需要用户手动指定，如：
+% \begin{latex}
+%   @misc{citekey,
+%     language = {japanese},
+%     mark     = {Z},
+%     medium   = {DK},
+%     ...
+% \end{latex}
+% 可选的语言有 english, chinese, japanese, russian。
+%
+% 注意，国标规定参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，
+% 然后按著者字顺和出版年排列；
+% 中文文献可以按著者汉语拼音字顺排列，也可以按著者的笔画笔顺排列。
+% 然而由于 \BibTeX{} 功能的局限性，无法自动获取著者姓名的拼音或笔画笔顺，
+% 所以\emph{必须}在 bib 数据库中的 key 域手动录入著者姓名的拼音，如：
+% \begin{latex}
+%   @book{capital,
+%     author = {马克思 and 恩格斯},
+%     key    = {ma3 ke4 si1   en1 ge2 si1},
+%     ...
+% \end{latex}
+%
+% \BibTeX{} 对自定义样式的支持比较有限，
+% 所以用户只能通过修改 \file{bst} 文件来修改文献列表的格式。
+% 本宏包提供了一些接口供用户更方便地修改。
+%
+% 在 \file{bst} 文件开始处的 |load.config| 函数中，
+% 有一组配置参数用来控制样式，表~\ref{tab:config} 列出了每一项的默认值和功能。
+% 若变量被设为 |#1| 则表示该项被启用，设为 |#0| 则不启用。
+% 默认的值是严格遵循《GB/T 7714-2015》的配置。
+%
+% \begin{table}[htb]
+% \centering\small
+% \caption{参考文献表样式的配置参数}
+% \label{tab:config}
+% \begin{tabular}{lcl}
+%   \toprule
+%   参数值                         & 默认值 & 功能                           \\
+%   \midrule
+%   uppercase.name                 & |#1|   & 将著者姓名转为大写             \\
+%   max.num.authors                & |#3|   & 输出著者的最多数量             \\
+%   period.between.author.year     & |#0|   & 著者和年份之间使用句点连接     \\
+%   sentence.case.title            & |#1|   & 将西文的题名转为 sentence case \\
+%   link.title                     & |#0|   & 在题名上添加 url 的超链接      \\
+%   show.mark                      & |#1|   & 显示文献类型标识               \\
+%   italic.jounal                  & |#0|   & 西文期刊名使用斜体             \\
+%   show.missing.address.publisher & |#1|   & 出版项缺失时显示“出版者不详”   \\
+%   show.url                       & |#1|   & 显示 url                       \\
+%   show.doi                       & |#1|   & 显示 doi                       \\
+%   show.note                      & |#0|   & 显示 note 域的信息             \\
+%   \bottomrule
+% \end{tabular}
+% \end{table}
 %
 %
 % \StopEventually
@@ -218,7 +625,6 @@ version 2005/12/01 or later.
 % \subsection{处理选项}
 %
 %    \begin{macrocode}
-%<*class>
 \newif\ifustc@doctor
 \newif\ifustc@master
 \newif\ifustc@bachelor
@@ -277,9 +683,9 @@ version 2005/12/01 or later.
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{titletoc}
-\RequirePackage{url}
-\RequirePackage[perpage]{footmisc}
 \RequirePackage{caption}
+\RequirePackage[perpage]{footmisc}
+\RequirePackage{url}
 \RequirePackage{calc}
 \RequirePackage{amsthm}
 \ifustc@numerical
@@ -371,6 +777,7 @@ version 2005/12/01 or later.
   ]{Songti SC}
   \setCJKfamilyfont{zhhei}[BoldFont=* Medium]{Heiti SC}
   \setCJKfamilyfont{zhkai}[BoldFont=* Bold]{Kaiti SC}
+  \xeCJKsetwidth{‘’“”}{1em}
 }{
   \xeCJKsetup{EmboldenFactor=2}
   \ustc@strifeq{\ustc@fontset}{windows}{
@@ -581,6 +988,39 @@ version 2005/12/01 or later.
 %
 % \subsection{处理语言}
 %
+% 由于 Unicode 的一些标点符号是中西文混用的：
+% \unicodechar{00B7}、
+% \unicodechar{2013}、
+% \unicodechar{2014}、
+% \unicodechar{2018}、
+% \unicodechar{2019}、
+% \unicodechar{201C}、
+% \unicodechar{201D}、
+% \unicodechar{2025}、
+% \unicodechar{2026}、
+% \unicodechar{2E3A}，
+% 所以要根据语言设置正确的字体。
+% \footnote{\url{https://github.com/CTeX-org/ctex-kit/issues/389}}
+% 所以要根据语言设置正确的字体。
+%    \begin{macrocode}
+\newcommand\ustc@setchinese{%
+  \xeCJKResetPunctClass
+}
+\newcommand\ustc@setenglish{%
+  \xeCJKDeclareCharClass{HalfLeft}{"2018, "201C}%
+  \xeCJKDeclareCharClass{HalfRight}{%
+    "00B7, "2019, "201D, "2013, "2014, "2025, "2026, "2E3A%
+  }%
+}
+\newcommand\ustc@setdefaultlanguage{%
+  \ifustc@chinese
+    \ustc@setchinese
+  \else
+    \ustc@setenglish
+  \fi
+}
+%    \end{macrocode}
+%
 % 这里设置了中英文的各种名字。
 %    \begin{macrocode}
 \newcommand\ustc@universityname{中国大学}
@@ -622,7 +1062,7 @@ version 2005/12/01 or later.
 %    \end{macrocode}
 %
 % 页眉和页码可以使用 \pkg{fancyhdr} 或者 \pkg{titleps} 来设置，
-% 但是 \pkg{fancyhdr} 有一个坑，它定义的样式在第一次被调用时会修改
+% 但是 \pkg{fancyhdr} 有一个坑：它定义的样式在第一次被调用时会修改
 % \cs{chaptermark}，所以如果需要切换几种 page style 就会有问题；
 % 而且页眉默认是向下对齐的。
 %
@@ -662,7 +1102,7 @@ version 2005/12/01 or later.
   \def\chaptermark#1{%
     \markboth{%
       \CTEXifname{\CTEXthechapter\CTEX@chapter@aftername}{}%
-      #1%
+      \ustc@spacetitle{#1}%
     }{}%
   }
 }{
@@ -675,23 +1115,12 @@ version 2005/12/01 or later.
           \fi
         \fi
       \fi
-      #1%
+      \ustc@spacetitle{#1}%
     }{}%
   }
 }
 \let\sectionmark\@gobble
 \pagestyle{plain}
-%    \end{macrocode}
-%
-% |headings| 只有页眉，没有页脚。
-%    \begin{macrocode}
-\def\ps@headings{%
-  \def\@oddhead{\ustc@head}%
-  \let\@evenhead\@oddhead
-  \let\@oddfoot\@empty
-  \let\@evenfoot\@empty
-  \let\@mkboth\markboth
-}
 %    \end{macrocode}
 %
 % 每章第一页默认会设置特殊的 page style，我们希望它不改变页眉页脚，
@@ -716,6 +1145,7 @@ version 2005/12/01 or later.
   \cleardoublepage
   \@mainmatterfalse
   \pagenumbering{Roman}%
+  \pagestyle{plain}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -800,6 +1230,7 @@ version 2005/12/01 or later.
 % 中文封面：
 %    \begin{macrocode}
 \newcommand\ustc@makezhtitle{%
+  \ustc@setchinese
   \begin{titlepage}%
     \ustc@pdfbookmark{封面}%
     \centering
@@ -827,6 +1258,7 @@ version 2005/12/01 or later.
         \textsf{完成时间：} & \ustc@date
       \end{tabular}\par}%
   \end{titlepage}%
+  \ustc@setdefaultlanguage
 }
 %    \end{macrocode}
 %
@@ -844,6 +1276,7 @@ version 2005/12/01 or later.
 % 英文封面
 %    \begin{macrocode}
 \newcommand\ustc@makeentitle{%
+  \ustc@setenglish
   \begin{titlepage}%
     \ustc@pdfbookmark{Title page}%
     \centering
@@ -870,6 +1303,7 @@ version 2005/12/01 or later.
         Finished time: \ustc@endate
       \end{tabular}\par}%
   \end{titlepage}%
+  \ustc@setdefaultlanguage
 }
 %    \end{macrocode}
 %
@@ -881,7 +1315,7 @@ version 2005/12/01 or later.
   \pagestyle{empty}%
   \ustc@makezhtitle
   \ustc@makeentitle
-  \pagestyle{plain}
+  \pagestyle{plain}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -968,6 +1402,29 @@ version 2005/12/01 or later.
 \setcounter{secnumdepth}{5}
 %    \end{macrocode}
 %
+% \begin{macro}{\ustc@spacetitle}
+% 章题为两字时中间空两字，三字时空一字，四字时空半字，四字以上不空。
+% 这里用 \LaTeX3 的 \cs{str\_count:N} 判断字数。
+% 注意，\pkg{stringstrings} 宏包会导致范数命令 \verb+\|+ 被修改。
+%    \begin{macrocode}
+\newcount\ustc@titlelength
+\DeclareRobustCommand\ustc@spacetitle[1]{%
+  \ustc@titlelength=\csname str_count:N\endcsname{#1}%
+  \begingroup
+    \ifcase\ustc@titlelength
+    \or\or
+      \ziju{2}%
+    \or
+      \ziju{1}%
+    \or
+      \ziju{0.5}%
+    \fi
+    #1%
+  \endgroup
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\ustc@textcircled}
 % 五级节标题和脚注需要使用带圈的数字，这里使用 \cs{ustc@circlefont} ：
 %    \begin{macrocode}
@@ -990,7 +1447,7 @@ version 2005/12/01 or later.
   chapter = {
     format      = \centering\sffamily\bfseries\fontsize{16\bp@}{26.67\bp@}\selectfont,
     nameformat  = {},
-    titleformat = {},
+    titleformat = \ustc@spacetitle,
     number      = \thechapter,
     aftername   = \hspace{\ccwd},
   },
@@ -1114,10 +1571,12 @@ version 2005/12/01 or later.
 % 中文摘要环境。
 %    \begin{macrocode}
 \newenvironment{abstract}{%
+  \ustc@setchinese
   \ustc@chapter{摘要}%
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
   \textbf{关键词}：\ustc@keywords
+  \ustc@setdefaultlanguage
 }
 %    \end{macrocode}
 % \end{environment}
@@ -1127,11 +1586,13 @@ version 2005/12/01 or later.
 %    \begin{macrocode}
 \newenvironment{enabstract}{%
   \@openrightfalse
+  \ustc@setenglish
   \ustc@chapter{Abstract}%
   \@openrighttrue
 }{
   \par\null\par\noindent\hangindent=5.3em\relax
   \textbf{Key Words}: \ustc@enkeywords
+  \ustc@setdefaultlanguage
 }
 %    \end{macrocode}
 % \end{environment}
@@ -1152,7 +1613,7 @@ version 2005/12/01 or later.
 % 下面用 \pkg{titletoc} 宏包设置目录内容的格式。
 % 先定义目录线：
 %    \begin{macrocode}
-\newcommand\ustc@leaders{\titlerule*[0.5pc]{$\cdot$}}
+\newcommand\ustc@leaders{\titlerule*[9\bp@]{\textperiodcentered}}
 %    \end{macrocode}
 %
 % 各章目录要求宋体 14 磅，行距 20 磅，段前 6 磅，段后 0 磅，两端对齐，
@@ -1161,30 +1622,27 @@ version 2005/12/01 or later.
 % 另外 \pkg{ctex} 在章目录的序号后加 |\hspace{.3em}|，所以用 \cs{unskip} 修正。
 %    \begin{macrocode}
 \titlecontents{chapter}
-  [\z@]
-  {\addvspace{6\bp@}\fontsize{14\bp@}{20\bp@}\selectfont}
-  {\contentspush{\thecontentslabel\unskip\hskip\ccwd\relax}}
-  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+  [\z@]{\addvspace{6\bp@}\fontsize{14\bp@}{20\bp@}\selectfont}
+  {\contentspush{\thecontentslabel\unskip\hspace{\ccwd}}}{}
+  {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 %    \end{macrocode}
 %
 % 一级节标题目录要求宋体 12 磅，行距 20 磅，左缩进一字，段前段后 0 磅，
 % 两端对齐，页码右对齐，序号与题名间空一字。
 %    \begin{macrocode}
 \titlecontents{section}
-  [\ccwd]
-  {\fontsize{12\bp@}{20\bp@}\selectfont}
-  {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
-  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+  [\ccwd]{\fontsize{12\bp@}{20\bp@}\selectfont}
+  {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
+  {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 %    \end{macrocode}
 %
 % 二级节标题目录要求宋体 10.5 磅，行距 20 磅，左缩进两字，段前段后 0 磅，
 % 两端对齐，页码右对齐，序号与题名间空一字。
 %    \begin{macrocode}
 \titlecontents{subsection}
-  [2\ccwd]
-  {\fontsize{10.5\bp@}{20\bp@}\selectfont}
-  {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
-  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+  [2\ccwd]{\fontsize{10.5\bp@}{20\bp@}\selectfont}
+  {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
+  {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 %    \end{macrocode}
 %
 % \begin{macro}{\listoffigures}
@@ -1195,10 +1653,9 @@ version 2005/12/01 or later.
   \@starttoc{lof}%
 }
 \titlecontents{figure}
-  [\ccwd]
-  {\normalsize}
-  {\thecontentslabel\hspace*{0.5em}}
-  {}{\ustc@leaders\contentspage}
+  [2.3em]{\normalsize}
+  {\contentslabel{2.3em}}{}
+  {\ustc@leaders\contentspage}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1209,10 +1666,9 @@ version 2005/12/01 or later.
   \@starttoc{lot}%
 }
 \titlecontents{table}
-  [\ccwd]
-  {\normalsize}
-  {\thecontentslabel\hspace*{0.5em}}
-  {}{\ustc@leaders\contentspage}
+  [2.3em]{\normalsize}
+  {\contentslabel{2.3em}}{}
+  {\ustc@leaders\contentspage}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1224,6 +1680,21 @@ version 2005/12/01 or later.
 \newenvironment{notation}{%
   \ustc@chapter{\ustc@notationname}%
 }{}%
+\newcommand*\notationlabel[1]{#1\hfil}%
+\newenvironment{notationlist}[1]{%
+  \list{}{%
+    \itemsep 3pt%
+    \labelwidth #1\relax%
+    \labelsep 1em%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \advance\leftmargin 3em%
+    \rightmargin 3em%
+    \let\makelabel\notationlabel
+  }%
+}{%
+  \endlist
+}
 %    \end{macrocode}
 % \end{environment}
 %
@@ -1233,6 +1704,12 @@ version 2005/12/01 or later.
 % 段间距 0 磅。
 %    \begin{macrocode}
 \setlength{\parskip}{0\p@ \@plus .2\p@}
+%    \end{macrocode}
+%
+% 在 \opt{scheme=plain} 时也首段缩进。
+%    \begin{macrocode}
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
 %    \end{macrocode}
 %
 % URL 的字体设为保持原样。
@@ -1331,10 +1808,10 @@ version 2005/12/01 or later.
 \setcounter{dbltopnumber}{9}
 %    \end{macrocode}
 %
-% 修改默认的浮动体描述符为 |htbp|。
+% 修改默认的浮动体描述符为 |htb|。
 %    \begin{macrocode}
-\def\fps@figure{htbp}
-\def\fps@table{htbp}
+\def\fps@figure{htb}
+\def\fps@table{htb}
 %    \end{macrocode}
 %
 % 用 \pkg{caption} 宏包设置图、表的格式
@@ -1616,7 +2093,7 @@ version 2005/12/01 or later.
 %    \end{macrocode}
 %
 %
-% \subsubsection{hyperref 宏包}
+% \subsubsection{\pkg{hyperref} 宏包}
 %
 %    \begin{macrocode}
 \ustc@atendpackage{hyperref}{
@@ -1700,7 +2177,7 @@ version 2005/12/01 or later.
 %    \end{macrocode}
 %
 %
-% \subsubsection{amsthm 宏包}
+% \subsubsection{\pkg{amsthm} 宏包}
 %
 %    \begin{macrocode}
 \ustc@atendpackage{amsthm}{
@@ -1764,30 +2241,53 @@ version 2005/12/01 or later.
 }
 %    \end{macrocode}
 %
-% \subsubsection{algorithm2e 宏包}
+%
+% \subsubsection{\pkg{algorithm2e} 宏包}
+%
+% 按章节编号。
+%    \begin{macrocode}
+\PassOptionsToPackage{algochapter}{algorithm2e}
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 \ustc@atendpackage{algorithm2e}{
   \ifustc@chinese
-    \renewcommand\listalgorithmcfname{算法索引}
-    \renewcommand\algorithmcfname{算法}
+    \SetAlgorithmName{算法}{算法}{算法清单}
   \else
-    \renewcommand\listalgorithmcfname{List of Algorithms}
-    \renewcommand\algorithmcfname{Algorithm}
+    \SetAlgorithmName{Algorithm}{Algorithm}{List of Algorithms}
   \fi
 %    \end{macrocode}
 %
-% 使算法目录另起一页
+% 设置算法环境的格式。
 %    \begin{macrocode}
-  \let\ustc@save@listofalgorithms=\listofalgorithms
-  \renewcommand\listofalgorithms{%
-    \cleardoublepage
-    \ustc@save@listofalgorithms}
+  \SetAlCapSkip{6\bp@}
+  \SetAlCapFnt{\small}
+  \SetAlCapNameFnt{\small}
+  \ifustc@graduate
+    \SetAlCapNameSty{textbf}
+  \fi
+  \SetAlgoCaptionSeparator{\unskip\hspace*{\ccwd}}
+%    \end{macrocode}
+%
+% 设置算法清单的格式
+%    \begin{macrocode}
+  \renewcommand\listofalgocfs{%
+    \ifustc@graduate
+      \cleardoublepage
+    \fi
+    \ustc@chapter{\listalgorithmcfname}%
+    \@starttoc{loa}%
+  }
+  \titlecontents{algocf}
+    [2.3em]{\normalsize}
+    {\contentslabel{2.3em}}{}
+    {\ustc@leaders\contentspage}
+  \contentsuse{algocf}{loa}
 }
 %    \end{macrocode}
 %
 %
-% \subsubsection{nomencl 宏包}
+% \subsubsection{\pkg{nomencl} 宏包}
 %
 %    \begin{macrocode}
 \ustc@atendpackage{nomencl}{
@@ -1804,13 +2304,12 @@ version 2005/12/01 or later.
   \def\endthenomenclature{%
     \endlist
     \nompostamble
-    \clearpage
   }
 }
 %    \end{macrocode}
 %
 %
-% \subsubsection{siunitx 宏包}
+% \subsubsection{\pkg{siunitx} 宏包}
 %
 %    \begin{macrocode}
 \ustc@atendpackage{siunitx}{
@@ -1829,9 +2328,5 @@ version 2005/12/01 or later.
 }
 %    \end{macrocode}
 %
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-% \clearpage
 % \Finale
 \endinput

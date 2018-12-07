@@ -58,9 +58,9 @@
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{titletoc}
-\RequirePackage{url}
-\RequirePackage[perpage]{footmisc}
 \RequirePackage{caption}
+\RequirePackage[perpage]{footmisc}
+\RequirePackage{url}
 \RequirePackage{calc}
 \RequirePackage{amsthm}
 \ifustc@numerical
@@ -120,6 +120,7 @@
   ]{Songti SC}
   \setCJKfamilyfont{zhhei}[BoldFont=* Medium]{Heiti SC}
   \setCJKfamilyfont{zhkai}[BoldFont=* Bold]{Kaiti SC}
+  \xeCJKsetwidth{‘’“”}{1em}
 }{
   \xeCJKsetup{EmboldenFactor=2}
   \ustc@strifeq{\ustc@fontset}{windows}{
@@ -232,6 +233,22 @@
 \renewcommand\huge{\@setfontsize\huge{24\bp@}{40\bp@}}
 \renewcommand\Huge{\@setfontsize\Huge{26\bp@}{43.33\bp@}}
 \linespread{1}\selectfont
+\newcommand\ustc@setchinese{%
+  \xeCJKResetPunctClass
+}
+\newcommand\ustc@setenglish{%
+  \xeCJKDeclareCharClass{HalfLeft}{"2018, "201C}%
+  \xeCJKDeclareCharClass{HalfRight}{%
+    "00B7, "2019, "201D, "2013, "2014, "2025, "2026, "2E3A%
+  }%
+}
+\newcommand\ustc@setdefaultlanguage{%
+  \ifustc@chinese
+    \ustc@setchinese
+  \else
+    \ustc@setenglish
+  \fi
+}
 \newcommand\ustc@universityname{中国大学}
 \newcommand\ustc@enuniversityname{University of China}
 \ifustc@chinese
@@ -275,7 +292,7 @@
   \def\chaptermark#1{%
     \markboth{%
       \CTEXifname{\CTEXthechapter\CTEX@chapter@aftername}{}%
-      #1%
+      \ustc@spacetitle{#1}%
     }{}%
   }
 }{
@@ -288,19 +305,12 @@
           \fi
         \fi
       \fi
-      #1%
+      \ustc@spacetitle{#1}%
     }{}%
   }
 }
 \let\sectionmark\@gobble
 \pagestyle{plain}
-\def\ps@headings{%
-  \def\@oddhead{\ustc@head}%
-  \let\@evenhead\@oddhead
-  \let\@oddfoot\@empty
-  \let\@evenfoot\@empty
-  \let\@mkboth\markboth
-}
 \def\ps@none{}
 \ctexset{chapter/pagestyle=none}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
@@ -309,6 +319,7 @@
   \cleardoublepage
   \@mainmatterfalse
   \pagenumbering{Roman}%
+  \pagestyle{plain}%
 }
 \def\ustc@define@term#1#2{%
   \expandafter\gdef\csname #1\endcsname##1{%
@@ -360,6 +371,7 @@
   \if@restonecol\twocolumn \else \newpage \fi
 }
 \newcommand\ustc@makezhtitle{%
+  \ustc@setchinese
   \begin{titlepage}%
     \ustc@pdfbookmark{封面}%
     \centering
@@ -387,6 +399,7 @@
         \textsf{完成时间：} & \ustc@date
       \end{tabular}\par}%
   \end{titlepage}%
+  \ustc@setdefaultlanguage
 }
 \newcommand\ustc@supervisorline{%
   \ifx\ustc@encosupervisor\@empty
@@ -396,6 +409,7 @@
   \fi
 }
 \newcommand\ustc@makeentitle{%
+  \ustc@setenglish
   \begin{titlepage}%
     \ustc@pdfbookmark{Title page}%
     \centering
@@ -422,13 +436,14 @@
         Finished time: \ustc@endate
       \end{tabular}\par}%
   \end{titlepage}%
+  \ustc@setdefaultlanguage
 }
 \renewcommand\maketitle{%
   \pagenumbering{Alph}%
   \pagestyle{empty}%
   \ustc@makezhtitle
   \ustc@makeentitle
-  \pagestyle{plain}
+  \pagestyle{plain}%
 }
 \newcommand\ustc@originality{%
   本人声明所呈交的学位论文，是本人在导师指导下进行研究工作所取得的成果。%
@@ -482,6 +497,21 @@
   \end{titlepage}%
 }
 \setcounter{secnumdepth}{5}
+\newcount\ustc@titlelength
+\DeclareRobustCommand\ustc@spacetitle[1]{%
+  \ustc@titlelength=\csname str_count:N\endcsname{#1}%
+  \begingroup
+    \ifcase\ustc@titlelength
+    \or\or
+      \ziju{2}%
+    \or
+      \ziju{1}%
+    \or
+      \ziju{0.5}%
+    \fi
+    #1%
+  \endgroup
+}
 \newcommand\ustc@textcircled[1]{%
   \ifnum\value{#1}<21\relax
     {\ustc@circlefont\symbol{\numexpr\value{#1} + "245F\relax}}%
@@ -493,7 +523,7 @@
   chapter = {
     format      = \centering\sffamily\bfseries\fontsize{16\bp@}{26.67\bp@}\selectfont,
     nameformat  = {},
-    titleformat = {},
+    titleformat = \ustc@spacetitle,
     number      = \thechapter,
     aftername   = \hspace{\ccwd},
   },
@@ -566,61 +596,77 @@
   }%
   \chapter*{#2}}
 \newenvironment{abstract}{%
+  \ustc@setchinese
   \ustc@chapter{摘要}%
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
   \textbf{关键词}：\ustc@keywords
+  \ustc@setdefaultlanguage
 }
 \newenvironment{enabstract}{%
   \@openrightfalse
+  \ustc@setenglish
   \ustc@chapter{Abstract}%
   \@openrighttrue
 }{
   \par\null\par\noindent\hangindent=5.3em\relax
   \textbf{Key Words}: \ustc@enkeywords
+  \ustc@setdefaultlanguage
 }
 \renewcommand\tableofcontents{%
   \ustc@chapter{\contentsname}%
   \@starttoc{toc}%
 }
-\newcommand\ustc@leaders{\titlerule*[0.5pc]{$\cdot$}}
+\newcommand\ustc@leaders{\titlerule*[9\bp@]{\textperiodcentered}}
 \titlecontents{chapter}
-  [\z@]
-  {\addvspace{6\bp@}\fontsize{14\bp@}{20\bp@}\selectfont}
-  {\contentspush{\thecontentslabel\unskip\hskip\ccwd\relax}}
-  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+  [\z@]{\addvspace{6\bp@}\fontsize{14\bp@}{20\bp@}\selectfont}
+  {\contentspush{\thecontentslabel\unskip\hspace{\ccwd}}}{}
+  {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 \titlecontents{section}
-  [\ccwd]
-  {\fontsize{12\bp@}{20\bp@}\selectfont}
-  {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
-  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+  [\ccwd]{\fontsize{12\bp@}{20\bp@}\selectfont}
+  {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
+  {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 \titlecontents{subsection}
-  [2\ccwd]
-  {\fontsize{10.5\bp@}{20\bp@}\selectfont}
-  {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
-  {}{\ustc@leaders\fontsize{12\bp@}{20\bp@}\selectfont\contentspage}
+  [2\ccwd]{\fontsize{10.5\bp@}{20\bp@}\selectfont}
+  {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
+  {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 \renewcommand\listoffigures{%
   \ustc@chapter{\listfigurename}%
   \@starttoc{lof}%
 }
 \titlecontents{figure}
-  [\ccwd]
-  {\normalsize}
-  {\thecontentslabel\hspace*{0.5em}}
-  {}{\ustc@leaders\contentspage}
+  [2.3em]{\normalsize}
+  {\contentslabel{2.3em}}{}
+  {\ustc@leaders\contentspage}
 \renewcommand\listoftables{%
   \ustc@chapter{\listtablename}%
   \@starttoc{lot}%
 }
 \titlecontents{table}
-  [\ccwd]
-  {\normalsize}
-  {\thecontentslabel\hspace*{0.5em}}
-  {}{\ustc@leaders\contentspage}
+  [2.3em]{\normalsize}
+  {\contentslabel{2.3em}}{}
+  {\ustc@leaders\contentspage}
 \newenvironment{notation}{%
   \ustc@chapter{\ustc@notationname}%
 }{}%
+\newcommand*\notationlabel[1]{#1\hfil}%
+\newenvironment{notationlist}[1]{%
+  \list{}{%
+    \itemsep 3pt%
+    \labelwidth #1\relax%
+    \labelsep 1em%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \advance\leftmargin 3em%
+    \rightmargin 3em%
+    \let\makelabel\notationlabel
+  }%
+}{%
+  \endlist
+}
 \setlength{\parskip}{0\p@ \@plus .2\p@}
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
 \urlstyle{same}
 \def\UrlBreaks{%
   \do\/%
@@ -668,8 +714,8 @@
 \setcounter{bottomnumber}{9}
 \setcounter{totalnumber}{20}
 \setcounter{dbltopnumber}{9}
-\def\fps@figure{htbp}
-\def\fps@table{htbp}
+\def\fps@figure{htb}
+\def\fps@table{htb}
 \DeclareCaptionLabelSeparator{zhspace}{\hspace{\ccwd}}
 \captionsetup{
   format    = hang,
@@ -903,18 +949,32 @@
   }
   \renewcommand\proofname\ustc@proofname
 }
+\PassOptionsToPackage{algochapter}{algorithm2e}
 \ustc@atendpackage{algorithm2e}{
   \ifustc@chinese
-    \renewcommand\listalgorithmcfname{算法索引}
-    \renewcommand\algorithmcfname{算法}
+    \SetAlgorithmName{算法}{算法}{算法清单}
   \else
-    \renewcommand\listalgorithmcfname{List of Algorithms}
-    \renewcommand\algorithmcfname{Algorithm}
+    \SetAlgorithmName{Algorithm}{Algorithm}{List of Algorithms}
   \fi
-  \let\ustc@save@listofalgorithms=\listofalgorithms
-  \renewcommand\listofalgorithms{%
-    \cleardoublepage
-    \ustc@save@listofalgorithms}
+  \SetAlCapSkip{6\bp@}
+  \SetAlCapFnt{\small}
+  \SetAlCapNameFnt{\small}
+  \ifustc@graduate
+    \SetAlCapNameSty{textbf}
+  \fi
+  \SetAlgoCaptionSeparator{\unskip\hspace*{\ccwd}}
+  \renewcommand\listofalgocfs{%
+    \ifustc@graduate
+      \cleardoublepage
+    \fi
+    \ustc@chapter{\listalgorithmcfname}%
+    \@starttoc{loa}%
+  }
+  \titlecontents{algocf}
+    [2.3em]{\normalsize}
+    {\contentslabel{2.3em}}{}
+    {\ustc@leaders\contentspage}
+  \contentsuse{algocf}{loa}
 }
 \ustc@atendpackage{nomencl}{
   \let\nomname\ustc@notationname
@@ -930,7 +990,6 @@
   \def\endthenomenclature{%
     \endlist
     \nompostamble
-    \clearpage
   }
 }
 \ustc@atendpackage{siunitx}{

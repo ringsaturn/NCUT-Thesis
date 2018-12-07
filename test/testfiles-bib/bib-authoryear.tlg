@@ -98,7 +98,8 @@ Completed box being shipped out [1]
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline \ETC.}
-...\mark{{第1章\protect \hspace  {\ccwd }Citations}{}}
+...\mark{{第1章\protect \hspace  {\ccwd }\protect \ustc@spacetitle  {Citatio\ETC.
+}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -686,15 +687,15 @@ Completed box being shipped out [3]
 ...\glue 0.0 plus 1.0fil
 ...\hbox(22.76228+0.0)x417.11752
 ....\vbox(22.76228+0.0)x417.11752, glue set 10.31744fil
-.....\hbox(8.43135+3.6135)x417.11752, glue set 187.48027fil
+.....\hbox(8.43135+3.6135)x417.11752, glue set 179.57584fil
 ......\hbox(0.0+0.0)x0.0
 ......\glue 0.0 plus 1.0fil
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 参
-......\glue 0.0 plus 0.44936
+......\glue 5.26962 plus 0.45427 minus 0.17125
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 考
-......\glue 0.0 plus 0.44936
+......\glue 5.26962 plus 0.45427 minus 0.17125
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 文
-......\glue 0.0 plus 0.44936
+......\glue 5.26962 plus 0.45427 minus 0.17125
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 献
 ......\kern -0.00017
 ......\kern 0.00017
@@ -709,7 +710,7 @@ Completed box being shipped out [3]
 ..\vbox(700.50723+0.0)x417.11752, glue set 293.46825fil
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{参考文献}{\thepage \ET
 C.}
-...\mark{{参考文献}{}}
+...\mark{{\protect \ustc@spacetitle  {参考文献}}{}}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -718,15 +719,15 @@ C.}
 ...\glue 12.08972 plus -0.2
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(12.49454+2.8747)x417.11752, glue set 176.43913fil
+...\hbox(12.49454+2.8747)x417.11752, glue set 164.39427fil
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\hbox(0.0+0.0)x0.0
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 参
-....\glue 0.0 plus 1.37747
+....\glue 8.0299 plus 0.97638 minus 0.4981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 考
-....\glue 0.0 plus 1.37747
+....\glue 8.0299 plus 0.97638 minus 0.4981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 文
-....\glue 0.0 plus 1.37747
+....\glue 8.0299 plus 0.97638 minus 0.4981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 献
 ....\kern -0.00017
 ....\kern 0.00017

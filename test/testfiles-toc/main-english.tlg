@@ -9,11 +9,11 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 1.0fil
 ...\hbox(22.76228+0.0)x417.11752
 ....\vbox(22.76228+0.0)x417.11752, glue set 10.31744fil
-.....\hbox(8.43135+3.6135)x417.11752, glue set 198.01952fil
+.....\hbox(8.43135+3.6135)x417.11752, glue set 187.48027fil
 ......\hbox(0.0+0.0)x0.0
 ......\glue 0.0 plus 1.0fil
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 摘
-......\glue 0.0 plus 0.44936
+......\glue 21.07849 plus 2.2638 minus 0.34248
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 要
 ......\kern -0.00017
 ......\kern 0.00017
@@ -33,7 +33,7 @@ Completed box being shipped out [1]
 ...\write-{}
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
-...\mark{{摘要}{}}
+...\mark{{\protect \ustc@spacetitle  {摘要}}{}}
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\glue(\topskip) 12.0
@@ -42,11 +42,11 @@ Completed box being shipped out [1]
 ...\glue 12.08972 plus -0.2
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(12.5909+2.90681)x417.11752, glue set 192.49895fil
+...\hbox(12.5909+2.90681)x417.11752, glue set 176.43913fil
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\hbox(0.0+0.0)x0.0
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 摘
-....\glue 0.0 plus 1.37747
+....\glue 32.11963 plus 1.95277 minus 3.61748
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 要
 ....\kern -0.00017
 ....\kern 0.00017
@@ -56,7 +56,8 @@ Completed box being shipped out [1]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(9.3709+2.2042)x417.11752, glue set 353.882fil
+...\hbox(9.3709+2.2042)x417.11752, glue set 335.882fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 摘
 ....\glue 0.0 plus 0.61366
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 要
@@ -139,7 +140,7 @@ Completed box being shipped out [2]
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 598.12192fil
 ...\write-{}
-...\mark{{Abstract}{}}
+...\mark{{\protect \ustc@spacetitle  {Abstract}}{}}
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\glue(\topskip) 12.0
@@ -160,7 +161,8 @@ Completed box being shipped out [2]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(8.22664+0.13248)x417.11752, glue set 322.53325fil
+...\hbox(8.22664+0.13248)x417.11752, glue set 304.53325fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Abstract
 ....\kern -0.00021
 ....\kern 0.00021
@@ -207,47 +209,7 @@ Completed box being shipped out [2]
 ...\kern -0.0002
 ...\kern 0.0002
 ...\glue 0.0 plus 1.0fil
-(main-english.toc
-LaTeX Font Info:    Calculating math sizes for size <14.05234> on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 14.05255pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 9.83672pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 7.02628pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 14.05211pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 9.83643pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 7.02605pt on input line ....
-LaTeX Font Info:    Calculating math sizes for size <12.04486> on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 12.04504pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 8.43147pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 6.02252pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 12.04466pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 8.43121pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 6.02232pt on input line ....
-LaTeX Font Info:    Calculating math sizes for size <10.53925> on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 10.5394pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 7.37753pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
-(Font)              scaled to size 5.2697pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 10.53908pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 7.3773pt on input line ....
-LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
-(Font)              scaled to size 5.26953pt on input line ....
-)
+(main-english.toc)
 \tf@toc=\write...
 Completed box being shipped out [3]
 \vbox(722.98453+0.0)x435.04271
@@ -273,7 +235,7 @@ Completed box being shipped out [3]
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 455.52448fil
 ...\write-{}
-...\mark{{Contents}{}}
+...\mark{{\protect \ustc@spacetitle  {Contents}}{}}
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\glue(\topskip) 12.0
@@ -298,8 +260,9 @@ Completed box being shipped out [3]
 ...\penalty 10000
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(14.05226+6.02249)x417.11752, glue set 303.14444fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 307.28421fill
 ....\glue(\leftskip) 69.0813
+....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
 ....\hbox(9.59775+3.04935)x0.0, glue set - 69.0813fil
 .....\glue 0.0 plus 1.0fil minus 1.0fil
@@ -319,15 +282,13 @@ Completed box being shipped out [3]
 ....\kern 0.00017
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 4.11734
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(4.49675+0.0)x6.0, glue set 1.88266fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(4.49675+0.0)x4.11734
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/14.05234 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.14233+0.0)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -346,7 +307,7 @@ Completed box being shipped out [3]
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 301.54851fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 305.10008fill
 ....\glue(\leftskip) 39.1458
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
@@ -370,15 +331,13 @@ Completed box being shipped out [3]
 ....\kern 0.00017
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 3.52914
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(3.85435+0.0)x6.0, glue set 2.47086fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(3.85435+0.0)x3.52914
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/12.04486 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.14233+0.0)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -397,7 +356,7 @@ Completed box being shipped out [3]
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 292.95607fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 296.0665fill
 ....\glue(\leftskip) 55.70746
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
@@ -421,15 +380,13 @@ Completed box being shipped out [3]
 ....\kern 0.00017
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 3.088
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(3.37256+0.0)x6.0, glue set 2.912fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(3.37256+0.0)x3.088
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/10.53925 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.14233+0.0)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -449,7 +406,7 @@ Completed box being shipped out [3]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 289.0921fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 293.23187fill
 ....\glue(\leftskip) 69.0813
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
@@ -473,15 +430,13 @@ Completed box being shipped out [3]
 ....\kern 0.00017
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 4.11734
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(4.49675+0.0)x6.0, glue set 1.88266fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(4.49675+0.0)x4.11734
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/14.05234 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.14233+0.16861)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -501,7 +456,7 @@ Completed box being shipped out [3]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 326.44322fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 330.583fill
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
 ....\TU/texgyretermes(0)/m/n/14.05234 Bibliography
@@ -509,15 +464,13 @@ Completed box being shipped out [3]
 ....\kern 0.0002
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 4.11734
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(4.49675+0.0)x6.0, glue set 1.88266fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(4.49675+0.0)x4.11734
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/14.05234 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.28687+0.16861)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -537,7 +490,7 @@ Completed box being shipped out [3]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 260.98743fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 265.1272fill
 ....\glue(\leftskip) 83.13364
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
@@ -563,15 +516,13 @@ Completed box being shipped out [3]
 ....\kern 0.00017
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 4.11734
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(4.49675+0.0)x6.0, glue set 1.88266fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(4.49675+0.0)x4.11734
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/14.05234 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(7.9737+0.09634)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -591,7 +542,7 @@ Completed box being shipped out [3]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 290.75027fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 294.89005fill
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
 ....\TU/texgyretermes(0)/m/n/14.05234 Acknowledgements
@@ -599,15 +550,13 @@ Completed box being shipped out [3]
 ....\kern 0.0002
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 4.11734
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(4.49675+0.0)x6.0, glue set 1.88266fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(4.49675+0.0)x4.11734
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/14.05234 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.14233+0.26497)x18.66977, glue set 12.64734fil
 .....\glue 0.0 plus 1.0fil
@@ -627,7 +576,7 @@ Completed box being shipped out [3]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 0.00002
-...\hbox(14.05226+6.02249)x417.11752, glue set 330.8416fill
+...\hbox(14.05226+6.02249)x417.11752, glue set 334.98137fill
 ....\hbox(0.0+0.0)x0.0
 ....\rule(14.05226+6.02249)x0.0
 ....\TU/texgyretermes(0)/m/n/14.05234 Publications
@@ -635,15 +584,13 @@ Completed box being shipped out [3]
 ....\kern 0.0002
 ....\rule(14.05226+6.02249)x0.0
 ....\kern 0.0
-....\glue -6.0
-....\glue 4.11734
+....\glue -9.03365
+....\glue 3.01122
 ....\leaders 0.0 plus 1.0fill
-.....\hbox(4.49675+0.0)x6.0, glue set 1.88266fil
+.....\hbox(3.68573+0.0)x9.03365, glue set 6.02243fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(4.49675+0.0)x4.11734
-.......\mathon
-.......\TU/STIX2Math.otf(1)/m/n/14.05234 glyph#1938
-.......\mathoff
+......\hbox(3.68573+0.0)x3.01122
+.......\TU/texgyretermes(0)/m/n/12.04486 ^^b7
 ....\kern 0.0
 ....\hbox(8.14233+0.0)x18.66977, glue set 6.62491fil
 .....\glue 0.0 plus 1.0fil
@@ -661,8 +608,13 @@ Completed box being shipped out [3]
 ...\glue -6.0
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
-..\glue(\baselineskip) 22.47748
-..\hbox(0.0+0.0)x417.11752
+..\glue(\baselineskip) 15.5005
+..\hbox(6.97697+0.0)x417.11752, glue set 203.29442fil
+...\glue 0.0 plus 1.0fil
+...\TU/texgyretermes(0)/m/n/10.53925 III
+...\kern -0.0002
+...\kern 0.0002
+...\glue 0.0 plus 1.0fil
 Completed box being shipped out [4]
 \vbox(722.98453+0.0)x435.04271
 .\glue -29.59128
@@ -681,9 +633,9 @@ Completed box being shipped out [4]
 ..\glue(\baselineskip) 22.47748
 ..\hbox(0.0+0.0)x417.11752
 Completed box being shipped out [5]
-\vbox(722.98453+0.0)x435.04271
+\vbox(722.98453+0.11592)x435.04271
 .\glue -29.59128
-.\vbox(752.5758+0.0)x417.11752, shifted 17.92519
+.\vbox(752.5758+0.11592)x417.11752, shifted 17.92519
 ..\vbox(22.76228+0.0)x417.11752
 ...\glue 0.0 plus 1.0fil
 ...\hbox(22.76228+0.0)x417.11752
@@ -703,7 +655,7 @@ Completed box being shipped out [5]
 ..\glue 6.82881
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 638.26744fil
-...\mark{{Notation}{}}
+...\mark{{\protect \ustc@spacetitle  {Notation}}{}}
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\glue(\topskip) 12.0
@@ -724,20 +676,26 @@ Completed box being shipped out [5]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(7.9737+0.13248)x417.11752, glue set 363.48979fil
+...\hbox(7.9737+0.13248)x417.11752, glue set 345.48979fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Notations.
 ....\kern -0.00021
 ....\kern 0.00021
 ....\glue 4.01495 plus 4.5168 minus 0.33458
-....\write1{\protect \FN@pp@footnotehinttrue }
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
+...\write1{\protect \FN@pp@footnotehinttrue }
 ...\glue -0.13248
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
-..\glue(\baselineskip) 22.47748
-..\hbox(0.0+0.0)x417.11752
+..\glue(\baselineskip) 15.5005
+..\hbox(6.97697+0.11592)x417.11752, glue set 204.7541fil
+...\glue 0.0 plus 1.0fil
+...\TU/texgyretermes(0)/m/n/10.53925 V
+...\kern -0.0002
+...\kern 0.0002
+...\glue 0.0 plus 1.0fil
 Completed box being shipped out [6]
 \vbox(722.98453+0.0)x435.04271
 .\glue -29.59128
@@ -748,8 +706,6 @@ Completed box being shipped out [6]
 ..\glue 6.82881
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x0.0, glue set 688.50723fil
-...\write-{}
-...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\glue(\topskip) 12.0
 ...\hbox(0.0+0.0)x0.0
@@ -766,7 +722,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 1.0fil
 ...\hbox(22.76228+0.0)x417.11752
 ....\vbox(22.76228+0.0)x417.11752, glue set 10.31744fil
-.....\hbox(8.43135+3.6135)x417.11752, glue set 172.11406fil
+.....\hbox(8.43135+3.6135)x417.11752, glue set 161.57481fil
 ......\hbox(0.0+0.0)x0.0
 ......\glue 0.0 plus 1.0fil
 ......\TU/texgyretermes(0)/m/n/10.53925 Chapter
@@ -778,7 +734,7 @@ Completed box being shipped out [1]
 ......\kern 0.0002
 ......\glue 10.53925
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 简
-......\glue 0.0 plus 0.44936
+......\glue 21.07849 plus 2.2638 minus 0.34248
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 介
 ......\kern -0.00017
 ......\kern 0.00017
@@ -794,7 +750,8 @@ Completed box being shipped out [1]
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline \ETC.}
-...\mark{{Chapter 1\protect \hspace  {\ccwd }简介}{}}
+...\mark{{Chapter 1\protect \hspace  {\ccwd }\protect \ustc@spacetitle  {简介\ETC
+.}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -803,7 +760,7 @@ Completed box being shipped out [1]
 ...\glue 12.08972 plus -0.2
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(12.39818+3.50102)x417.11752, glue set 147.51541fil
+...\hbox(12.39818+3.50102)x417.11752, glue set 131.4556fil
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\hbox(0.0+0.0)x0.0
 ....\TU/texgyreheros(0)/bx/n/16.05981 Chapter
@@ -815,7 +772,7 @@ Completed box being shipped out [1]
 ....\kern 0.0002
 ....\glue 16.05981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 简
-....\glue 0.0 plus 1.37747
+....\glue 32.11963 plus 1.95277 minus 3.61748
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 介
 ....\kern -0.00017
 ....\kern 0.00017
@@ -825,7 +782,8 @@ Completed box being shipped out [1]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(8.22664+2.61372)x417.11752, glue set 355.31534fil
+...\hbox(8.22664+2.61372)x417.11752, glue set 337.31534fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Chapter
 ....\kern -0.00021
 ....\kern 0.00021
@@ -880,7 +838,8 @@ Completed box being shipped out [1]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 9.4733
-...\hbox(8.14233+0.16861)x417.11752, glue set 357.31479fil
+...\hbox(8.14233+0.16861)x417.11752, glue set 339.31479fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Section
 ....\kern -0.00021
 ....\kern 0.00021
@@ -921,7 +880,8 @@ Completed box being shipped out [1]
 ...\glue 6.02243
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 9.56464
-...\hbox(8.22664+0.16861)x417.11752, glue set 340.58447fil
+...\hbox(8.22664+0.16861)x417.11752, glue set 322.58447fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Subsection
 ....\kern -0.00021
 ....\kern 0.00021
@@ -965,7 +925,8 @@ Completed box being shipped out [1]
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 9.7403
-...\hbox(8.22664+0.16861)x417.11752, glue set 323.85417fil
+...\hbox(8.22664+0.16861)x417.11752, glue set 305.85417fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Subsubsection
 ....\kern -0.00021
 ....\kern 0.00021
@@ -1006,7 +967,8 @@ Completed box being shipped out [1]
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 9.70416
-...\hbox(8.22664+2.62576)x417.11752, glue set 344.73994fil
+...\hbox(8.22664+2.62576)x417.11752, glue set 326.73994fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Paragraph
 ....\kern -0.00021
 ....\kern 0.00021
@@ -1047,7 +1009,8 @@ Completed box being shipped out [1]
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
 ...\glue(\baselineskip) 9.70416
-...\hbox(8.22664+2.62576)x417.11752, glue set 326.43176fil
+...\hbox(8.22664+2.62576)x417.11752, glue set 308.43176fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/texgyretermes(0)/m/n/12.04486 Subparagraph
 ....\kern -0.00021
 ....\kern 0.00021
@@ -1087,6 +1050,19 @@ Completed box being shipped out [2]
 ..\glue(\baselineskip) 22.47748
 ..\hbox(0.0+0.0)x417.11752
 Chapter 2
+LaTeX Font Info:    Calculating math sizes for size <12.04486> on input line ....
+LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
+(Font)              scaled to size 12.04504pt on input line ....
+LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
+(Font)              scaled to size 8.43147pt on input line ....
+LaTeX Font Info:    Font shape `TU/STIX2Math.otf(2)/m/n' will be
+(Font)              scaled to size 6.02252pt on input line ....
+LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
+(Font)              scaled to size 12.04466pt on input line ....
+LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
+(Font)              scaled to size 8.43121pt on input line ....
+LaTeX Font Info:    Font shape `TU/STIX2Math.otf(3)/m/n' will be
+(Font)              scaled to size 6.02232pt on input line ....
 Completed box being shipped out [3]
 \vbox(722.98453+0.14754)x435.04271
 .\glue -29.59128
@@ -1095,7 +1071,7 @@ Completed box being shipped out [3]
 ...\glue 0.0 plus 1.0fil
 ...\hbox(22.76228+0.0)x417.11752
 ....\vbox(22.76228+0.0)x417.11752, glue set 10.31744fil
-.....\hbox(8.43135+3.6135)x417.11752, glue set 166.84444fil
+.....\hbox(8.43135+3.6135)x417.11752, glue set 156.30519fil
 ......\hbox(0.0+0.0)x0.0
 ......\glue 0.0 plus 1.0fil
 ......\TU/texgyretermes(0)/m/n/10.53925 Chapter
@@ -1107,9 +1083,9 @@ Completed box being shipped out [3]
 ......\kern 0.0002
 ......\glue 10.53925
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 浮
-......\glue 0.0 plus 0.44936
+......\glue 10.53925 plus 0.32036 minus 0.74957
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 动
-......\glue 0.0 plus 0.44936
+......\glue 10.53925 plus 0.32036 minus 0.74957
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 体
 ......\kern -0.00017
 ......\kern 0.00017
@@ -1123,7 +1099,8 @@ Completed box being shipped out [3]
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 649.62704fil
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline \ETC.}
-...\mark{{Chapter 2\protect \hspace  {\ccwd }浮动体}{}}
+...\mark{{Chapter 2\protect \hspace  {\ccwd }\protect \ustc@spacetitle  {浮动\ETC
+.}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -1132,7 +1109,7 @@ Completed box being shipped out [3]
 ...\glue 12.08972 plus -0.2
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(12.25363+3.50102)x417.11752, glue set 139.4855fil
+...\hbox(12.25363+3.50102)x417.11752, glue set 123.42569fil
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\hbox(0.0+0.0)x0.0
 ....\TU/texgyreheros(0)/bx/n/16.05981 Chapter
@@ -1144,9 +1121,9 @@ Completed box being shipped out [3]
 ....\kern 0.0002
 ....\glue 16.05981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 浮
-....\glue 0.0 plus 1.37747
+....\glue 16.05981 plus 1.30185 minus 1.26904
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 动
-....\glue 0.0 plus 1.37747
+....\glue 16.05981 plus 1.30185 minus 1.26904
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 体
 ....\kern -0.00017
 ....\kern 0.00017
@@ -1156,7 +1133,8 @@ Completed box being shipped out [3]
 ...\penalty 10000
 ...\kern 1.0
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(10.03581+0.0)x417.11752, glue set 406.78658fil
+...\hbox(10.03581+0.0)x417.11752, glue set 388.78658fil
+....\hbox(0.0+0.0)x18.0
 ....\mathon
 ....\hbox(5.6996+1.31528)x10.33095, shifted -4.33621
 .....\TU/texgyretermes(0)/m/n/8.43135 [
@@ -1222,7 +1200,7 @@ Completed box being shipped out [5]
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 615.59549fil
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{Bibliography}{\thepage \ETC.}
-...\mark{{Bibliography}{}}
+...\mark{{\protect \ustc@spacetitle  {Bibliography}}{}}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -1383,7 +1361,7 @@ Completed box being shipped out [7]
 ...\glue 0.0 plus 1.0fil
 ...\hbox(22.76228+0.0)x417.11752
 ....\vbox(22.76228+0.0)x417.11752, glue set 10.31744fil
-.....\hbox(8.43135+3.6135)x417.11752, glue set 156.30519fil
+.....\hbox(8.43135+3.6135)x417.11752, glue set 148.40076fil
 ......\hbox(0.0+0.0)x0.0
 ......\glue 0.0 plus 1.0fil
 ......\TU/texgyretermes(0)/m/n/10.53925 Appendix
@@ -1395,11 +1373,11 @@ Completed box being shipped out [7]
 ......\kern 0.0002
 ......\glue 10.53925
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 附
-......\glue 0.0 plus 0.44936
+......\glue 5.26962 plus 0.45427 minus 0.17125
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 录
-......\glue 0.0 plus 0.44936
+......\glue 5.26962 plus 0.45427 minus 0.17125
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 章
-......\glue 0.0 plus 0.44936
+......\glue 5.26962 plus 0.45427 minus 0.17125
 ......\TU/FandolSong-Regular(0)/m/n/10.53925 节
 ......\kern -0.00017
 ......\kern 0.00017
@@ -1413,7 +1391,8 @@ Completed box being shipped out [7]
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 633.18852fil
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline \ETC.}
-...\mark{{Appendix A\protect \hspace  {\ccwd }附录章节}{}}
+...\mark{{Appendix A\protect \hspace  {\ccwd }\protect \ustc@spacetitle  {附录\ET
+C.}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -1422,7 +1401,7 @@ Completed box being shipped out [7]
 ...\glue 12.08972 plus -0.2
 ...\glue 0.0
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(12.34999+3.50102)x417.11752, glue set 123.79506fil
+...\hbox(12.34999+3.50102)x417.11752, glue set 111.7502fil
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\hbox(0.0+0.0)x0.0
 ....\TU/texgyreheros(0)/bx/n/16.05981 Appendix
@@ -1434,11 +1413,11 @@ Completed box being shipped out [7]
 ....\kern 0.0002
 ....\glue 16.05981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 附
-....\glue 0.0 plus 1.37747
+....\glue 8.0299 plus 0.97638 minus 0.4981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 录
-....\glue 0.0 plus 1.37747
+....\glue 8.0299 plus 0.97638 minus 0.4981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 章
-....\glue 0.0 plus 1.37747
+....\glue 8.0299 plus 0.97638 minus 0.4981
 ....\TU/FandolHei-Regular(0)/bx/n/16.05981 节
 ....\kern -0.00017
 ....\kern 0.00017
@@ -1448,7 +1427,8 @@ Completed box being shipped out [7]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(9.31068+2.2042)x417.11752, glue set 364.65012fil
+...\hbox(9.31068+2.2042)x417.11752, glue set 346.65012fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 附
 ....\glue 0.0 plus 0.61366
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 录
@@ -1520,7 +1500,7 @@ Completed box being shipped out [9]
 ...\write1{\protect \FN@pp@footnotehinttrue }
 ...\write-{}
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{Acknowledgements}{\thepage \ETC.}
-...\mark{{Acknowledgements}{}}
+...\mark{{\protect \ustc@spacetitle  {Acknowledgements}}{}}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -1541,7 +1521,8 @@ Completed box being shipped out [9]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(9.32272+2.2042)x417.11752, glue set 356.89322fil
+...\hbox(9.32272+2.2042)x417.11752, glue set 338.89322fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 致
 ....\glue 0.0 plus 0.61366
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 谢
@@ -1613,7 +1594,7 @@ Completed box being shipped out [11]
 ..\glue(\lineskip) 0.0
 ..\vbox(700.50723+0.0)x417.11752, glue set 636.88228fil
 ...\write1{\@writefile{toc}{\protect \contentsline {chapter}{Publications}{\thepage \ETC.}
-...\mark{{Publications}{}}
+...\mark{{\protect \ustc@spacetitle  {Publications}}{}}
 ...\write1{\@writefile{lof}{\protect \addvspace {10.0pt}}}
 ...\write1{\@writefile{lot}{\protect \addvspace {10.0pt}}}
 ...\glue(\topskip) 12.0
@@ -1634,7 +1615,8 @@ Completed box being shipped out [11]
 ...\penalty 10000
 ...\glue 18.06729 plus -0.2
 ...\glue(\parskip) 0.0 plus 0.2
-...\hbox(9.35886+2.21623)x417.11752, glue set 353.882fil
+...\hbox(9.35886+2.21623)x417.11752, glue set 335.882fil
+....\hbox(0.0+0.0)x18.0
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 发
 ....\glue 0.0 plus 0.61366
 ....\TU/FandolSong-Regular(0)/m/n/12.04486 表
