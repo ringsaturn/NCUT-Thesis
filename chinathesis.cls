@@ -6,7 +6,7 @@
 %%
 %% chinathesis.dtx  (with options: `class')
 %% 
-%% Copyright (C) 2015-2018 by Zeping Lee <zepinglee AT gmail.com>
+%% Copyright (C) 2015-2019 by Zeping Lee <zepinglee AT gmail.com>
 %% 
 %% This file may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3c
@@ -249,8 +249,8 @@
     \ustc@setenglish
   \fi
 }
-\newcommand\ustc@universityname{中国大学}
-\newcommand\ustc@enuniversityname{University of China}
+\newcommand\ustc@universityname{北方工业大学}
+\newcommand\ustc@enuniversityname{North China University of Technology}
 \ifustc@chinese
   \renewcommand\listfigurename{插图清单}
   \renewcommand\listtablename{表格清单}
@@ -385,7 +385,7 @@
     {\sffamily\fontsize{56\bp@}{56\bp@}\selectfont
       \ustc@thesisname\par}%
     \vskip 2.0cm%
-    \includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
+    \includegraphics[height=4.1cm,width=4.1cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.9cm%
     \parbox[t][3.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont

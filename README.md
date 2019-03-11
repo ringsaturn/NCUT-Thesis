@@ -1,9 +1,6 @@
-# 中文学位论文 LaTeX 模板框架
+# 北方工业大学本科学位论文 LaTeX 模板框架
 
-本项目是国内高校学位论文 LaTeX 模板的一个编写框架，
-包括模板代码、注释、文档，示例论文，以及用于维护模板的持续集成和单元测试。
-该框架针对国内高校 LaTeX 模板的普遍需求提供了指南，并尽可能使格式与内容分离，
-旨在帮助编写高质量的中文模板，也可供已有模板进行参考。
+本分支是改编自 [latexstudio/ChinaThesis: 中文学位论文 LaTeX 模板基础框架](https://github.com/latexstudio/ChinaThesis)
 
 主要特性：
 - 支持跨平台使用，兼容最新的 TeX Live, MacTeX 和 MikTeX 发行版，
