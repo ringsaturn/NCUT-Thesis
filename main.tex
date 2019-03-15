@@ -5,7 +5,7 @@
 \documentclass[bachelor]{chinathesis}
 % doctor|master|bachelor [chinese|english] [print|pdf] [super|numebers|authoryear]
 
-\title{NCUT 中文学位论文\\LaTeX 模板框架}
+\title{NCUT 中文学位论文 \LaTeX 模板框架}
 \author{ringsaturn}
 \major{信息与计算科学}
 \supervisor{高德纳\ 教授}
@@ -15,9 +15,9 @@
 % \secretlevel{秘密}        % 绝密|机密|秘密，注释本行则不保密
 % \secretyear{20}           % 保密年限
 
-\entitle{A LaTeX template framework for NCUT's Chinese dissertations}
+\entitle{A \LaTeX template framework for NCUT's Chinese dissertations}
 \enauthor{ringsaturn}
-\enmajor{信息与计算科学}
+\enmajor{Information and Computing Science}
 \ensupervisor{Prof. Donald E. Knuth}
 % \encosupervisor{}
 % \endate{May 1, 2017}      % Today if commented
@@ -34,6 +34,9 @@
 \usepackage{amsthm}
 \usepackage{hyperref}
 
+\usepackage{graphicx}
+\usepackage{lscape}
+
 \DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 \newcommand\pkg{\textsf}
 
@@ -42,31 +45,34 @@
 \newcommand\ts{\symbfsf}
 \newcommand\real{\mathbf{R}}
 
+% \usepackage{gbt7714}
 
 \begin{document}
 
-\maketitle
-\makestatement
+% \maketitle
+% \makestatement
 
 \frontmatter
 \input{chapters/abstract}
 \tableofcontents
 % \listoffigures
 % \listoftables
-\input{chapters/notation}
 
 \mainmatter
+\input{chapters/notation}
 \input{chapters/intro}
 \input{chapters/floats}
 \input{chapters/math}
 \input{chapters/citations}
+\input{chapters/thanks.tex}
 \bibliography{bibs/refs}
 
 \appendix
 \chapter{论文规范}
-
-\backmatter
-\input{chapters/acknowledgements}
-\input{chapters/publications}
+\input{chapters/写作规范.tex}
+\input{chapters/translation.tex}
+% \backmatter
+% \input{chapters/acknowledgements}
+% \input{chapters/publications}
 
 \end{document}

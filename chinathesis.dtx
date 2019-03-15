@@ -62,6 +62,7 @@ version 2005/12/01 or later.
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{hypdoc}
+\usepackage{hyperref}
 
 \makeatletter
 
@@ -664,7 +665,7 @@ version 2005/12/01 or later.
 %
 % 载入 \cls{ctexbook} 文档类，注意要求为 2.2 或更高的版本。
 %    \begin{macrocode}
-\LoadClass[UTF8,b5paper,openright,zihao=-4]{ctexbook}[2016/05/16]
+\LoadClass[UTF8,b5j,openright,zihao=-4]{ctexbook}[2016/05/16]
 %    \end{macrocode}
 %
 % 检测 ctexbook 版本，如果版本过低会报错
@@ -1053,7 +1054,7 @@ version 2005/12/01 or later.
 %
 %    \begin{macrocode}
 %%\geometry{
-%%  paper      = b5paper,
+%%  paper      = b5j,
 %%  vmargin    = 2.54cm,
 %%  hmargin    = 3.17cm,
 %%  headheight = 0.8cm,
@@ -1061,7 +1062,7 @@ version 2005/12/01 or later.
 %%  footskip   = 0.79cm,
 %%}
 \geometry{
-  paper      = b5paper,
+  paper      = b5j,
   top        = 4.5cm,
   bottom     = 1.5cm,
   left       = 2.5cm,
@@ -1478,13 +1479,17 @@ version 2005/12/01 or later.
 %
 %
 % \subsection{摘要}
-% TODO 调整为校方的版式
 % \begin{environment}{abstract}
 % 中文摘要环境。
 %    \begin{macrocode}
+%\ustc@title
 \newenvironment{abstract}{%
-  \ustc@setchinese
-  \ustc@chapter{摘要}%
+\begin{center}
+  {\sffamily\fontsize{22\bp@}{22\bp@}\selectfont
+      \ustc@title\par}%
+    \vskip 2.0cm%
+\end{center}
+\textbf{摘要：}\ustc@setchinese
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
   \textbf{关键词}：\ustc@keywords
@@ -1497,13 +1502,20 @@ version 2005/12/01 or later.
 % 英文摘要环境
 %    \begin{macrocode}
 \newenvironment{enabstract}{%
+  \newpage
+  %\ustc@entitle
   \@openrightfalse
-  \ustc@setenglish
-  \ustc@chapter{Abstract}%
+  \begin{center}
+    {\sffamily\fontsize{22\bp@}{22\bp@}\selectfont
+        \ustc@entitle\par}%
+      \vskip 2.0cm%
+  \end{center}
+  \textbf{Abstract: }\ustc@setenglish
+%\ustc@chapter{Abstract}%
   \@openrighttrue
 }{
   \par\null\par\noindent\hangindent=5.3em\relax
-  \textbf{Key Words}: \ustc@enkeywords
+  \textbf{Keywords: }\ustc@enkeywords
   \ustc@setdefaultlanguage
 }
 %    \end{macrocode}

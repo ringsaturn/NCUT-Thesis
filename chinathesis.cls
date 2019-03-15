@@ -48,7 +48,7 @@
   \PassOptionsToClass{oneside}{book}
 \fi
 \PassOptionsToPackage{quiet}{xeCJK}
-\LoadClass[UTF8,a4paper,openright,zihao=-4]{ctexbook}[2016/05/16]
+\LoadClass[UTF8,b5j,openright,zihao=-4]{ctexbook}[2016/05/16]
 \@ifclasslater{ctexbook}{2016/05/16}{}{
   \ClassError{chinathesis}{%
     This template requires TeX Live\MessageBreak 2016 or later version}{}
@@ -263,30 +263,20 @@
   \newcommand\ustc@publicationsname{Publications}
   \newcommand\ustc@notationname{Notation}
 \fi
+%%\geometry{
+%%  paper      = b5j,
+%%  vmargin    = 2.54cm,
+%%  hmargin    = 3.17cm,
+%%  headheight = 0.8cm,
+%%  headsep    = 0.24cm,
+%%  footskip   = 0.79cm,
+%%}
 \geometry{
-  paper      = a4paper,
-  vmargin    = 2.54cm,
-  hmargin    = 3.17cm,
-  headheight = 0.8cm,
-  headsep    = 0.24cm,
-  footskip   = 0.79cm,
-}
-\newcommand\ustc@header@font{\fontsize{10.5\bp@}{12\bp@}\selectfont}
-\newcommand\ustc@header{\leftmark}
-\newcommand\ustc@head{%
-  \vbox to\headheight{%
-    \hfil\ustc@header@font\ustc@header\strut\hfil
-    \hrule\@height 0.4\p@\@width\textwidth
-    \vfil
-  }%
-}
-\newcommand\ustc@foot{\hfil\ustc@header@font\thepage\hfil}
-\def\ps@plain{%
-  \def\@oddhead{\ustc@head}%
-  \def\@oddfoot{\ustc@foot}%
-  \let\@evenhead\@oddhead
-  \let\@evenfoot\@oddfoot
-  \let\@mkboth\markboth
+  paper      = b5j,
+  top        = 4.5cm,
+  bottom     = 1.5cm,
+  left       = 2.5cm,
+  right      = 1.5cm,
 }
 \@ifclasslater{ctexbook}{2016/09/21}{
   \def\chaptermark#1{%
@@ -385,7 +375,7 @@
     {\sffamily\fontsize{56\bp@}{56\bp@}\selectfont
       \ustc@thesisname\par}%
     \vskip 2.0cm%
-    \includegraphics[height=4.1cm,width=4.1cm]{figures/chinathesis-logo.pdf}\par
+    \includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
     \vskip 0.9cm%
     \parbox[t][3.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont
@@ -445,56 +435,9 @@
   \ustc@makeentitle
   \pagestyle{plain}%
 }
-\newcommand\ustc@originality{%
-  本人声明所呈交的学位论文，是本人在导师指导下进行研究工作所取得的成果。%
-  除已特别加以标注和致谢的地方外，论文中不包含任何他人已经发表或撰写过的%
-  研究成果。%
-  与我一同工作的同志对本研究所做的贡献均已在论文中作了明确的说明。}
-\newcommand\ustc@authorization{%
-  作为申请学位的条件之一，学位论文著作权拥有者授权\ustc@universityname{}拥有%
-  学位论文的部分使用权，%
-  即：学校有权按有关规定向国家有关部门或机构送交论文的复印件和电子版，%
-  允许论文被查阅和借阅，可以将学位论文编入《中国学位论文全文数据库》等%
-  有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。%
-  本人提交的电子文档的内容和纸质论文的内容相一致。\par
-  保密的学位论文在解密后也遵守此规定。}
-\newcommand\ustc@underline[2][3.2cm]{\underline{\hb@xt@ #1{\hss#2\hss}}}
 \newcommand\ustc@checkbox{%
   \makebox[\z@][l]{$\square$}%
   \raisebox{-0.2ex}{\hspace{0.1em}$\checkmark$}%
-}
-\newcommand\makestatement{%
-  \begin{titlepage}%
-    \ustc@pdfbookmark{原创性和授权使用声明}%
-    \null
-    \vskip 0.3cm%
-    {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
-      \ustc@universityname{}学位论文原创性声明\par}%
-    \vskip 0.7cm%
-    \ustc@originality\par
-    \vskip 1.3cm%
-    作者签名：\ustc@underline{}\hspace{2.7cm}%
-    签字日期：\ustc@underline{}\par
-    \vskip 1.9cm%
-    {\centering\sffamily\fontsize{16\bp@}{32\bp@}\selectfont
-      \ustc@universityname{}学位论文授权使用声明\par}%
-    \vskip 0.7cm%
-    \ustc@authorization\par
-    \vskip 0.6cm%
-    \ifx\ustc@secretlevel\@empty
-      \ustc@checkbox{} 公开\quad
-      $\square$ 保密（\ustc@underline[0.85cm]{}年）\par
-    \else
-      $\square$ 公开\quad
-      \ustc@checkbox{} 保密（\ustc@underline[0.8cm]{\ustc@secretyear}年）\par
-    \fi
-    \vskip 0.5cm%
-    作者签名：\ustc@underline{}\hspace{2.7cm}%
-    导师签名：\ustc@underline{}\par
-    \vskip 0.5cm%
-    签字日期：\ustc@underline{}\hspace{2.7cm}%
-    签字日期：\ustc@underline{}\par
-  \end{titlepage}%
 }
 \setcounter{secnumdepth}{5}
 \newcount\ustc@titlelength
@@ -546,13 +489,13 @@
 }
 \ctexset{
   section = {
-    format     = \sffamily\fontsize{14\bp@}{23.33\bp@}\selectfont,
+    format     = \sffamily\fontsize{12\bp@}{23.33\bp@}\selectfont,
     aftername  = \hspace{\ccwd},
     beforeskip = 24\bp@,
     afterskip  = 6\bp@,
   },
   subsection = {
-    format     = \sffamily\fontsize{13\bp@}{21.67\bp@}\selectfont,
+    format     = \sffamily\fontsize{12\bp@}{21.67\bp@}\selectfont,
     aftername  = \hspace{\ccwd},
     indent     = 2\ccwd,
     beforeskip = 12\bp@,
@@ -596,21 +539,31 @@
   }%
   \chapter*{#2}}
 \newenvironment{abstract}{%
-  \ustc@setchinese
-  \ustc@chapter{摘要}%
+\begin{center}
+  {\sffamily\fontsize{22\bp@}{22\bp@}\selectfont
+      \ustc@title\par}%
+    \vskip 2.0cm%
+\end{center}
+\textbf{摘要：}\ustc@setchinese
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
   \textbf{关键词}：\ustc@keywords
   \ustc@setdefaultlanguage
 }
 \newenvironment{enabstract}{%
+  \newpage
+  %\ustc@entitle
   \@openrightfalse
-  \ustc@setenglish
-  \ustc@chapter{Abstract}%
+  \begin{center}
+    {\sffamily\fontsize{22\bp@}{22\bp@}\selectfont
+        \ustc@entitle\par}%
+      \vskip 2.0cm%
+  \end{center}
+  \textbf{Abstract: }\ustc@setenglish
   \@openrighttrue
 }{
   \par\null\par\noindent\hangindent=5.3em\relax
-  \textbf{Key Words}: \ustc@enkeywords
+  \textbf{Keywords: }\ustc@enkeywords
   \ustc@setdefaultlanguage
 }
 \renewcommand\tableofcontents{%

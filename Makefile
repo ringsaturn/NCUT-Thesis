@@ -53,11 +53,13 @@ clean :
 	$(LATEXMK) -c $(MAIN).tex
 	$(LATEXMK) -c $(NAME).dtx
 	rm -rf build
+	rm -f *.aux *.bbl *.log *.lot *.toc *.out *.blg *.lof *.nav *.snm
 
 distclean :
 	$(LATEXMK) -C $(MAIN).tex
 	$(LATEXMK) -C $(NAME).dtx
 	rm -rf build
+	
 
 install : cls doc
 	mkdir -p $(TEXMF)/{doc,source,tex}/latex/$(NAME)
