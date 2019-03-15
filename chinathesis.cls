@@ -541,13 +541,13 @@
 \newenvironment{abstract}{%
 \begin{center}
   {\sffamily\fontsize{22\bp@}{22\bp@}\selectfont
-      \ustc@title\par}%
+      \textbf{\ustc@title}\par}%
     \vskip 2.0cm%
 \end{center}
 \textbf{摘要：}\ustc@setchinese
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
-  \textbf{关键词}：\ustc@keywords
+  \textmd{关键词}：\ustc@keywords
   \ustc@setdefaultlanguage
 }
 \newenvironment{enabstract}{%
@@ -556,7 +556,7 @@
   \@openrightfalse
   \begin{center}
     {\sffamily\fontsize{22\bp@}{22\bp@}\selectfont
-        \ustc@entitle\par}%
+    \textmd{\ustc@entitle}\par}%
       \vskip 2.0cm%
   \end{center}
   \textbf{Abstract: }\ustc@setenglish
