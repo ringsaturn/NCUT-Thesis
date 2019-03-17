@@ -274,9 +274,9 @@
 \geometry{
   paper      = b5j,
   top        = 4.5cm,
-  bottom     = 1.5cm,
+  bottom     = 2.5cm,
   left       = 2.5cm,
-  right      = 1.5cm,
+  right      = 2.5cm,
 }
 \@ifclasslater{ctexbook}{2016/09/21}{
   \def\chaptermark#1{%
@@ -374,9 +374,9 @@
     \vskip 0.6cm%
     {\sffamily\fontsize{56\bp@}{56\bp@}\selectfont
       \ustc@thesisname\par}%
-    \vskip 2.0cm%
-    \includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
-    \vskip 0.9cm%
+    %\vskip 2.0cm%
+    %\includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
+    %\vskip 0.9cm%
     \parbox[t][3.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont
       \ustc@title\par}\par
@@ -411,9 +411,9 @@
       \ustc@enuniversityname\par}%
     {\sffamily\fontsize{26\bp@}{30\bp@}\selectfont
       \ustc@enthesisname\par}%
-    \vskip 2.5cm%
-    \includegraphics[height=4.5cm]{figures/chinathesis-logo.pdf}\par
-    \vskip 0.5cm%
+    %\vskip 2.5cm%
+    %\includegraphics[height=4.5cm]{figures/chinathesis-logo.pdf}\par
+    %\vskip 0.5cm%
     \parbox[t][4.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
       \ustc@entitle\par}\par
