@@ -580,7 +580,7 @@
   {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
   {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 \titlecontents{subsection}
-  [2\ccwd]{\fontsize{10.5\bp@}{20\bp@}\selectfont}
+  [2\ccwd]{\fontsize{12\bp@}{20\bp@}\selectfont}
   {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
   {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 \renewcommand\listoffigures{%
@@ -805,7 +805,7 @@
   \ifustc@pdf
     \hypersetup{
       colorlinks = true,
-      allcolors  = blue,
+      allcolors  = black,
     }
   \else
     \hypersetup{hidelinks}
