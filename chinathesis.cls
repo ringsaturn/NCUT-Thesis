@@ -548,7 +548,7 @@
 \textbf{摘要：}\ustc@setchinese
 }{
   \par\null\par\noindent\hangindent=4\ccwd\relax
-  \textmd{关键词}：\ustc@keywords
+  \textbf{关键词}：\ustc@keywords
   \ustc@setdefaultlanguage
 }
 \newenvironment{enabstract}{%
@@ -573,7 +573,7 @@
 }
 \newcommand\ustc@leaders{\titlerule*[9\bp@]{\textperiodcentered}}
 \titlecontents{chapter}
-  [\z@]{\addvspace{6\bp@}\fontsize{14\bp@}{20\bp@}\selectfont}
+  [\z@]{\addvspace{6\bp@}\fontsize{12\bp@}{20\bp@}\selectfont}
   {\contentspush{\thecontentslabel\unskip\hspace{\ccwd}}}{}
   {\fontsize{12\bp@}{20\bp@}\selectfont\ustc@leaders\contentspage}
 \titlecontents{section}
