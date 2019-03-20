@@ -1355,9 +1355,11 @@ version 2005/12/01 or later.
 %
 % 各章标题：黑体 16 磅加粗居中，段前 24 磅，段后 18 磅，
 % 章序号与章名间空一字。
+% 不用 XX 章，用纯数字标示
 %    \begin{macrocode}
 \ctexset{
   chapter = {
+    name = {},
     format      = \centering\sffamily\bfseries\fontsize{16\bp@}{26.67\bp@}\selectfont,
     nameformat  = {},
     titleformat = \ustc@spacetitle,
