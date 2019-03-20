@@ -464,6 +464,7 @@
 }
 \ctexset{
   chapter = {
+    name = {},
     format      = \centering\sffamily\bfseries\fontsize{16\bp@}{26.67\bp@}\selectfont,
     nameformat  = {},
     titleformat = \ustc@spacetitle,
