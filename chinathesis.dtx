@@ -63,6 +63,7 @@ version 2005/12/01 or later.
 \usepackage{listings}
 \usepackage{hypdoc}
 \usepackage{hyperref}
+\usepackage{stackengine}
 
 \makeatletter
 
@@ -1140,6 +1141,12 @@ version 2005/12/01 or later.
 %
 % 定义用户接口：
 %    \begin{macrocode}
+% add NCUT's cover required info
+\ustc@define@term{studentid}{}
+\ustc@define@term{college}{}
+\ustc@define@term{encollege}{}
+\ustc@define@term{classname}{}
+\ustc@define@term{enclassname}{}
 \ustc@define@term{title}{论文题目}
 \ustc@define@term{author}{XXX}
 \ustc@define@term{major}{XXX}
@@ -1171,7 +1178,7 @@ version 2005/12/01 or later.
     \newcommand\ustc@thesisname{硕士学位论文}
     \newcommand\ustc@enthesisname{A dissertation for master's degree}
   \else
-    \newcommand\ustc@thesisname{学士学位论文}
+    \newcommand\ustc@thesisname{本科毕业设计（论文）}
     \newcommand\ustc@enthesisname{A dissertation for bachelor's degree}
   \fi
 \fi
@@ -1200,7 +1207,7 @@ version 2005/12/01 or later.
 }
 %    \end{macrocode}
 % \end{environment}
-%
+\newcommand{\wideunderline}[2][2em]{\underline{\makebox[\ifdim\width>#1\width\else#1\fi]{#2}}}
 % 中文封面：
 %    \begin{macrocode}
 \newcommand\ustc@makezhtitle{%
@@ -1212,25 +1219,29 @@ version 2005/12/01 or later.
       \raggedleft\fangsong\fontsize{14\bp@}{14\bp@}\selectfont
       \null\ustc@secretlevel\par}\par
     \vskip 0.5cm%
-    {\sffamily\bfseries\fontsize{36\bp@}{36\bp@}\selectfont
+    {\sffamily\bfseries\fontsize{20\bp@}{20\bp@}\selectfont
       \ustc@universityname\par}
     \vskip 0.6cm%
-    {\sffamily\fontsize{56\bp@}{56\bp@}\selectfont
+    {\sffamily\fontsize{20\bp@}{20\bp@}\selectfont
       \ustc@thesisname\par}%
-    %\vskip 2.0cm%
-    %\includegraphics[height=4.1cm]{figures/chinathesis-logo.pdf}\par
-    %\vskip 0.9cm%
-    \parbox[t][3.5cm][c]{\textwidth}{%
-      \centering\sffamily\bfseries\fontsize{26\bp@}{50\bp@}\selectfont
-      \ustc@title\par}\par
+    \vskip 2.0cm%
+    \includegraphics[width=0.5\textwidth]{figures/chinathesis-logo.pdf}\par
+    % \vskip 0.9cm%
+    % \parbox[t][3.5cm][c]{\textwidth}{%
+    %   \centering\sffamily\bfseries\fontsize{20\bp@}{20\bp@}\selectfont
+    %   \ustc@title\par}\par
     \vskip 0.6cm%
-    {\fontsize{16\bp@}{31\bp@}\selectfont
-      \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
-        \textsf{作者姓名：} & \ustc@author \\
-        \textsf{学科专业：} & \ustc@major \\
-        \textsf{导师姓名：} & \ustc@supervisor\quad\ustc@cosupervisor \\
-        \textsf{完成时间：} & \ustc@date
-      \end{tabular}\par}%
+    % {\fontsize{16\bp@}{31\bp@}\selectfont
+    \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
+      \makebox[5em][s]{\textbf{学院：}}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@college}} \\
+      \makebox[5em][s]{\textbf{专业班级：}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@classname}} \\
+      \makebox[5em][s]{\textbf{学号：}}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@studentid}} \\
+      \makebox[5em][s]{\textbf{姓名：}}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@author}} \\
+      % \textsf{学科专业：} & \ustc@major \\
+      \makebox[5em][s]{\textbf{指导老师：}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@supervisor\quad\ustc@cosupervisor}} \\
+      % \textsf{完成时间：} & \ustc@date
+    \end{tabular}
+    % \par}%
   \end{titlepage}%
   \ustc@setdefaultlanguage
 }
@@ -1259,12 +1270,12 @@ version 2005/12/01 or later.
       \raggedleft\fontsize{14\bp@}{14\bp@}\selectfont
       \null\ustc@ensecretlevel\par}\par
     \vskip 0.5cm%
-    {\sffamily\fontsize{20\bp@}{30\bp@}\selectfont
+    {\sffamily\fontsize{20\bp@}{20\bp@}\selectfont
       \ustc@enuniversityname\par}%
-    {\sffamily\fontsize{26\bp@}{30\bp@}\selectfont
+    {\sffamily\fontsize{20\bp@}{20\bp@}\selectfont
       \ustc@enthesisname\par}%
     %\vskip 2.5cm%
-    %\includegraphics[height=4.5cm]{figures/chinathesis-logo.pdf}\par
+    %\includegraphics[width=0.5\textwidth]{figures/chinathesis-logo.pdf}\par
     %\vskip 0.5cm%
     \parbox[t][4.5cm][c]{\textwidth}{%
       \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
