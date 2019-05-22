@@ -10,6 +10,30 @@
   - 页眉等都是论文专用纸提供
   - 封面是论文专用封面提供
 
+另，如老师要求需要有封面，则请添加如下格式的数据到导言区:
+
+```latex
+\author{ringsaturn}
+\studentid{3.1415926}
+\classname{信 15-1}
+\college{理学院}
+\supervisor{高德纳\ 教授}
+```
+
+然后在正文中开始后调用:
+
+```latex
+\maketitle
+```
+
+例子请参见 [main.tex](./main.tex)
+
+<!-- - [截止于 2019-05-22 的最新样式版本](https://github.com/ringsaturn/NCUT-Thesis/commit/bc816b8ee6b26bc6f8461734345fca203e6ca3f3) 暂时不支持格式比较完善的英文封面（不过学校也不要求英文封面） -->
+
+TODO
+
+- [  ] 更新 `dtx` 文件的文档
+
 ******
 
 主要特性：
