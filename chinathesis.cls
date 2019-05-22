@@ -63,6 +63,7 @@
 \RequirePackage{url}
 \RequirePackage{calc}
 \RequirePackage{amsthm}
+\RequirePackage{array}
 \ifustc@numerical
   \PassOptionsToPackage{sort&compress}{natbib}
 \fi
@@ -375,19 +376,19 @@
       \raggedleft\fangsong\fontsize{14\bp@}{14\bp@}\selectfont
       \null\ustc@secretlevel\par}\par
     \vskip 0.5cm%
-    {\sffamily\bfseries\fontsize{20\bp@}{20\bp@}\selectfont
+    {\bfseries\fontsize{25\bp@}{25\bp@}\selectfont
       \ustc@universityname\par}
     \vskip 0.6cm%
-    {\sffamily\fontsize{20\bp@}{20\bp@}\selectfont
+    {\fontsize{25\bp@}{25\bp@}\selectfont
       \ustc@thesisname\par}%
-    \vskip 2.0cm%
+    \vskip 1.6cm%
     \includegraphics[width=0.5\textwidth]{figures/chinathesis-logo.pdf}\par
     % \vskip 0.9cm%
     % \parbox[t][3.5cm][c]{\textwidth}{%
     %   \centering\sffamily\bfseries\fontsize{20\bp@}{20\bp@}\selectfont
     %   \ustc@title\par}\par
-    \vskip 0.6cm%
-    % {\fontsize{16\bp@}{31\bp@}\selectfont
+    \vskip 1.6cm%
+    {\fontsize{18\bp@}{18\bp@}\selectfont
     \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
       \makebox[5em][s]{\textbf{学院：}}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@college}} \\
       \makebox[5em][s]{\textbf{专业班级：}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@classname}} \\
@@ -397,7 +398,7 @@
       \makebox[5em][s]{\textbf{指导老师：}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@supervisor\quad\ustc@cosupervisor}} \\
       % \textsf{完成时间：} & \ustc@date
     \end{tabular}
-    % \par}%
+    \par}%
   \end{titlepage}%
   \ustc@setdefaultlanguage
 }
@@ -413,32 +414,44 @@
   \begin{titlepage}%
     \ustc@pdfbookmark{Title page}%
     \centering
-    \parbox[t][0.4cm][t]{\textwidth}{%
+    \parbox[t][0.6cm][t]{\textwidth}{%
       \raggedleft\fontsize{14\bp@}{14\bp@}\selectfont
       \null\ustc@ensecretlevel\par}\par
     \vskip 0.5cm%
-    {\sffamily\fontsize{20\bp@}{20\bp@}\selectfont
+    {\sffamily\fontsize{25\bp@}{25\bp@}\selectfont
       \ustc@enuniversityname\par}%
-    {\sffamily\fontsize{20\bp@}{20\bp@}\selectfont
+      \vskip 0.6cm%
+    {\sffamily\fontsize{25\bp@}{25\bp@}\selectfont
       \ustc@enthesisname\par}%
-    %\vskip 2.5cm%
-    %\includegraphics[width=0.5\textwidth]{figures/chinathesis-logo.pdf}\par
-    %\vskip 0.5cm%
-    \parbox[t][4.5cm][c]{\textwidth}{%
-      \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
-      \ustc@entitle\par}\par
     \vskip 1.6cm%
-    {\fontsize{16\bp@}{30\bp@}\selectfont
-      \begin{tabular}{@{}l@{}}%
-        Author:        \ustc@enauthor \\
-        Speciality:    \ustc@enmajor \\
-        \ustc@supervisorline \\
-        Finished time: \ustc@endate
-      \end{tabular}\par}%
+    \includegraphics[width=0.5\textwidth]{figures/chinathesis-logo.pdf}\par
+    %\vskip 0.5cm%
+    % \parbox[t][4.5cm][c]{\textwidth}{%
+    %   \centering\sffamily\bfseries\fontsize{26\bp@}{30\bp@}\selectfont
+    %   \ustc@entitle\par}\par
+    \vskip 1.0cm%
+    {\fontsize{18\bp@}{18\bp@}\selectfont
+    \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
+      \makebox[5em][s]{\sffamily{College: }}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@encollege}} \\
+      \makebox[5em][s]{\textsf{Class: }} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@enclassname}} \\
+      \makebox[5em][s]{\textsf{Student ID: }}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@studentid}} \\
+      \makebox[5em][s]{\textsf{Author: }}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@enauthor}} \\
+      % \textsf{学科专业：} & \ustc@major \\
+      \makebox[5em][s]{\textsf{Supervisor:}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@ensupervisor\quad\ustc@encosupervisor}} \\
+      % \textsf{完成时间：} & \ustc@date
+    \end{tabular}
+    }
+    % \par}%
   \end{titlepage}%
   \ustc@setdefaultlanguage
 }
 \renewcommand\maketitle{%
+  \pagenumbering{Alph}%
+  \pagestyle{empty}%
+  \ustc@makezhtitle
+  \pagestyle{plain}%
+}
+\newcommand\makebilingualtitle{%
   \pagenumbering{Alph}%
   \pagestyle{empty}%
   \ustc@makezhtitle
