@@ -395,7 +395,7 @@
       \makebox[5em][s]{\textbf{学号：}}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@studentid}} \\
       \makebox[5em][s]{\textbf{姓名：}}    &    \makebox[10em][s]{\wideunderline[10em]{\ustc@author}} \\
       % \textsf{学科专业：} & \ustc@major \\
-      \makebox[5em][s]{\textbf{指导老师：}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@supervisor\quad\ustc@cosupervisor}} \\
+      \makebox[5em][s]{\textbf{指导老师：}} &    \makebox[10em][s]{\wideunderline[10em]{\ustc@supervisor}} \\
       % \textsf{完成时间：} & \ustc@date
     \end{tabular}
     \par}%
